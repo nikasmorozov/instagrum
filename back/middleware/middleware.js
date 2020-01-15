@@ -4,9 +4,9 @@ const User = require('../user/userModel.js')
 
 
 const alterData = (req, res, next) => {
-    if (req.body.task) {
-        let task = req.body.task[0].toUpperCase() + req.body.task.slice(1);
-        req.body.task = task;
+    if (req.body.post) {
+        let post = req.body.post[0].toUpperCase() + req.body.post.slice(1);
+        req.body.post = post;
         next();
     }
 }

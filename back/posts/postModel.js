@@ -24,6 +24,6 @@ const postSchema = new mongoose.Schema({
     imageURL: String   // instead of this
 })
 
-let Post = mongoose.model('tasks', postSchema);
+let Post = mongoose.model('posts', postSchema);
 
 module.exports = Post;

@@ -7,8 +7,8 @@ const createPost = (req, res) => {
     post.user = req.user._id;
     post.liked = data.liked;
     post.save()
-    .then((createdTask) => {
-        res.json(createdTask)
+    .then((createdPost) => {
+        res.json(createdPost)
     }).catch((e) => {
         res.status(400).json(e)
     })
@@ -16,10 +16,10 @@ const createPost = (req, res) => {
 
 const getAllPosts = async (req, res) => {
     try {
-        let tasks = await Post.find({
+        let posts = await Post.find({
             user: req.user._id
         })
-        res.json(tasks)
+        res.json(posts)
     } catch (e) {
         res.status(400).json(e)
     }

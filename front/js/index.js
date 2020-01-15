@@ -18,7 +18,7 @@ const createPost = () => {
     let token = localStorage.getItem('x-auth');
 
     let body = {
-        post: newPost,
+        title: newPost,
     }
     fetch('http://localhost:3000/api/v1/posts/createPost', {
         method: 'POST',
@@ -34,7 +34,7 @@ const createPost = () => {
             throw Error(header);
         }
     }).then((response) => {
-        // alert('Item added successfully')
+        alert('Item added successfully')
     }).catch((e) => {
         console.log(e);
         alert('Adding failed');
@@ -71,9 +71,9 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].completed) li.classList.add('list-group-item-success')
+            if (myJson[i].liked) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
-            p.textContent = myJson[i].task
+            p.textContent = myJson[i].title
             p.addEventListener('click', () => {
                 toggleChecked(myJson[i]._id, li)
             })
@@ -97,7 +97,7 @@ createElements();
 const toggleLike = (id, li) => {
     let token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:3000/api/v1/posts/toggleCompleted/${id}`, {
+    fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
         method: 'PATCH',
         headers: {
             'x-auth': token,

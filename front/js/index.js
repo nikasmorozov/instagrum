@@ -34,13 +34,13 @@ const createPost = () => {
             throw Error(header);
         }
     }).then((response) => {
-        alert('Item added successfully')
+        alert('Item added successfully');
+        createElements();
     }).catch((e) => {
         console.log(e);
         alert('Adding failed');
     })
 
-    createElements();
 };
 
 const createElements = () => {

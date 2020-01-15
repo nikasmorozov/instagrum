@@ -75,7 +75,7 @@ const createElements = () => {
             let p = document.createElement('p')
             p.textContent = myJson[i].title
             p.addEventListener('click', () => {
-                toggleChecked(myJson[i]._id, li)
+                toggleLike(myJson[i]._id, li)
             })
             li.appendChild(p)
             let span = document.createElement('button')

@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -14,14 +13,17 @@ const postSchema = new mongoose.Schema({
         type: Number, 
         default: 0 
     },
-    // comments: [{ 
-    //     type: Schema.Types.ObjectId, 
-    //     ref: 'Comment' 
-    // }],
+    comments: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Comment' 
+    }],
     date: { 
         type: Date, 
-        default: Date.now },
-    imageURL: String   // instead of this
+        default: Date.now 
+    },
+    imageURL:{
+        type: String
+    } 
 })
 
 let Post = mongoose.model('posts', postSchema);

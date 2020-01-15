@@ -22,7 +22,6 @@ router.get('/user/logout', middleware.authenticate, userController.logout);
 router.post('/posts/createPost', middleware.authenticate, postController.createPost);
 router.get('/posts/getAllPosts', middleware.authenticate, postController.getAllPosts);
 router.get('/posts/getPostByName/:post', postController.getPostByTitle);
-// router.get('/posts/deletePostByName/:post', postController.deletePostByName);
 router.patch('/posts/toggleLike/:id', postController.toggleLike);
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
 

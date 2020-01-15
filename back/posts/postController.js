@@ -17,6 +17,7 @@ const createPost = (req, res) => {
 const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
+            //gaut postus is kitu useriu
             user: req.user._id
         })
         res.json(posts)

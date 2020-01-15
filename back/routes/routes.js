@@ -8,7 +8,7 @@ router.get('/', (rec, res) => {
     res.json('API is working')
 });
 
-//user routes
+//user routeses
 router.post('/user/register', userController.register);
 router.post('/user/login', userController.login);
 router.get('/user/getAllUsers', userController.getAll);

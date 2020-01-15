@@ -20,7 +20,7 @@ const createPost = () => {
     let body = {
         post: newPost,
     }
-    fetch('http://localhost:3000/api/v1/todolist/addTask', {
+    fetch('http://localhost:3000/api/v1/posts/createPost', {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -50,7 +50,7 @@ const createElements = () => {
 
     list.innerHTML = '';
 
-    fetch('http://localhost:3000/api/v1/todolist/getalltasks', {
+    fetch('http://localhost:3000/api/v1/posts/getAllPosts', {
         method: 'GET',
         headers: {
             'x-auth': token,
@@ -97,7 +97,7 @@ createElements();
 const toggleLike = (id, li) => {
     let token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:3000/api/v1/todolist/toggleCompleted/${id}`, {
+    fetch(`http://localhost:3000/api/v1/posts/toggleCompleted/${id}`, {
         method: 'PATCH',
         headers: {
             'x-auth': token,
@@ -126,7 +126,7 @@ const toggleLike = (id, li) => {
 const deletePost = (id, li) => {
     let token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:3000/api/v1/todolist/deleteTaskById/${id}`, {
+    fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
         method: 'DELETE',
         headers: {
             'x-auth': token,

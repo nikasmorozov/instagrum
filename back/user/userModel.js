@@ -12,6 +12,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    following: [{  
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    }],
+    followers: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    }],
     tokens: [{
         access: {
             type: String,

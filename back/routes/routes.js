@@ -15,6 +15,7 @@ router.get('/user/getAllUsers', userController.getAll);
 router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.get('/user/deleteUserByName/:username', userController.deleteUserByName);
 router.get('/user/logout', middleware.authenticate, userController.logout);
+router.post('/user/:user_id/follow-user', middleware.authenticate, userController.followUser)
 
 
 
@@ -26,7 +27,7 @@ router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.to
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
 
 //Comment routes
-router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
+// router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
 
 
 

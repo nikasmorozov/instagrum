@@ -38,12 +38,35 @@ const getSingleUser = async (req, res) => {
     let id = req.params.id;
     try {
         let user = await User.findOne({
-            username: id
+            _id: id
         })
         res.json(user)
     } catch (e) {
         res.status(400).json(e)
     }
+}
+
+const followUser = (req, res) => {
+    User.findById(req.params.user_id, function(err, user) {
+        user.followers.push(req.user._id);
+        let followedUser = user._id;
+        user.save(function(err) {
+            if(err) {
+                console.log(err)
+            } else {
+                User.findOne({ _id: req.params.id }, function(err, user) {
+                    user.following.push(followedUser);
+                    user.save(function(err) {
+                        if(err) {
+                            console.log(err)
+                        } else {
+                            res.json(user)
+                        }
+                    })
+                })
+            }
+        })
+    })
 }
 
 const deleteUserByName = async (req, res) => {
@@ -110,5 +133,6 @@ module.exports = {
     getSingleUser,
     deleteUserByName,
     login,
-    logout
+    logout,
+    followUser
 };

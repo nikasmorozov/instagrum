@@ -1,6 +1,6 @@
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-    console.log(token)
+    console.log(token);
 
     if (!token) {
         window.location.href = "../front/login.html";
@@ -71,9 +71,9 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.length > 0) li.classList.add('list-group-item-success')
+            if (myJson[i].likes.includes()) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
-            p.textContent = myJson[i].title
+            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
@@ -118,6 +118,7 @@ const toggleLike = (id, li) => {
         return response.json();
 
     }).then((myJson) => {
+        createElements();
 
     }).catch((e) => {
         console.log(e);

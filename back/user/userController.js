@@ -38,7 +38,7 @@ const getSingleUser = async (req, res) => {
     let id = req.params.id;
     try {
         let user = await User.findOne({
-            username: id
+            _id: id
         })
         res.json(user)
     } catch (e) {

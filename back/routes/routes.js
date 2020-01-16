@@ -25,6 +25,8 @@ router.get('/posts/getPostById/:id', postController.getPostById);
 router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.toggleLike);
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
 
+//Comment routes
+router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
 
 
 

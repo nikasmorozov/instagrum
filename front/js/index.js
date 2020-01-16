@@ -34,7 +34,7 @@ const createPost = () => {
             throw Error(header);
         }
     }).then((response) => {
-        alert('Item added successfully');
+        // alert('Item added successfully');
         createElements();
     }).catch((e) => {
         console.log(e);
@@ -65,7 +65,8 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
-
+        console.log(myJson);
+        
         let ul = document.getElementById("list")
         ul.innerHTML = ''
         for (let i = 0; i < myJson.length; i++) {
@@ -134,7 +135,7 @@ const deletePost = (id, li) => {
         }
     }).then((response) => {
         // console.log(response);
-        alert('deleted successfully');
+        // alert('deleted successfully');
 
         li.remove();
 

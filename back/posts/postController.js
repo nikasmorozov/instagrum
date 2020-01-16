@@ -57,9 +57,6 @@ const toggleLike = async (req, res) => {
             _id: id,
             likes: user
         });
-      
-        console.log(post.likes.length);
-
 
         if (!isLiked) {
         post.likes.push(user)

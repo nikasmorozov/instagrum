@@ -1,6 +1,5 @@
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-    console.log(token)
 
     if (!token) {
         window.location.href = "../front/login.html";
@@ -27,24 +26,28 @@ function createPost() {
         method: "POST",
         body: data,
         headers: {
-          "x-auth": token
+            "x-auth": token
         }
-      })
-      .then((res) => {
-        return res.json()
-      })
-      .then(data => {
-        console.log(data)
-      })
-      .catch(error => console.error("Error:", error));
-    //
-    //
-  }
+    }).then((header)=> {
+        console.log(header);
+        if (!header.ok) {
+            throw Error(header)
+        }
+    }).then((response) => {
+        createElements();
+    }).catch((e) => {
+        console.log(e);
+        alert('Adding failed');
+    })
+
+};
 
 const createElements = () => {
 
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
+    let activeUserId = localStorage.getItem('activeUserId');
+    console.log(activeUserId);
 
     list.innerHTML = '';
 
@@ -70,9 +73,10 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.length > 0) li.classList.add('list-group-item-success')
+    console.log(activeUserId);
+            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
-            p.textContent = myJson[i].title
+            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
@@ -117,6 +121,7 @@ const toggleLike = (id, li) => {
         return response.json();
 
     }).then((myJson) => {
+        createElements();
 
     }).catch((e) => {
         console.log(e);

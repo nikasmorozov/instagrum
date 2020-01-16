@@ -43,6 +43,8 @@ router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.to
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
+//Comment routes
+// router.post('/comments/addComment', middleware.authenticate, commentController.addComment);
 
 
 

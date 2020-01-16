@@ -9,7 +9,7 @@ const alterData = (req, res, next) => {
         req.body.post = post;
         next();
     }
-}
+};
 
 const authenticate = async (req, res, next) => {
     let token = req.header('x-auth');
@@ -30,7 +30,7 @@ const authenticate = async (req, res, next) => {
     } catch(e) {
         res.status(400).json(e)
     }
-}
+};
 
 module.exports = {
     alterData,

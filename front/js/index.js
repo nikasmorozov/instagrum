@@ -71,7 +71,7 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].liked) li.classList.add('list-group-item-success')
+            if (myJson[i].likes.length > 0) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
             p.textContent = myJson[i].title
             p.addEventListener('click', () => {
@@ -93,6 +93,8 @@ const createElements = () => {
 };
 
 createElements();
+
+
 
 const toggleLike = (id, li) => {
     let token = localStorage.getItem('x-auth');

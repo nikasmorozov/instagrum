@@ -14,7 +14,39 @@ const register = (req, res) => {
         }).catch((e) => {
             res.status(400).json(e)
         })
-}
+};
+
+const login = async (req, res) => {
+    try {
+        let user = await User.findOne({
+            username: req.body.username
+        })
+        if (!user) {
+            res.status(400).json('no such user');
+            return
+        }
+        bcrypt.compare(req.body.password, user.password, (err, response) => {
+            if (response) {
+                let access = 'auth';
+                let token = jwt.sign({
+                    _id: user._id.toHexString(),
+                    access 
+                }, config.password).toString()
+                user.tokens.push({
+                    token,
+                    access
+                });
+                user.save().then(() => {
+                    res.header('x-auth', token).json(user);
+                })
+            } else {
+                res.status(400).json("wrong password");
+            }
+        });
+    } catch (e) {
+        res.status(400).json(e);
+    }
+};
 
 // let getAll = (req, res) => {
 //     User.find()
@@ -80,38 +112,6 @@ const deleteUserByName = async (req, res) => {
         res.status(400).json(e)
     }
 }
-
-const login = async (req, res) => {
-    try {
-        let user = await User.findOne({
-            username: req.body.username
-        })
-        if (!user) {
-            res.status(400).json('no such user');
-            return
-        }
-        bcrypt.compare(req.body.password, user.password, (err, response) => {
-            if (response) {
-                let access = 'auth';
-                let token = jwt.sign({
-                    _id: user._id.toHexString(),
-                    access 
-                }, config.password).toString()
-                user.tokens.push({
-                    token,
-                    access
-                });
-                user.save().then(() => {
-                    res.header('x-auth', token).json(user)
-                })
-            } else {
-                res.status(400).json("wrong password");
-            }
-        });
-    } catch (e) {
-        res.status(400).json(e);
-    }
-};
 
 const logout = (req, res) => {
     let token = req.token

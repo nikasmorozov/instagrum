@@ -1,11 +1,17 @@
 const Post = require('./postModel.js');
 
 const createPost = (req, res) => {
+    const host = req.hostname;
+    const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
+    
+    console.log(filePath);
+    
     let data = req.body
     let post = new Post()
     post.title = data.title;
     post.user = req.user._id;
-    post.liked = data.liked;
+
+    post.imageURL = filePath
     post.save()
     .then((createdPost) => {
         res.json(createdPost)
@@ -51,9 +57,6 @@ const toggleLike = async (req, res) => {
             _id: id,
             likes: user
         });
-      
-        console.log(post.likes.length);
-
 
         if (!isLiked) {
         post.likes.push(user)

@@ -1,6 +1,5 @@
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-    console.log(token)
 
     if (!token) {
         window.location.href = "../front/login.html";
@@ -10,31 +9,31 @@ const checkifLoggedIn = () => {
 checkifLoggedIn();
 
 
-
-const createPost = () => {
-
+function createPost() {
+    let token = localStorage.getItem('x-auth');
     let newPost = document.getElementById('newItem').value;
 
-    let token = localStorage.getItem('x-auth');
+    let file = document.getElementById('attachedImage');
+    let data = new FormData()
+    
+    data.append('avatar', file.files[0])
+    data.append('username', 'newuser')
+    data.append('title', newPost)
 
-    let body = {
-        title: newPost,
-    }
-    fetch('http://localhost:3000/api/v1/posts/createPost', {
-        method: 'POST',
-        body: JSON.stringify(body),
+    console.log('data',data);
+
+    fetch("http://localhost:3000/api/v1/posts/createPost", {
+        method: "POST",
+        body: data,
         headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
+            "x-auth": token
         }
-    }).then((header) => {
+    }).then((header)=> {
         console.log(header);
-
         if (!header.ok) {
-            throw Error(header);
+            throw Error(header)
         }
     }).then((response) => {
-        // alert('Item added successfully');
         createElements();
     }).catch((e) => {
         console.log(e);
@@ -47,6 +46,8 @@ const createElements = () => {
 
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
+    let activeUserId = localStorage.getItem('activeUserId');
+    console.log(activeUserId);
 
     list.innerHTML = '';
 
@@ -72,9 +73,10 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.length > 0) li.classList.add('list-group-item-success')
+    console.log(activeUserId);
+            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
-            p.textContent = myJson[i].title
+            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
@@ -119,6 +121,7 @@ const toggleLike = (id, li) => {
         return response.json();
 
     }).then((myJson) => {
+        createElements();
 
     }).catch((e) => {
         console.log(e);

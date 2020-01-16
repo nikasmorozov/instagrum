@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const userController = require('../user/userController.js');
 const postController = require('../posts/postController.js');
-const middleware = require('../middleware/middleware.js')
+const middleware = require('../middleware/middleware.js');
 
 
 router.get('/', (rec, res) => {
@@ -26,7 +26,7 @@ router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.to
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
 
 //Comment routes
-router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
+// router.post('/comments/addComment', middleware.authenticate, commentController.addComment);
 
 
 

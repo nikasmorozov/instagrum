@@ -1,6 +1,5 @@
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-    console.log(token);
 
     if (!token) {
         window.location.href = "../front/login.html";
@@ -34,7 +33,6 @@ const createPost = () => {
             throw Error(header);
         }
     }).then((response) => {
-        // alert('Item added successfully');
         createElements();
     }).catch((e) => {
         console.log(e);
@@ -47,6 +45,8 @@ const createElements = () => {
 
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
+    let activeUserId = localStorage.getItem('activeUserId');
+    console.log(activeUserId);
 
     list.innerHTML = '';
 
@@ -72,7 +72,8 @@ const createElements = () => {
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.includes()) li.classList.add('list-group-item-success')
+    console.log(activeUserId);
+            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
             p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
             p.addEventListener('click', () => {

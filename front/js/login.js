@@ -24,11 +24,18 @@ const login = () => {
         }
 
         let token = header.headers.get('x-auth');
+
         localStorage.setItem('x-auth', token);
-        console.log(token);
+        
+        return header.json();
+
     }).then((response) => {
-            alert('Login successful')
+            alert('Login successful');
             window.location.href = '../front/index.html';
+
+            activeUserId = response._id;
+            localStorage.setItem('activeUserId', activeUserId);
+
     }).catch((e) => {
         console.log(e);
         alert('Login failed');

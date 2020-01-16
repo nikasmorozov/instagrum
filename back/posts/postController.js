@@ -5,7 +5,6 @@ const createPost = (req, res) => {
     let post = new Post()
     post.title = data.title;
     post.user = req.user._id;
-    post.liked = data.liked;
     post.save()
     .then((createdPost) => {
         res.json(createdPost)

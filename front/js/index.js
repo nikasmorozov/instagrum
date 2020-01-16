@@ -10,38 +10,36 @@ const checkifLoggedIn = () => {
 checkifLoggedIn();
 
 
-
-const createPost = () => {
-
+function createPost() {
+    let token = localStorage.getItem('x-auth');
     let newPost = document.getElementById('newItem').value;
 
-    let token = localStorage.getItem('x-auth');
+    let file = document.getElementById('attachedImage');
+    let data = new FormData()
+    
+    data.append('avatar', file.files[0])
+    data.append('username', 'newuser')
+    data.append('title', newPost)
 
-    let body = {
-        title: newPost,
-    }
-    fetch('http://localhost:3000/api/v1/posts/createPost', {
-        method: 'POST',
-        body: JSON.stringify(body),
+    console.log('data',data);
+
+    fetch("http://localhost:3000/api/v1/posts/createPost", {
+        method: "POST",
+        body: data,
         headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
+          "x-auth": token
         }
-    }).then((header) => {
-        console.log(header);
-
-        if (!header.ok) {
-            throw Error(header);
-        }
-    }).then((response) => {
-        // alert('Item added successfully');
-        createElements();
-    }).catch((e) => {
-        console.log(e);
-        alert('Adding failed');
-    })
-
-};
+      })
+      .then((res) => {
+        return res.json()
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.error("Error:", error));
+    //
+    //
+  }
 
 const createElements = () => {
 

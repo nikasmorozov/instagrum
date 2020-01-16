@@ -18,7 +18,7 @@ const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
             //gaut postus is kitu useriu
-            user: req.user._id
+            // user: req.user._id
         })
         res.json(posts)
     } catch (e) {
@@ -26,8 +26,8 @@ const getAllPosts = async (req, res) => {
     }
 };
 
-const getPostByTitle = async (req, res) => {
-    let postTitle = req.params.title;
+const getPostById = async (req, res) => {
+    let postTitle = req.params._id;
     try {
         let post = await Post.findOne({
             post: postTitle
@@ -41,11 +41,26 @@ const getPostByTitle = async (req, res) => {
 
 const toggleLike = async (req, res) => {
     let id = req.params.id;
+    let user = req.user.id;
     try {
-        let title = await Post.findOne({
+        let post = await Post.findOne({
             _id: id
-        })
-        post.liked = !post.liked;
+        });
+
+        let isLiked = await Post.findOne({
+            _id: id,
+            likes: user
+        });
+      
+        console.log(post.likes.length);
+
+
+        if (!isLiked) {
+        post.likes.push(user)
+        } else {
+            post.likes.pull(user)
+        };
+
         post.save();
         res.json(post)
         
@@ -69,7 +84,7 @@ const deletePostById = async (req, res) => {
 module.exports = {
     createPost,
     getAllPosts,
-    getPostByTitle,
+    getPostById,
     deletePostById,
     toggleLike,
 };

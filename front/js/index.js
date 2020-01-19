@@ -65,14 +65,12 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
-        console.log(myJson);
         
         let ul = document.getElementById("list")
         ul.innerHTML = ''
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-    console.log(activeUserId);
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
             p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 

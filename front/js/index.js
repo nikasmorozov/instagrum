@@ -107,11 +107,8 @@ const toggleLike = (id, li) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        // console.log(response);
-        // alert('toggle successful');
 
         li.classList.toggle('list-group-item-success');
-
 
         if (!response.ok) {
             throw Error(response);

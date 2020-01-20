@@ -75,12 +75,16 @@ const createElements = () => {
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
     console.log(activeUserId);
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
+            const img = document.createElement('img')
+            img.setAttribute('class', 'postImage')
+            img.setAttribute('src',myJson[i].imageURL)
             let p = document.createElement('p')
             p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
             li.appendChild(p)
+            li.appendChild(img)
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'

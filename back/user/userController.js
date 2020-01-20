@@ -64,19 +64,19 @@ const getAll = async (req, res) => {
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const getSingleUser = async (req, res) => {
     let id = req.params.id;
     try {
         let user = await User.findOne({
             _id: id
-        })
+        });
         res.json(user)
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const deleteUserByName = async (req, res) => {
     let username = req.params.user;
@@ -88,7 +88,7 @@ const deleteUserByName = async (req, res) => {
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const logout = (req, res) => {
     let token = req.token

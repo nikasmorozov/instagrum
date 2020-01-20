@@ -41,6 +41,8 @@ router.get('/posts/getAllPosts', middleware.authenticate, postController.getAllP
 router.get('/posts/getPostById/:id', postController.getPostById);
 router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.toggleLike);
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
+router.get('/posts/getLikesUsers/:id', postController.getLikesUsers);
+
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
 //Comment routes

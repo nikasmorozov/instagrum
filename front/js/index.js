@@ -47,7 +47,6 @@ const createElements = () => {
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
     let activeUserId = localStorage.getItem('activeUserId');
-    console.log(activeUserId);
 
     list.innerHTML = '';
 
@@ -74,11 +73,18 @@ const createElements = () => {
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             let p = document.createElement('p')
-            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
+            let a = document.createElement('a')
+            a.textContent = myJson[i].likes.length
+            p.textContent = myJson[i].title
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
+            a.addEventListener('click', () => {
+                showLikes(myJson[i]._id)
+            })
             li.appendChild(p)
+            li.appendChild(a)
+
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'
@@ -122,6 +128,30 @@ const toggleLike = (id, li) => {
         console.log(e);
         alert('toggle failed');
     });
+};
+
+const showLikes = (id) => {
+    let token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:3000/api/v1/posts/getLikesUsers/${id}`, {
+        method: 'GET',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+
+    }).then((myJson) => {
+        for (let i = 0; i < myJson.length; i++) {
+            console.log(myJson[i].username)
+        };
+    }).catch((e) => {
+        console.log(e);
+    })
 };
 
 const deletePost = (id, li) => {

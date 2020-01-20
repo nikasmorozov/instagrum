@@ -12,10 +12,14 @@ const postSchema = new mongoose.Schema({
     likes: [{
         type: String
     }],
-    comments: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Comment' 
-    }],
+    comment: {
+        commenterName: {
+            type: String
+        },
+        comment: {
+            type: String
+        }
+    },
     date: { 
         type: Date, 
         default: Date.now 

@@ -77,6 +77,8 @@ const createElements = () => {
             img.setAttribute('class', 'postImage')
             img.setAttribute('src',myJson[i].imageURL)
             let p = document.createElement('p')
+            let username = document.createElement('a')
+            username.textContent = myJson[i].user[0].username;
             let a = document.createElement('a')
             a.textContent = myJson[i].likes.length
             p.textContent = myJson[i].title
@@ -89,6 +91,7 @@ const createElements = () => {
             img.addEventListener('dblclick', () => {
                 toggleLike(myJson[i]._id, li)
             });
+            li.appendChild(username)
             li.appendChild(p)
             li.appendChild(img)
             li.appendChild(a)

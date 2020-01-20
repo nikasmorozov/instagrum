@@ -85,8 +85,12 @@ const createElements = () => {
             a.addEventListener('click', () => {
                 showLikes(myJson[i]._id)
             })
+            img.addEventListener('dblclick', () => {
+                toggleLike(myJson[i]._id, li)
+            });
             li.appendChild(p)
             li.appendChild(img)
+            li.appendChild(a)
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'

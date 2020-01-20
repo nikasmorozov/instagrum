@@ -238,6 +238,7 @@ const addComment = (id, li) => {
         comment: comment,
         postId: id
     }
+    li.querySelector("input").value = ""
     fetch(`http://localhost:3000/api/v1/comments/addComment`, {
         method: 'POST',
         headers: {

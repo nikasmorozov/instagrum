@@ -1,6 +1,6 @@
-const goToRegister = () => {
-    window.location.href = "../front/register.html";
-};
+// const goToRegister = () => {
+//     window.location.href = "../front/register.html";
+// };
 
 const login = () => {
     let username = document.getElementById('loginEmail').value;
@@ -17,21 +17,29 @@ const login = () => {
             'Content-Type': 'application/json'
         }
     }).then((header) => {
-        console.log(header);
-
+        // console.log(header);
         if (!header.ok) {
             throw Error(header);
         }
 
         let token = header.headers.get('x-auth');
         localStorage.setItem('x-auth', token);
-        console.log(token);
+        // console.log(token);
     }).then((response) => {
-            alert('Login successful')
-            window.location.href = '../front/index.html';
+            // alert('Login successful')
+            window.location.href = '../front/feed.html';
     }).catch((e) => {
         console.log(e);
         alert('Login failed');
     })
+};
 
-}
+//show password
+const showPasswordBtn = () =>{
+  var x = document.getElementById("loginPassword");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+};

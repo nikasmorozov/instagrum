@@ -10,16 +10,13 @@ const checkifLoggedIn = () => {
 checkifLoggedIn();
 
 
-
 const createPost = () => {
-
     let newPost = document.getElementById('newItem').value;
-
     let token = localStorage.getItem('x-auth');
-
     let body = {
         title: newPost,
     }
+
     fetch('http://localhost:3000/api/v1/posts/createPost', {
         method: 'POST',
         body: JSON.stringify(body),
@@ -34,7 +31,6 @@ const createPost = () => {
             throw Error(header);
         }
     }).then((response) => {
-        // alert('Item added successfully');
         createElements();
     }).catch((e) => {
         console.log(e);
@@ -44,7 +40,6 @@ const createPost = () => {
 };
 
 const createElements = () => {
-
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
 
@@ -66,7 +61,7 @@ const createElements = () => {
 
     }).then((myJson) => {
         console.log(myJson);
-        
+
         let ul = document.getElementById("list")
         ul.innerHTML = ''
         for (let i = 0; i < myJson.length; i++) {
@@ -96,7 +91,6 @@ const createElements = () => {
 createElements();
 
 
-
 const toggleLike = (id, li) => {
     let token = localStorage.getItem('x-auth');
 
@@ -107,12 +101,7 @@ const toggleLike = (id, li) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        // console.log(response);
-        // alert('toggle successful');
-
         li.classList.toggle('list-group-item-success');
-
-
         if (!response.ok) {
             throw Error(response);
         }
@@ -136,9 +125,6 @@ const deletePost = (id, li) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        // console.log(response);
-        // alert('deleted successfully');
-
         li.remove();
 
         if (!response.ok) {
@@ -153,7 +139,6 @@ const deletePost = (id, li) => {
         alert('toggle failed');
     });
 };
-
 
 
 const logout = () => {
@@ -177,5 +162,4 @@ const logout = () => {
     }).catch((e) => {
         console.log(e);
     })
-
 }

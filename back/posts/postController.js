@@ -17,7 +17,6 @@ const createPost = (req, res) => {
 const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
-            //gaut postus is kitu useriu
             // user: req.user._id
         })
         res.json(posts)
@@ -33,7 +32,7 @@ const getPostById = async (req, res) => {
             post: postTitle
         })
         res.json(post)
-        
+
     } catch (e) {
         res.status(400).json(e)
     }
@@ -51,7 +50,7 @@ const toggleLike = async (req, res) => {
             _id: id,
             likes: user
         });
-      
+
         console.log(post.likes.length);
 
 
@@ -63,7 +62,7 @@ const toggleLike = async (req, res) => {
 
         post.save();
         res.json(post)
-        
+
     } catch (e) {
         res.status(400).json(e)
     }

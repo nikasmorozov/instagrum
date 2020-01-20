@@ -66,14 +66,12 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
-        console.log(myJson);
         
         let ul = document.getElementById("list")
         ul.innerHTML = ''
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-    console.log(activeUserId);
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
             const img = document.createElement('img')
             img.setAttribute('class', 'postImage')
@@ -113,11 +111,8 @@ const toggleLike = (id, li) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        // console.log(response);
-        // alert('toggle successful');
 
         li.classList.toggle('list-group-item-success');
-
 
         if (!response.ok) {
             throw Error(response);

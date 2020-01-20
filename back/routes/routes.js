@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const userController = require('../user/userController.js');
 const postController = require('../posts/postController.js');
-const middleware = require('../middleware/middleware.js')
-const multer = require('multer')
-const crypto = require('crypto')
+const middleware = require('../middleware/middleware.js');
+const multer = require('multer');
+const crypto = require('crypto');
 
 
 router.get('/', (rec, res) => {

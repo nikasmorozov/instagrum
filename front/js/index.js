@@ -72,6 +72,9 @@ const createElements = () => {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
+            const img = document.createElement('img')
+            img.setAttribute('class', 'postImage')
+            img.setAttribute('src',myJson[i].imageURL)
             let p = document.createElement('p')
             let a = document.createElement('a')
             a.textContent = myJson[i].likes.length
@@ -83,8 +86,7 @@ const createElements = () => {
                 showLikes(myJson[i]._id)
             })
             li.appendChild(p)
-            li.appendChild(a)
-
+            li.appendChild(img)
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'

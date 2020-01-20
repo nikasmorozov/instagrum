@@ -25,9 +25,7 @@ const createPost = (req, res) => {
 const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
-            //gaut postus is kitu useriu
-            // user: req.user._id
-        })
+        }).populate('user')
         res.json(posts)
     } catch (e) {
         res.status(400).json(e)

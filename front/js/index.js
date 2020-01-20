@@ -57,7 +57,7 @@ const createElements = () => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        console.log(response);
+        // console.log(response);
 
         if (!response.ok) {
             throw Error(response);
@@ -65,6 +65,7 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
+        console.log(myJson)
         
         let ul = document.getElementById("list")
         ul.innerHTML = ''

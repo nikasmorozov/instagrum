@@ -95,6 +95,19 @@ const createElements = () => {
             li.appendChild(p)
             li.appendChild(img)
             li.appendChild(a)
+            //add comment block
+            let commentField = document.createElement('input')
+            commentField.type = "text"
+            commentField.placeholder = "Comment"   
+            li.appendChild(commentField)
+            let span2 = document.createElement('button')
+            span2.classList.add('badge', 'badge-primary', 'badge-pill')
+            span2.innerHTML = '<ion-icon name="add"></ion-icon>'
+            span2.addEventListener('click', () => {
+                addComment(myJson[i]._id, li)               
+            })
+            li.appendChild(span2)
+            //comment block
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'
@@ -217,3 +230,29 @@ const logout = () => {
     })
 
 }
+
+const addComment = (id, li) => {
+    let token = localStorage.getItem('x-auth');
+    let comment = li.querySelector("input").value
+    let body = {
+        comment: comment,
+        postId: id
+    }
+    fetch(`http://localhost:3000/api/v1/comments/addComment`, {
+        method: 'POST',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then((response) => {
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+    }).then((myJson) => {
+        //createElements()
+    }).catch((e) => {
+        console.log(e);
+    });
+};

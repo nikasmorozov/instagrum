@@ -1,6 +1,5 @@
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-    console.log(token)
 
     if (!token) {
         window.location.href = "../front/login.html";
@@ -10,25 +9,29 @@ const checkifLoggedIn = () => {
 checkifLoggedIn();
 
 
-const createPost = () => {
-    let newPost = document.getElementById('newItem').value;
+function createPost() {
     let token = localStorage.getItem('x-auth');
-    let body = {
-        title: newPost,
-    }
+    let newPost = document.getElementById('newItem').value;
 
-    fetch('http://localhost:3000/api/v1/posts/createPost', {
-        method: 'POST',
-        body: JSON.stringify(body),
+    let file = document.getElementById('attachedImage');
+    let data = new FormData()
+
+    data.append('avatar', file.files[0])
+    data.append('username', 'newuser')
+    data.append('title', newPost)
+
+    console.log('data',data);
+
+    fetch("http://localhost:3000/api/v1/posts/createPost", {
+        method: "POST",
+        body: data,
         headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
+            "x-auth": token
         }
-    }).then((header) => {
+    }).then((header)=> {
         console.log(header);
-
         if (!header.ok) {
-            throw Error(header);
+            throw Error(header)
         }
     }).then((response) => {
         createElements();
@@ -42,6 +45,7 @@ const createPost = () => {
 const createElements = () => {
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
+    let activeUserId = localStorage.getItem('activeUserId');
 
     list.innerHTML = '';
 
@@ -60,20 +64,28 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
-        console.log(myJson);
 
         let ul = document.getElementById("list")
         ul.innerHTML = ''
         for (let i = 0; i < myJson.length; i++) {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.length > 0) li.classList.add('list-group-item-success')
+            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
+            const img = document.createElement('img')
+            img.setAttribute('class', 'postImage')
+            img.setAttribute('src',myJson[i].imageURL)
             let p = document.createElement('p')
+            let a = document.createElement('a')
+            a.textContent = myJson[i].likes.length
             p.textContent = myJson[i].title
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
+            a.addEventListener('click', () => {
+                showLikes(myJson[i]._id)
+            })
             li.appendChild(p)
+            li.appendChild(img)
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'
@@ -101,18 +113,45 @@ const toggleLike = (id, li) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
+
         li.classList.toggle('list-group-item-success');
+
         if (!response.ok) {
             throw Error(response);
         }
         return response.json();
 
     }).then((myJson) => {
+        createElements();
 
     }).catch((e) => {
         console.log(e);
         alert('toggle failed');
     });
+};
+
+const showLikes = (id) => {
+    let token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:3000/api/v1/posts/getLikesUsers/${id}`, {
+        method: 'GET',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+
+    }).then((myJson) => {
+        for (let i = 0; i < myJson.length; i++) {
+            console.log(myJson[i].username)
+        };
+    }).catch((e) => {
+        console.log(e);
+    })
 };
 
 const deletePost = (id, li) => {

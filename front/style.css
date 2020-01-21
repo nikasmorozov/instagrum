@@ -146,12 +146,12 @@ label{
   margin-right: 5px;
 }
 
-/* NEZINAU KAIP SU NUOTRAUKu DARYTI DYDZIAIS */
-.postImg{
+/* NEZINAU KAIP SU NUOTRAUKU DARYTI DYDZIAIS */
+.postImage{
   /* object-fit: fill; */
   /* height: auto; */
-  object-fit: contain;
-  /* height: 360px; */
+  /* object-fit: contain; */
+  height: 400px;
   width: 100%;
 }
 
@@ -221,6 +221,11 @@ label{
 .viewAllComBtn p{
   color: #4c5fd7;
   margin: 0;
+}
+
+.userCommTxt{
+  margin-left: 6px;
+  font-weight: 100;
 }
 
 /* newPost.html */
@@ -364,6 +369,6 @@ ul, li {
   list-style: none;
 }
 
-li p {
+li p, li a{
   cursor: pointer;
 }

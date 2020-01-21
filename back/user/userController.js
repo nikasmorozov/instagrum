@@ -14,49 +14,7 @@ const register = (req, res) => {
         }).catch((e) => {
             res.status(400).json(e)
         })
-}
-
-// let getAll = (req, res) => {
-//     User.find()
-//     .then((users) => {
-//         res.json(users)
-//     }).catch((e) => {
-//         res.status(400).json(e)
-//     })
-// };
-
-const getAll = async (req, res) => {
-    try {
-        let users = await User.find()
-        res.json(users)
-    } catch (e) {
-        res.status(400).json(e)
-    }
-}
-
-const getSingleUser = async (req, res) => {
-    let id = req.params.id;
-    try {
-        let user = await User.findOne({
-            username: id
-        })
-        res.json(user)
-    } catch (e) {
-        res.status(400).json(e)
-    }
-}
-
-const deleteUserByName = async (req, res) => {
-    let username = req.params.user;
-    try {
-        let user = await User.deleteOne({
-            user: username
-        })
-        res.json(user)
-    } catch (e) {
-        res.status(400).json(e)
-    }
-}
+};
 
 const login = async (req, res) => {
     try {
@@ -79,7 +37,7 @@ const login = async (req, res) => {
                     access
                 });
                 user.save().then(() => {
-                    res.header('x-auth', token).json(user)
+                    res.header('x-auth', token).json(user);
                 })
             } else {
                 res.status(400).json("wrong password");
@@ -87,6 +45,48 @@ const login = async (req, res) => {
         });
     } catch (e) {
         res.status(400).json(e);
+    }
+};
+
+// let getAll = (req, res) => {
+//     User.find()
+//     .then((users) => {
+//         res.json(users)
+//     }).catch((e) => {
+//         res.status(400).json(e)
+//     })
+// };
+
+const getAll = async (req, res) => {
+    try {
+        let users = await User.find()
+        res.json(users)
+    } catch (e) {
+        res.status(400).json(e)
+    }
+};
+
+const getSingleUser = async (req, res) => {
+    let id = req.params.id;
+    try {
+        let user = await User.findOne({
+            _id: id
+        });
+        res.json(user)
+    } catch (e) {
+        res.status(400).json(e)
+    }
+};
+
+const deleteUserByName = async (req, res) => {
+    let username = req.params.user;
+    try {
+        let user = await User.deleteOne({
+            user: username
+        })
+        res.json(user)
+    } catch (e) {
+        res.status(400).json(e)
     }
 };
 

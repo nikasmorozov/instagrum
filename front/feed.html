@@ -23,113 +23,51 @@
     </a>
   </nav>
 
-<!-- ONE IMAGE POST -->
-<div class="container-fluid fullWidthCnt postsCont">
-  <div class="container fullWidthCnt onePost" id="newItem">
-
-    <div class="container-fluid d-flex justify-content-between align-items-center userInfoCnt">
-      <div class="userInfo">
-        <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPicSml">
-        <span class="font-weight-bold userName" id="userNameTag">UserNameTest</span>
-      </div>
-        <i data-feather="more-horizontal"></i>
-    </div>
-
-    <div class="container-fluid fullWidthCnt userPostContentCnt" id="userPost">
-      <div class="postImgCont">
-          <img src="https://www.istockphoto.com/resources/images/IllustrationsLanding/Signature-825938466.jpg" alt="Test Img" class="img-fluid postImg">
-      </div>
-
-      <div class="container-fluid postActionsCnt">
-        <div class="actionsCnt">
-          <span class="actionsElem">
-            <i class='actionBtn' data-feather="heart" id="heartBtn" ></i>
-          </span>
-          <a class="actionsElemLink" href="comments.html">
-            <i data-feather="message-circle" class="messageCircle"></i>
-          </a>
-          <span class="actionsElem">
-            <i data-feather="send" class="actionBtn" id="sendIcon"></i>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid postComsAndLikesCnt">
-      <p class="font-weight-bold postLikes">Liked by <span id="userWlikedToo">TestName</span> and <span id="likeCount">797</span> others</p>
-      <p class="userPostCom">
-        <span class="font-weight-bold userName">UserNameTest </span>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-        <span class="collapse collapseSpan" id="collapseUserCom"> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </span>
-        <a class="btn moreBtnPostCom" role="button" data-toggle="collapse" href="#collapseUserCom" aria-controls="collapseUserCom"><span>...more</span></a>
-      </p>
-      <a class="btn viewAllComBtn" href="comments.html"><p>View all <span id="postComNum">6</span> comments</p></a>
-    </div>
-  </div>
-</div>
-
-
-<!-- MULTIPLE IMGS POST -->
-  <!-- <div class="container-fluid fullWidthCnt postsContForMultiple">
-    <div class="container fullWidthCnt onePost">
+  <!-- ONE IMAGE POST -->
+  <div class="container-fluid fullWidthCnt postsCont" id="postsCont">
+    <div class="container fullWidthCnt onePost" id="newItem">
 
       <div class="container-fluid d-flex justify-content-between align-items-center userInfoCnt">
         <div class="userInfo">
-          <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPic">
-          <span class="font-weight-bold userName">UserNameTest</span>
+          <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPicSml">
+          <span class="font-weight-bold userName" id="userNameTag">UserNameTest</span>
         </div>
           <i data-feather="more-horizontal"></i>
       </div>
 
-      <div class="container-fluid carousel slide  fullWidthCnt userPostContentCnt" data-ride="carousel" data-interval="false" id="slider">
-        <div class="carousel-inner postImgCont">
-          <div class="carousel-item active">
-            <img src="https://www.istockphoto.com/resources/images/IllustrationsLanding/Signature-825938466.jpg" alt="Test Img" class="img-fluid postImg">
-          </div>
-          <div class="carousel-item">
-            <img src="https://craftwork.design/wp-content/uploads/Cover-Craftwork-Small-3.png" alt="Test Img" class="img-fluid postImg">
-          </div>
-          <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMjU4fQ&w=1000&q=80" alt="Test Img" class="img-fluid postImg">
-          </div>
-          <div class="carousel-item">
-            <img src="/front/src/test2.jpg" alt="Test Img" class="img-fluid postImg">
-          </div>
+      <div class="container-fluid fullWidthCnt userPostContentCnt" id="userPost">
+        <div class="postImgCont">
+            <img src="https://www.istockphoto.com/resources/images/IllustrationsLanding/Signature-825938466.jpg" alt="Test Img" class="img-fluid postImage">
         </div>
 
         <div class="container-fluid postActionsCnt">
           <div class="actionsCnt">
             <span class="actionsElem">
-              <i class="actionBtn" data-feather="heart" id="heartBtnMultPos"></i>
+              <i class='actionBtn' data-feather="heart" id="heartBtn" ></i>
             </span>
             <a class="actionsElemLink" href="comments.html">
               <i data-feather="message-circle" class="messageCircle"></i>
             </a>
             <span class="actionsElem">
-              <i data-feather="send" class="actionBtn" id="sendIconMultPost"></i>
+              <i data-feather="send" class="actionBtn" id="sendIcon"></i>
             </span>
           </div>
-          <ul class="carousel-indicators">
-            <li data-target="#slider" data-slide-to="0" class="active"></li>
-            <li data-target="#slider" data-slide-to="1"></li>
-            <li data-target="#slider" data-slide-to="2"></li>
-            <li data-target="#slider" data-slide-to="3"></li>
-          </ul>
         </div>
       </div>
 
       <div class="container-fluid postComsAndLikesCnt">
         <p class="font-weight-bold postLikes">Liked by <span id="userWlikedToo">TestName</span> and <span id="likeCount">797</span> others</p>
-        <p class="userPostCom">
+
+        <!-- //remastered -->
+        <div class="userPostCom">
           <span class="font-weight-bold userName">UserNameTest </span>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-          <span class="collapse multi-collapse collapseSpan" id="collapseCom"> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </span>
-          <a class="btn moreBtnPostCom" role="button" data-toggle="collapse" href="#collapseCom" aria-controls="collapseCom"><span>...more</span></a>
-        </p>
+          <span class='userCommTxt' id="comment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
+        </div>
+
         <a class="btn viewAllComBtn" href="comments.html"><p>View all <span id="postComNum">6</span> comments</p></a>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <footer class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers">
     <a class="footerElem" href="feed.html">

@@ -5,13 +5,13 @@ const config = require('../config/config.js')
 
 const register = (req, res) => {
     const host = req.hostname;
-    const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
+    // const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
 
     let data = req.body
     let user = new User()
     user.username = data.username;
     user.password = data.password;
-    user.profilePicURL = filePath;
+    // user.profilePicURL = filePath;
     console.log('user',user);
     
     user.save()

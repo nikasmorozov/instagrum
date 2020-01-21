@@ -1,259 +1,165 @@
+// for icons
+feather.replace();
+
+//moreBtn hide
+let moreInfBtn = document.querySelectorAll('.moreBtnPostCom');
+
+for (var i = 0; i < moreInfBtn.length; i++) {
+  moreInfBtn[i].addEventListener('click', (event)=>{
+  let btnClass = event.target.style.display = 'none';
+  });
+}
+
+//checking
 const checkifLoggedIn = () => {
     let token = localStorage.getItem('x-auth');
-
+    // console.log(token)
     if (!token) {
         window.location.href = "../front/login.html";
     }
 };
-
 checkifLoggedIn();
 
 
-function createPost() {
-    let token = localStorage.getItem('x-auth');
-    let newPost = document.getElementById('newItem').value;
+const createElements = () =>{
 
-    let file = document.getElementById('attachedImage');
-    let data = new FormData()
+  let postsCont = document.getElementById('postsCont');
+  let token = localStorage.getItem('x-auth');
+  // let activeUserId = localStorage.getItem('activeUserId')
+  postsCont.innerHTML = '';
 
-    data.append('postPic', file.files[0])
-    data.append('username', 'newuser')
-    data.append('title', newPost)
-
-    console.log('data',data);
-
-    fetch("http://localhost:3000/api/v1/posts/createPost", {
-        method: "POST",
-        body: data,
-        headers: {
-            "x-auth": token
-        }
-    }).then((header)=> {
-        console.log(header);
-        if (!header.ok) {
-            throw Error(header)
-        }
+  fetch('http://localhost:3000/api/v1/posts/getAllPosts',{
+    method: 'GET',
+    headers: {
+        'x-auth': token,
+        'Content-Type': 'application/json'
+    }
     }).then((response) => {
-        createElements();
-    }).catch((e) => {
-        console.log(e);
-        alert('Adding failed');
-    })
-
-};
-
-const createElements = () => {
-    let list = document.getElementById('list');
-    let token = localStorage.getItem('x-auth');
-    let activeUserId = localStorage.getItem('activeUserId');
-
-    list.innerHTML = '';
-
-    fetch('http://localhost:3000/api/v1/posts/getAllPosts', {
-        method: 'GET',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        // console.log(response);
 
         if (!response.ok) {
             throw Error(response);
         }
         return response.json();
-
-    }).then((myJson) => {
-        console.log(myJson)
-
-        let ul = document.getElementById("list")
-        ul.innerHTML = ''
-        for (let i = 0; i < myJson.length; i++) {
-            let li = document.createElement('li')
-            li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
-            const postImage = document.createElement('img')
-            postImage.setAttribute('class', 'postImage')
-            postImage.setAttribute('src', myJson[i].imageURL)
-            const profileImage = document.createElement('img')
-            profileImage.setAttribute('class', 'profileImage')
-            profileImage.setAttribute('src', myJson[i].user[0].profilePicURL)
-            profileImage.style.width = '100px'
-            profileImage.style.height = '50px'
-            let p = document.createElement('p')
-            let username = document.createElement('a')
-            username.textContent = myJson[i].user[0].username;
-            let a = document.createElement('a')
-            a.textContent = myJson[i].likes.length
-            p.textContent = myJson[i].title
-            p.addEventListener('click', () => {
-                toggleLike(myJson[i]._id, li)
-            })
-            a.addEventListener('click', () => {
-                showLikes(myJson[i]._id)
-            })
-            postImage.addEventListener('dblclick', () => {
-                toggleLike(myJson[i]._id, li)
-            });
-            li.appendChild(profileImage)
-            li.appendChild(username)
-            li.appendChild(p)
-            li.appendChild(postImage)
-            li.appendChild(a)
-            //add comment block
-            let commentField = document.createElement('input')
-            commentField.type = "text"
-            commentField.placeholder = "Comment"
-            li.appendChild(commentField)
-            let span2 = document.createElement('button')
-            span2.classList.add('badge', 'badge-primary', 'badge-pill')
-            span2.innerHTML = '<ion-icon name="add"></ion-icon>'
-            span2.addEventListener('click', () => {
-                addComment(myJson[i]._id, li)
-            })
-            li.appendChild(span2)
-            //comment block
-            let span = document.createElement('button')
-            span.classList.add('badge', 'badge-danger', 'badge-pill')
-            span.innerHTML = '<ion-icon name="close"></ion-icon>'
-            span.addEventListener('click', () => {
-                deletePost(myJson[i]._id, li)
-            })
-            li.appendChild(span)
-            ul.appendChild(li)
-        }
-    }).catch((e) => {
-        console.log(e);
-    })
-};
-
-createElements();
-
-
-const toggleLike = (id, li) => {
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-
-        li.classList.toggle('list-group-item-success');
-
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
-    }).then((myJson) => {
-        createElements();
-
-    }).catch((e) => {
-        console.log(e);
-        alert('toggle failed');
-    });
-};
-
-const showLikes = (id) => {
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/posts/getLikesUsers/${id}`, {
-        method: 'GET',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
-    }).then((myJson) => {
-        for (let i = 0; i < myJson.length; i++) {
-            console.log(myJson[i].username)
-        };
-    }).catch((e) => {
-        console.log(e);
-    })
-};
-
-const deletePost = (id, li) => {
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        li.remove();
-
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
     }).then((myJson) => {
 
-    }).catch((e) => {
-        console.log(e);
-        alert('toggle failed');
-    });
-};
+      let postsCont = document.getElementById('postsCont');
+      postsCont.innerHTML = '';
 
+      for (let i = 0; i < myJson.length; i++){
+        //konteineriai
+        let onePost = document.createElement('div')
+        onePost.classList.add('container', 'fullWidthCnt', 'onePost');
 
-const logout = () => {
-    let token = localStorage.getItem('x-auth');
+        let userInfoCnt = document.createElement('div')
+        userInfoCnt.classList.add('container-fluid', 'd-flex', 'justify-content-between', 'align-items-center', 'userInfoCnt')
 
-    localStorage.removeItem('x-auth');
+        //cnt userInfo
+        let userInfo = document.createElement('div')
+        const profileImg = document.createElement('img')
+        profileImg.classList.add('rounded-circle', 'img-fluid', 'userProfPicSml')
+        profileImg.setAttribute('src', myJson[i].user[0].profilePicURL)
+        let userName = document.createElement('span')
+        userName.classList.add('font-weight-bold', 'userName')
+        userName.setAttribute("id", "userNameTag");
+        userName.textContent = myJson[i].user[0].username;
+        let moreIcn = document.createElement('i')
+        moreIcn.setAttribute("data-feather", "more-horizontal");
 
-    fetch(`http://localhost:3000/api/v1//user/logout`, {
-        method: 'GET',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((header) => {
-        console.log(header);
+        //cnt userPost
+        let userPostContentCnt = document.createElement('div')
+        userPostContentCnt.classList.add('container-fluid', 'fullWidthCnt', 'userPostContentCnt')
+        userPostContentCnt.setAttribute("id", "userPost");
 
-        if (!header.ok) {
-            throw Error(header);
-        };
+        const postImg = document.createElement('img')
+        postImg.classList.add('img-fluid', 'postImage')
+        postImg.setAttribute('src', myJson[i].imageURL)
 
+        let postActionsCnt = document.createElement('div')
+        postActionsCnt.classList.add('container-fluid', 'postActionsCnt')
+
+        let actionsCnt = document.createElement('div')
+        actionsCnt.classList.add('actionsCnt')
+
+        let actionsElem = document.createElement('span')
+        actionsElem.classList.add('actionsElem')
+        actionsElem.addEventListener('click', () => {
+            btn = document.getElementById('heartBtn');
+            btn.classList.toggle('fillBtn');
+        })
+        let likeBtn = document.createElement('i')
+        likeBtn.setAttribute("data-feather", "heart");
+        likeBtn.setAttribute("id", "heartBtn");
+        likeBtn.classList.add('actionBtn')
+
+        let actionsElemLink = document.createElement('a')
+        actionsElemLink.classList.add('actionsElemLink')
+        actionsElemLink.addEventListener('click', () => {
+            window.location.href = "../front/comments.html";
+        })
+        let chatIcn = document.createElement('i')
+        chatIcn.setAttribute("data-feather", "message-circle");
+        chatIcn.classList.add('messageCircle')
+
+        let actionsElemTwo = document.createElement('span')
+        actionsElemTwo.classList.add('actionsElem')
+        let sendBtn = document.createElement('i')
+        sendBtn.setAttribute("data-feather", "send");
+        sendBtn.setAttribute("id", "sendIcon");
+        sendBtn.classList.add('actionBtn')
+
+        // cnt postComsAndLikesCnt
+        let postComsAndLikesCnt = document.createElement('div')
+        postComsAndLikesCnt.classList.add('container-fluid', 'postComsAndLikesCnt')
+
+        let userPostCom = document.createElement('div')
+        userPostCom.classList.add('userPostCom')
+
+        // let userNameComment = document.createElement('p')
+        // userNameComment.classList.add('font-weight-bold', 'postLikes')
+
+        let userNameComment = document.createElement('span')
+        userNameComment.classList.add('font-weight-bold', 'userName')
+        userNameComment.setAttribute("id", "userNameTag")
+        userNameComment.textContent = myJson[i].user[0].username;
+        let comment = document.createElement('span')
+        comment.classList.add('userCommTxt')
+        comment.setAttribute("id", "comment");
+        comment.textContent = myJson[i].title
+
+        //main append
+        postsCont.appendChild(onePost)
+        onePost.appendChild(userInfoCnt)
+        //user info append
+        userInfoCnt.appendChild(userInfo)
+        userInfo.appendChild(profileImg)
+        userInfo.appendChild(userName)
+        userInfoCnt.appendChild(moreIcn)
+
+        //userPost append
+        onePost.appendChild(userPostContentCnt)
+        userPostContentCnt.appendChild(postImg)
+        userPostContentCnt.appendChild(postActionsCnt)
+        postActionsCnt.appendChild(actionsCnt)
+        //userPost icons
+        actionsCnt.appendChild(actionsElem)
+        actionsElem.appendChild(likeBtn)
+        actionsCnt.appendChild(actionsElemLink);
+        actionsElemLink.appendChild(chatIcn)
+        actionsCnt.appendChild(actionsElemTwo);
+        actionsElemTwo.appendChild(sendBtn)
+
+        //postComsAndLikesCnt append
+        onePost.appendChild(postComsAndLikesCnt)
+        postComsAndLikesCnt.appendChild(userPostCom)
+        userPostCom.appendChild(userNameComment)
+        userPostCom.appendChild(comment)
+
+        //ikonoms
+        feather.replace();
+      }
     }).catch((e) => {
         console.log(e);
     })
 
 }
-
-const addComment = (id, li) => {
-    let token = localStorage.getItem('x-auth');
-    let comment = li.querySelector("input").value
-    let body = {
-        comment: comment,
-        postId: id
-    }
-    li.querySelector("input").value = ""
-    fetch(`http://localhost:3000/api/v1/comments/addComment`, {
-        method: 'POST',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    }).then((response) => {
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-    }).then((myJson) => {
-        //createElements()
-    }).catch((e) => {
-        console.log(e);
-    });
-};
+  createElements();

@@ -1,21 +1,14 @@
+
 // for icons
 feather.replace();
 
-const checkifLoggedIn = () => {
-    let token = localStorage.getItem('x-auth');
-
-    if (!token) {
-        window.location.href = "../front/login.html";
-    }
-};
-checkifLoggedIn();
-
 function createPost() {
     let token = localStorage.getItem('x-auth');
-    let newPost = document.getElementById('newItem').value;
-    let file = document.getElementById('attachedImage');
+    let newPost = document.getElementById('title').value;
 
+    let file = document.getElementById('attachedImage');
     let data = new FormData()
+
     data.append('postPic', file.files[0])
     data.append('username', 'newuser')
     data.append('title', newPost)
@@ -36,4 +29,5 @@ function createPost() {
         console.log(e);
         alert('Adding failed');
     })
+
 };

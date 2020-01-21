@@ -24,7 +24,7 @@ function createPost() {
             throw Error(header)
         }
     }).then((response) => {
-        document.location.href='../front/feed.html',true
+        document.location.href='../front/index.html',true
     }).catch((e) => {
         console.log(e);
         alert('Adding failed');

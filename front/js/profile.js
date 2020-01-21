@@ -3,9 +3,7 @@ feather.replace();
 
 const logout = () => {
   let token = localStorage.getItem("x-auth");
-
   localStorage.removeItem("x-auth");
-
   fetch(`http://localhost:3000/api/v1//user/logout`, {
     method: "GET",
     headers: {
@@ -35,8 +33,6 @@ fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
         'Content-Type': 'application/json'
     }
 }).then((response) => {
-    // console.log(response);
-
     if (!response.ok) {
         throw Error(response);
     }
@@ -44,5 +40,4 @@ fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
 
 }).then((userFound) => {
 userNameTag.textContent = userFound.username
-
 })

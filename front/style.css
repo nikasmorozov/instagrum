@@ -153,12 +153,11 @@ label{
   margin-right: 5px;
 }
 
-/* NEZINAU KAIP SU NUOTRAUKU DARYTI DYDZIAIS */
 .postImage{
-  /* object-fit: fill; */
-  /* height: auto; */
-  /* object-fit: contain; */
-  height: 400px;
+  /* object-fit: fill;
+  height: auto; */
+  object-fit: contain;
+  /* height: 400px; */
   width: 100%;
 }
 

@@ -22,7 +22,6 @@ checkifLoggedIn();
 
 
 const createElements = () =>{
-
   let postsCont = document.getElementById('postsCont');
   let token = localStorage.getItem('x-auth');
   // let activeUserId = localStorage.getItem('activeUserId')
@@ -80,15 +79,21 @@ const createElements = () =>{
         let actionsCnt = document.createElement('div')
         actionsCnt.classList.add('actionsCnt')
 
+        //reikia sutvarkyt
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
-        actionsElem.addEventListener('click', () => {
-            btn = document.getElementById('heartBtn');
-            btn.classList.toggle('fillBtn');
+        actionsElem.addEventListener('click', (e) => {
+          let btn = document.querySelectorAll('.heart');
+          for (var i = 0; i < btn.length; i++) {
+            if(btn[i] == event.target){
+              btn[i].classList.toggle('fillBtn')
+            }
+          }
         })
         let likeBtn = document.createElement('i')
         likeBtn.setAttribute("data-feather", "heart");
         likeBtn.setAttribute("id", "heartBtn");
+        likeBtn.classList.add('heart')
         likeBtn.classList.add('actionBtn')
 
         let actionsElemLink = document.createElement('a')
@@ -111,11 +116,16 @@ const createElements = () =>{
         let postComsAndLikesCnt = document.createElement('div')
         postComsAndLikesCnt.classList.add('container-fluid', 'postComsAndLikesCnt')
 
+        //likes txt
+        let postLikes = document.createElement('p')
+        postLikes.classList.add('font-weight-bold', 'postLikes')
+        postLikes.textContent = "50 likes"
+        postLikes.addEventListener('click', () => {
+            // window.location.href = "../front/postLikes.html";
+        })
+
         let userPostCom = document.createElement('div')
         userPostCom.classList.add('userPostCom')
-
-        // let userNameComment = document.createElement('p')
-        // userNameComment.classList.add('font-weight-bold', 'postLikes')
 
         let userNameComment = document.createElement('span')
         userNameComment.classList.add('font-weight-bold', 'userName')
@@ -125,6 +135,18 @@ const createElements = () =>{
         comment.classList.add('userCommTxt')
         comment.setAttribute("id", "comment");
         comment.textContent = myJson[i].title
+
+        //view more comments btn
+        let viewAllComBtn = document.createElement('a')
+        viewAllComBtn.classList.add('btn', 'viewAllComBtn')
+        viewAllComBtn.addEventListener('click', () => {
+            window.location.href = "../front/comments.html";
+        })
+        let viewAllComTxt = document.createElement('p')
+        viewAllComTxt.textContent = "View all"
+        let postComNum = document.createElement('span')
+        //KOMENTARU SKAICIUS
+        postComNum.textContent = " 13 comments";
 
         //main append
         postsCont.appendChild(onePost)
@@ -150,9 +172,13 @@ const createElements = () =>{
 
         //postComsAndLikesCnt append
         onePost.appendChild(postComsAndLikesCnt)
+        postComsAndLikesCnt.appendChild(postLikes)
         postComsAndLikesCnt.appendChild(userPostCom)
         userPostCom.appendChild(userNameComment)
         userPostCom.appendChild(comment)
+        postComsAndLikesCnt.appendChild(viewAllComBtn)
+        viewAllComBtn.appendChild(viewAllComTxt)
+        viewAllComTxt.appendChild(postComNum)
 
         //ikonoms
         feather.replace();

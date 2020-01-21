@@ -73,9 +73,14 @@ const createElements = () => {
             let li = document.createElement('li')
             li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
             if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
-            const img = document.createElement('img')
-            img.setAttribute('class', 'postImage')
-            img.setAttribute('src',myJson[i].imageURL)
+            const postImage = document.createElement('img')
+            postImage.setAttribute('class', 'postImage')
+            postImage.setAttribute('src', myJson[i].imageURL)
+            const profileImage = document.createElement('img')
+            profileImage.setAttribute('class', 'profileImage')
+            profileImage.setAttribute('src', myJson[i].user[0].profilePicURL)
+            profileImage.style.width = '100px'
+            profileImage.style.height = '50px'
             let p = document.createElement('p')
             let username = document.createElement('a')
             username.textContent = myJson[i].user[0].username;
@@ -88,12 +93,13 @@ const createElements = () => {
             a.addEventListener('click', () => {
                 showLikes(myJson[i]._id)
             })
-            img.addEventListener('dblclick', () => {
+            postImage.addEventListener('dblclick', () => {
                 toggleLike(myJson[i]._id, li)
             });
+            li.appendChild(profileImage)
             li.appendChild(username)
             li.appendChild(p)
-            li.appendChild(img)
+            li.appendChild(postImage)
             li.appendChild(a)
             //add comment block
             let commentField = document.createElement('input')

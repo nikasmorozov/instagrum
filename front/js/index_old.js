@@ -130,7 +130,7 @@ const createElements = () => {
 createElements();
 
 
-const toggleLike = (id, li) => {
+const toggleLike = (id) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {

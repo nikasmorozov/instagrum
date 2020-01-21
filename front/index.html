@@ -4,49 +4,93 @@
   <title>Instagrum</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Lato:700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 
-<body>
-  <div class="logout">
-    <a href=""><button onclick="logout()">  <ion-icon name="walk"></ion-icon></button></a>
-    <!-- <a href=""><button onclick="logout()">  <ion-icon name="walk"></ion-icon></button></a> -->
+<body class="instagrumMainCont">
 
-  </div>
-  <div class="container">
-    <div class="row justify-content-md-center">
-      <div class="col col-md-8 createItemContainer">
-        <h3>Create new post</h3><br />
-        <input placeholder="Create post" id="newItem" />
+  <nav class="navbar fixed-top bg-light border-bottom d-flex justify-content-between">
+    <a class="navElem" href="#">
+      <i data-feather="camera"></i>
+    </a>
+    <a class="navElem" href="index.html">
+      <img src="/front/src/instagrum.png" class="navLogo img-fluid">
+    </a>
+    <a class="navElem" href="#">
+      <i data-feather="send" class='sendIcon'></i>
+    </a>
+  </nav>
 
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Choose your photo</label>
-          <input type="file" name="postPic" class="form-control" id="attachedImage" placeholder="Post image">
+  <!-- ONE IMAGE POST -->
+  <div class="container-fluid fullWidthCnt postsCont" id="postsCont">
+    <div class="container fullWidthCnt onePost" id="newItem">
 
-          <button type="button" class="btn btn-outline-primary" onclick="createPost()">Create</button>
+      <div class="container-fluid d-flex justify-content-between align-items-center userInfoCnt">
+        <div class="userInfo">
+          <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPicSml">
+          <span class="font-weight-bold userName" id="userNameTag">UserNameTest</span>
         </div>
-      </div>
-      <div class="col col-md-8 createItemContainer">
-        <h3>Posts</h3><br />
-        <div class="card" style="width:100%">
-          <ul class="list-group" id="list">
-
-          </ul>
-        </div>
+          <i data-feather="more-horizontal"></i>
       </div>
 
+      <div class="container-fluid fullWidthCnt userPostContentCnt" id="userPost">
+        <div class="postImgCont">
+            <!-- <img src="https://www.istockphoto.com/resources/images/IllustrationsLanding/Signature-825938466.jpg" alt="Test Img" class="img-fluid postImage"> -->
+        </div>
+
+        <div class="container-fluid postActionsCnt">
+          <div class="actionsCnt">
+            <span class="actionsElem">
+              <i class='actionBtn' data-feather="heart" id="heartBtn" ></i>
+            </span>
+            <a class="actionsElemLink" href="comments.html">
+              <i data-feather="message-circle" class="messageCircle"></i>
+            </a>
+            <span class="actionsElem">
+              <i data-feather="send" class="actionBtn" id="sendIcon"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid postComsAndLikesCnt">
+        <p class="font-weight-bold postLikes">Liked by <span id="userWlikedToo">TestName</span> and <span id="likeCount">797</span> others</p>
+
+        <!-- //remastered -->
+        <div class="userPostCom">
+          <span class="font-weight-bold userName">UserNameTest </span>
+          <span class='userCommTxt' id="comment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
+        </div>
+
+        <a class="btn viewAllComBtn" href="comments.html"><p>View all <span id="postComNum">6</span> comments</p></a>
+      </div>
     </div>
-
   </div>
 
-</body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/ionicons@4.5.9-1/dist/ionicons.js"></script>
-<script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
-<script src="./js/index.js"></script>
+  <footer class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers">
+    <a class="footerElem" href="index.html">
+      <i data-feather="home" class="filledIcon"></i>
+    </a>
+    <a class="footerElem" href="#">
+      <i data-feather="search"></i>
+    </a>
+    <a class="footerElem" id="newPostBtn" href="newpost.html">
+      <i data-feather="plus-square"></i>
+    </a>
+    <a class="footerElem" href="#">
+      <i data-feather="heart"></i>
+    </a>
+    <a class="footerElem" href="profile.html">
+      <i data-feather="user"></i>
+    </a>
+  </footer>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
+  <script src="./js/feed.js"></script>
+</body>
 </html>

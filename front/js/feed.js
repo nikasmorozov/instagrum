@@ -1,33 +1,38 @@
 // for icons
 feather.replace();
 
-//action Btns
-let actionsElem = document.querySelectorAll('.actionsElem');
 
-for (let i=0; i<actionsElem.length; i++){
-  actionsElem[i].addEventListener('click', function(event){
+// action Btns
+// let actionsElem = [...document.querySelectorAll('.actionsElem')];
+// console.log(actionsElem)
 
-    let btnId = event.target.id;
 
-    switch (btnId) {
-      case 'heartBtn':
-      btn = document.getElementById('heartBtn');
-      btn.classList.toggle('fillBtn');
-      // console.log(btn);
-      // document.querySelector('#heartBtn').style.fill = '#fd1d1d';
-        break;
-      case 'sendIcon':
-      console.log("send");
-        break;
-      case 'heartBtnMultPos':
-      document.querySelector('#heartBtnMultPos').style.fill = '#fd1d1d';
-        break;
-      case 'sendIconMultPost':
-      console.log("send");
-        break;
-    }
-  });
-}
+// for (let i=0; i<actionsElem.length; i++){
+//   actionsElem[i].addEventListener('click', function(event){
+
+//     let btnId = event.target.id;
+//     console.log(btnId)
+
+
+//     switch (btnId) {
+//       case 'heartBtn':
+//       btn = document.getElementById('heartBtn');
+//       btn.classList.toggle('fillBtn');
+//       console.log(btn);
+//       document.querySelector('#heartBtn').style.fill = '#fd1d1d';
+//         break;
+//       case 'sendIcon':
+//       console.log("send");
+//         break;
+//       case 'heartBtnMultPos':
+//       document.querySelector('#heartBtnMultPos').style.fill = '#fd1d1d';
+//         break;
+//       case 'sendIconMultPost':
+//       console.log("send");
+//         break;
+//     }
+//   });
+// };
 
 //moreBtn hide
 let moreInfBtn = document.querySelectorAll('.moreBtnPostCom');
@@ -122,7 +127,7 @@ const createElements = () =>{
         let userName = document.createElement('span')
         userName.classList.add('font-weight-bold', 'userName')
         userName.setAttribute("id", "userNameTag");
-        userName.textContent = myJson[i].user
+        userName.textContent = myJson[i].user[0].username
         let moreIcn = document.createElement('i')
         moreIcn.setAttribute("data-feather", "more-horizontal");
 
@@ -148,6 +153,11 @@ const createElements = () =>{
         likeBtn.setAttribute("id", "heartBtn");
         likeBtn.classList.add('actionBtn')
 
+        likeBtn.addEventListener('click', () => {
+          toggleLike(myJson[i]._id)
+          console.log('like')
+      });
+        
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
@@ -177,8 +187,8 @@ const createElements = () =>{
         let userNameComment = document.createElement('span')
         userNameComment.classList.add('font-weight-bold', 'userName')
         userNameComment.setAttribute("id", "userNameTag")
-        //NEGAUNU NAME atributo?
-        userNameComment.textContent = myJson[i].user
+
+        userNameComment.textContent = myJson[i].user[0].username
         let comment = document.createElement('span')
         comment.classList.add('userCommTxt')
         comment.setAttribute("id", "comment");
@@ -221,3 +231,58 @@ const createElements = () =>{
 
 }
   createElements();
+
+
+const toggleLike = (id, li) => {
+  let token = localStorage.getItem('x-auth');
+
+  console.log('like')
+
+  fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
+      method: 'PATCH',
+      headers: {
+          'x-auth': token,
+          'Content-Type': 'application/json'
+      }
+  }).then((response) => {
+
+      li.classList.toggle('list-group-item-success');
+
+      if (!response.ok) {
+          throw Error(response);
+      }
+      return response.json();
+
+  }).then((myJson) => {
+      createElements();
+
+
+  }).catch((e) => {
+      console.log(e);
+      alert('toggle failed');
+  });
+};
+
+const showLikes = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/posts/getLikesUsers/${id}`, {
+      method: 'GET',
+      headers: {
+          'x-auth': token,
+          'Content-Type': 'application/json'
+      }
+  }).then((response) => {
+      if (!response.ok) {
+          throw Error(response);
+      }
+      return response.json();
+
+  }).then((myJson) => {
+      for (let i = 0; i < myJson.length; i++) {
+          console.log(myJson[i].username)
+      };
+  }).catch((e) => {
+      console.log(e);
+  })
+};

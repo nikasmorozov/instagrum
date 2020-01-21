@@ -212,7 +212,6 @@ const createElements = () =>{
         userPostCom.appendChild(userNameComment)
         userPostCom.appendChild(comment)
 
-
         //ikonoms
         feather.replace();
       }

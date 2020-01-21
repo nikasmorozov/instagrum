@@ -88,7 +88,7 @@ label{
   margin: auto 5px;
 }
 
-/* feed.html */
+/* index.html */
 .instagrumMainCont{
   padding-top: 60px;
   height: auto;
@@ -304,7 +304,7 @@ textarea:focus, input:focus{
   margin-bottom: 2px;
 }
 
-.editProfBtn{
+.editProfBtn, .logOutBtn{
   border: 1.5px solid #ededed;
   color: #000;
   font-size: 15px;

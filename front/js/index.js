@@ -8,7 +8,6 @@ const checkifLoggedIn = () => {
 
 checkifLoggedIn();
 
-
 function createPost() {
     let token = localStorage.getItem('x-auth');
     let newPost = document.getElementById('newItem').value;
@@ -257,3 +256,6 @@ const addComment = (id, li) => {
         console.log(e);
     });
 };
+
+module.exports = checkifLoggedIn
+

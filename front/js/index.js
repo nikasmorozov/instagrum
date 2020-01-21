@@ -16,7 +16,7 @@ function createPost() {
     let file = document.getElementById('attachedImage');
     let data = new FormData()
     
-    data.append('avatar', file.files[0])
+    data.append('postPic', file.files[0])
     data.append('username', 'newuser')
     data.append('title', newPost)
 

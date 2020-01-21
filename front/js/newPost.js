@@ -1,6 +1,6 @@
-const checkifLoggedIn = require('./index.js')
+// const checkifLoggedIn = require('./index.js')
 
-checkifLoggedIn()
+// checkifLoggedIn()
 
 // for icons
 feather.replace();

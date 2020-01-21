@@ -28,7 +28,7 @@ const logout = () => {
 const userNameTag = document.getElementById('userNameTag')
 let token = localStorage.getItem('x-auth');
     let activeUserId = localStorage.getItem('activeUserId');
-fetch('http://localhost:3000/api/v1/getSingleUser/:id', {
+fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
     method: 'GET',
     headers: {
         'x-auth': token,
@@ -43,5 +43,6 @@ fetch('http://localhost:3000/api/v1/getSingleUser/:id', {
     return response.json();
 
 }).then((userFound) => {
+userNameTag.textContent = userFound.username
 
-}
+})

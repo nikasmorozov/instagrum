@@ -127,7 +127,7 @@ const createElements = () =>{
         let userName = document.createElement('span')
         userName.classList.add('font-weight-bold', 'userName')
         userName.setAttribute("id", "userNameTag");
-        // userName.textContent = myJson[i].user[0].username
+        userName.textContent = myJson[i].user[0].username
         let moreIcn = document.createElement('i')
         moreIcn.setAttribute("data-feather", "more-horizontal");
 

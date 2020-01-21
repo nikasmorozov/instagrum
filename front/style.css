@@ -50,6 +50,7 @@ input{
   border-radius: 4px;
   border: 1px solid #ededed;
   padding: 5px;
+  background-color: #fff;
 }
 
 input::placeholder{
@@ -128,12 +129,18 @@ label{
 
 .postsCont{
   height: auto;
+  width: 100%;
+}
+
+.fillBtn{
+  fill: #fd1d1d;
 }
 
 .onePost{
   height: auto;
-  margin: 5px 0px;
+  margin: 20px 0px;
 }
+
 
 .userInfoCnt{
   padding: 0px 10px;
@@ -226,6 +233,7 @@ label{
 .userCommTxt{
   margin-left: 6px;
   font-weight: 100;
+  word-wrap: break-word;
 }
 
 /* newPost.html */

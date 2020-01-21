@@ -1,7 +1,3 @@
-// const goToRegister = () => {
-//     window.location.href = "../front/register.html";
-// };
-
 const login = () => {
     let username = document.getElementById('loginEmail').value;
     let password = document.getElementById('loginPassword').value;
@@ -29,9 +25,7 @@ const login = () => {
         return header.json();
 
     }).then((response) => {
-            alert('Login successful');
             window.location.href = '../front/index.html';
-
             activeUserId = response._id;
             localStorage.setItem('activeUserId', activeUserId);
 

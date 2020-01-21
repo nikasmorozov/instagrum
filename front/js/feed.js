@@ -1,34 +1,6 @@
 // for icons
 feather.replace();
 
-//action Btns
-let actionsElem = document.querySelectorAll('.actionsElem');
-
-for (let i=0; i<actionsElem.length; i++){
-  actionsElem[i].addEventListener('click', function(event){
-
-    let btnId = event.target.id;
-
-    switch (btnId) {
-      case 'heartBtn':
-      btn = document.getElementById('heartBtn');
-      btn.classList.toggle('fillBtn');
-      // console.log(btn);
-      // document.querySelector('#heartBtn').style.fill = '#fd1d1d';
-        break;
-      case 'sendIcon':
-      console.log("send");
-        break;
-      case 'heartBtnMultPos':
-      document.querySelector('#heartBtnMultPos').style.fill = '#fd1d1d';
-        break;
-      case 'sendIconMultPost':
-      console.log("send");
-        break;
-    }
-  });
-}
-
 //moreBtn hide
 let moreInfBtn = document.querySelectorAll('.moreBtnPostCom');
 
@@ -48,45 +20,12 @@ const checkifLoggedIn = () => {
 };
 checkifLoggedIn();
 
-//TEST bandau priskirti userName is dattos emaila
-// let nameTag = document.getElementById('userNameTag');
-// let token = localStorage.getItem('x-auth');
-//
-// nameTag.innerHTML = '';
-//
-// fetch('http://localhost:3000/api/v1/user/getAllUsers',{
-//   method: 'GET',
-//   headers: {
-//       'x-auth': token,
-//       'Content-Type': 'application/json'
-//   }
-//   }).then((response) => {
-//
-//       if (!response.ok) {
-//           throw Error(response);
-//       }
-//       return response.json();
-//   }).then((myJson) => {
-//     for (let i = 0; i < myJson.length; i++){
-//       //userName
-//       let name = document.createElement('p')
-//       nameTag.textContent = myJson[i].username
-//     }
-//   }).catch((e) => {
-//       console.log(e);
-//   })
-
-
-
-
-//su img ?
 
 const createElements = () =>{
 
   let postsCont = document.getElementById('postsCont');
   let token = localStorage.getItem('x-auth');
   // let activeUserId = localStorage.getItem('activeUserId')
-
   postsCont.innerHTML = '';
 
   fetch('http://localhost:3000/api/v1/posts/getAllPosts',{
@@ -118,11 +57,12 @@ const createElements = () =>{
         let userInfo = document.createElement('div')
         const profileImg = document.createElement('img')
         profileImg.classList.add('rounded-circle', 'img-fluid', 'userProfPicSml')
-        profileImg.setAttribute('src',"https://www.w3schools.com/w3css/img_avatar3.png")
+        // profileImg.setAttribute('src', myJson[i].user.profilePicURL)
         let userName = document.createElement('span')
         userName.classList.add('font-weight-bold', 'userName')
         userName.setAttribute("id", "userNameTag");
-        userName.textContent = myJson[i].user
+        console.log(myJson[i]);
+        // userName.textContent = myJson[i].user
         let moreIcn = document.createElement('i')
         moreIcn.setAttribute("data-feather", "more-horizontal");
 
@@ -143,6 +83,10 @@ const createElements = () =>{
 
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
+        actionsElem.addEventListener('click', () => {
+            btn = document.getElementById('heartBtn');
+            btn.classList.toggle('fillBtn');
+        })
         let likeBtn = document.createElement('i')
         likeBtn.setAttribute("data-feather", "heart");
         likeBtn.setAttribute("id", "heartBtn");

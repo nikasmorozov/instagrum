@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
+const User = require('../user/userModel.js');
+
+
 
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
+    user: [{ type: mongoose.Schema.Types.ObjectId, ref: User }],
     likes: [{
         type: String
     }],
-    comments: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Comment' 
-    }],
+    comment: {
+        commenterName: {
+            type: String
+        },
+        comment: {
+            type: String
+        }
+    },
     date: { 
         type: Date, 
         default: Date.now 

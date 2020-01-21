@@ -47,7 +47,6 @@ const createElements = () => {
     let list = document.getElementById('list');
     let token = localStorage.getItem('x-auth');
     let activeUserId = localStorage.getItem('activeUserId');
-    console.log(activeUserId);
 
     list.innerHTML = '';
 
@@ -58,7 +57,7 @@ const createElements = () => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        console.log(response);
+        // console.log(response);
 
         if (!response.ok) {
             throw Error(response);
@@ -66,6 +65,7 @@ const createElements = () => {
         return response.json();
 
     }).then((myJson) => {
+        console.log(myJson)
         
         let ul = document.getElementById("list")
         ul.innerHTML = ''
@@ -77,12 +77,37 @@ const createElements = () => {
             img.setAttribute('class', 'postImage')
             img.setAttribute('src',myJson[i].imageURL)
             let p = document.createElement('p')
-            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
+            let username = document.createElement('a')
+            username.textContent = myJson[i].user[0].username;
+            let a = document.createElement('a')
+            a.textContent = myJson[i].likes.length
+            p.textContent = myJson[i].title
             p.addEventListener('click', () => {
                 toggleLike(myJson[i]._id, li)
             })
+            a.addEventListener('click', () => {
+                showLikes(myJson[i]._id)
+            })
+            img.addEventListener('dblclick', () => {
+                toggleLike(myJson[i]._id, li)
+            });
+            li.appendChild(username)
             li.appendChild(p)
             li.appendChild(img)
+            li.appendChild(a)
+            //add comment block
+            let commentField = document.createElement('input')
+            commentField.type = "text"
+            commentField.placeholder = "Comment"   
+            li.appendChild(commentField)
+            let span2 = document.createElement('button')
+            span2.classList.add('badge', 'badge-primary', 'badge-pill')
+            span2.innerHTML = '<ion-icon name="add"></ion-icon>'
+            span2.addEventListener('click', () => {
+                addComment(myJson[i]._id, li)               
+            })
+            li.appendChild(span2)
+            //comment block
             let span = document.createElement('button')
             span.classList.add('badge', 'badge-danger', 'badge-pill')
             span.innerHTML = '<ion-icon name="close"></ion-icon>'
@@ -126,6 +151,30 @@ const toggleLike = (id, li) => {
         console.log(e);
         alert('toggle failed');
     });
+};
+
+const showLikes = (id) => {
+    let token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:3000/api/v1/posts/getLikesUsers/${id}`, {
+        method: 'GET',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+
+    }).then((myJson) => {
+        for (let i = 0; i < myJson.length; i++) {
+            console.log(myJson[i].username)
+        };
+    }).catch((e) => {
+        console.log(e);
+    })
 };
 
 const deletePost = (id, li) => {
@@ -181,3 +230,30 @@ const logout = () => {
     })
 
 }
+
+const addComment = (id, li) => {
+    let token = localStorage.getItem('x-auth');
+    let comment = li.querySelector("input").value
+    let body = {
+        comment: comment,
+        postId: id
+    }
+    li.querySelector("input").value = ""
+    fetch(`http://localhost:3000/api/v1/comments/addComment`, {
+        method: 'POST',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then((response) => {
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+    }).then((myJson) => {
+        //createElements()
+    }).catch((e) => {
+        console.log(e);
+    });
+};

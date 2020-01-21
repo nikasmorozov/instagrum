@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const userController = require('../user/userController.js');
 const postController = require('../posts/postController.js');
+const commentController = require('../comments/commentController.js');
 const middleware = require('../middleware/middleware.js');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -40,10 +41,13 @@ router.get('/posts/getAllPosts', middleware.authenticate, postController.getAllP
 router.get('/posts/getPostById/:id', postController.getPostById);
 router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.toggleLike);
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
+router.get('/posts/getLikesUsers/:id', postController.getLikesUsers);
+
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
 //Comment routes
-// router.post('/comments/addComment', middleware.authenticate, commentController.addComment);
+router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
+router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId)
 
 
 

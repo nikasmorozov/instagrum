@@ -42,6 +42,10 @@ UserSchema.pre("save", function(next) {
   }
 });
 
+<<<<<<< HEAD
 let User = mongoose.model("Users", UserSchema);
+=======
+let User = mongoose.model('Users', UserSchema);;
+>>>>>>> 5a8fb50aca31b373145ba7f3b2877e06e7df849f
 
 module.exports = User;

@@ -1,6 +1,3 @@
-// const checkifLoggedIn = require('./index.js')
-
-// checkifLoggedIn()
 
 // for icons
 feather.replace();
@@ -16,8 +13,6 @@ function createPost() {
     data.append('username', 'newuser')
     data.append('title', newPost)
 
-    console.log('data',data);
-
     fetch("http://localhost:3000/api/v1/posts/createPost", {
         method: "POST",
         body: data,
@@ -25,14 +20,11 @@ function createPost() {
             "x-auth": token
         }
     }).then((header)=> {
-        console.log(header);
         if (!header.ok) {
             throw Error(header)
         }
     }).then((response) => {
-        // createElements();
-        window.location.href = '../front/index.html';
-
+        document.location.href='../front/index.html',true
     }).catch((e) => {
         console.log(e);
         alert('Adding failed');

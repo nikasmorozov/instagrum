@@ -59,24 +59,12 @@ const userProfPicBig = document.querySelector(".userProfPicBig");
 let token = localStorage.getItem("x-auth");
 let activeUserId = localStorage.getItem("activeUserId");
 fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
-<<<<<<< HEAD
-  method: "GET",
-  headers: {
-    "x-auth": token,
-    "Content-Type": "application/json"
-  }
-})
-  .then(response => {
-    // console.log(response);
-
-=======
     method: 'GET',
     headers: {
         'x-auth': token,
         'Content-Type': 'application/json'
     }
 }).then((response) => {
->>>>>>> 192c14ba20620cd24ebb8b3f655f7d7bb8bc5de3
     if (!response.ok) {
       throw Error(response);
     }
@@ -88,11 +76,3 @@ fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
           userProfPicBig.src = userFound.profilePicURL;
       }
   });
-
-<<<<<<< HEAD
-
-=======
-}).then((userFound) => {
-userNameTag.textContent = userFound.username
-})
->>>>>>> 192c14ba20620cd24ebb8b3f655f7d7bb8bc5de3

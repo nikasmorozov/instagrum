@@ -8,7 +8,7 @@ const registerUser = () => {
 
     if (password === rPassword) {
     let data = new FormData()
-        // data.append('profilePic', file.files[0])
+        data.append('profilePic', file.files[0])
         // data.append('username', 'newuser')
         data.append('username', email)
         data.append('password', password)

@@ -13,8 +13,8 @@ const logout = () => {
       "Content-Type": "application/json"
     }
   })
-      .then(header => {
-        window.location.href = '../front/login.html';
+    .then(header => {
+      window.location.href = "../front/login.html";
       console.log(header);
       if (!header.ok) {
         throw Error(header);
@@ -25,24 +25,61 @@ const logout = () => {
     });
 };
 
-const userNameTag = document.getElementById('userNameTag')
-let token = localStorage.getItem('x-auth');
-    let activeUserId = localStorage.getItem('activeUserId');
+const postsCounter = () => {
+    let token = localStorage.getItem("x-auth");
+    const noOfPostsSpan = document.querySelector(".statNum");
+
+    fetch('http://localhost:3000/api/v1//posts/getAllPosts', {
+      method: "GET",
+      headers: {
+        "x-auth": token,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        // console.log(response);
+    
+        if (!response.ok) {
+          throw Error(response);
+        }
+        return response.json();
+      })
+        .then(allPosts => {
+            const userPosts = allPosts.map(el => {
+                if (el.user[0]._id === activeUserId) {
+                      return el
+                  }
+            })
+            noOfPostsSpan.textContent = userPosts.length
+          })
+}
+
+postsCounter()
+
+const userNameTag = document.getElementById("userNameTag");
+const userProfPicBig = document.querySelector(".userProfPicBig");
+let token = localStorage.getItem("x-auth");
+let activeUserId = localStorage.getItem("activeUserId");
 fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
-    method: 'GET',
-    headers: {
-        'x-auth': token,
-        'Content-Type': 'application/json'
-    }
-}).then((response) => {
+  method: "GET",
+  headers: {
+    "x-auth": token,
+    "Content-Type": "application/json"
+  }
+})
+  .then(response => {
     // console.log(response);
 
     if (!response.ok) {
-        throw Error(response);
+      throw Error(response);
     }
     return response.json();
+  })
+  .then(userFound => {
+      userNameTag.textContent = userFound.username;
+      if (userFound.profilePicURL) {
+          userProfPicBig.src = userFound.profilePicURL;
+      }
+  });
 
-}).then((userFound) => {
-userNameTag.textContent = userFound.username
 
-})

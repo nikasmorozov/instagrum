@@ -3,22 +3,14 @@ const registerUser = () => {
     let password = document.getElementById('registerPassword').value;
     let rPassword = document.getElementById('registerRPassword').value;
     let file = document.getElementById('attachedProfileImage');
-    
-    
 
     if (password === rPassword) {
     let data = new FormData()
-        // data.append('profilePic', file.files[0])
+        data.append('profilePic', file.files[0])
         // data.append('username', 'newuser')
         data.append('username', email)
         data.append('password', password)
 
-        // let body = {
-        //     username: email,
-        //     password: password
-        // }
-        
-        
         fetch('http://localhost:3000/api/v1/user/register', {
             method: 'POST',
             // body: JSON.stringify(body),
@@ -35,8 +27,7 @@ const registerUser = () => {
             }
         }).then((response) => {
             if(response) {
-                // alert('Registration successful')
-                window.location.href = '../front/login.html';
+                document.location.href='../front/login.html',true
             }
         }).catch((e) => {
             console.log(e)

@@ -3,9 +3,7 @@ feather.replace();
 
 const logout = () => {
   let token = localStorage.getItem("x-auth");
-
   localStorage.removeItem("x-auth");
-
   fetch(`http://localhost:3000/api/v1//user/logout`, {
     method: "GET",
     headers: {
@@ -13,8 +11,8 @@ const logout = () => {
       "Content-Type": "application/json"
     }
   })
-      .then(header => {
-        window.location.href = '../front/login.html';
+    .then(header => {
+      window.location.href = "../front/login.html";
       console.log(header);
       if (!header.ok) {
         throw Error(header);
@@ -25,24 +23,74 @@ const logout = () => {
     });
 };
 
-const userNameTag = document.getElementById('userNameTag')
-let token = localStorage.getItem('x-auth');
-    let activeUserId = localStorage.getItem('activeUserId');
-fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
-    method: 'GET',
+const postsCounter = () => {
+  let token = localStorage.getItem("x-auth");
+  const noOfPostsSpan = document.querySelector(".statNum");
+  let activeUserId = localStorage.getItem("activeUserId");
+
+  fetch("http://localhost:3000/api/v1//posts/getAllPosts", {
+    method: "GET",
     headers: {
-        'x-auth': token,
-        'Content-Type': 'application/json'
+      "x-auth": token,
+      "Content-Type": "application/json"
     }
-}).then((response) => {
-    // console.log(response);
-
-    if (!response.ok) {
+  })
+    .then(response => {
+      if (!response.ok) {
         throw Error(response);
+      }
+      return response.json();
+    })
+    .then(allPosts => {
+      const userPosts = allPosts.filter(el => {
+        if (el.user[0]._id === activeUserId) {
+          return el;
+        }
+      });
+      noOfPostsSpan.textContent = userPosts.length;
+    });
+};
+
+postsCounter();
+
+const setProfileInfo = () => {
+  const userNameTag = document.getElementById("userNameTag");
+  const userProfPicBig = document.querySelector(".userProfPicBig");
+  let token = localStorage.getItem("x-auth");
+  let activeUserId = localStorage.getItem("activeUserId");
+
+  fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
     }
-    return response.json();
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(userFound => {
+      userNameTag.textContent = userFound.username;
+      if (userFound.profilePicURL) {
+        userProfPicBig.src = userFound.profilePicURL;
+      }
+    });
+};
 
-}).then((userFound) => {
-userNameTag.textContent = userFound.username
+setProfileInfo();
 
+const editProfileBtn = document.querySelector('.editProfBtn')
+
+editProfileBtn.addEventListener('click', (e) => {
+    if (editProfileBtn.textContent !== 'Save') {
+        
+        editProfileBtn.textContent = 'Save'
+        const usernameTag = document.getElementById('userNameTag')
+        const usernameInput = document.createElement('input')
+    } else {
+        editProfileBtn.textContent = 'Edit Profile'
+    }
 })

@@ -100,9 +100,9 @@ const createElements = () => {
       }
       return response.json();
     })
-      .then(myJson => {
-        console.log(myJson);
-        
+    .then(myJson => {
+      console.log(myJson);
+
       let postsCont = document.getElementById("postsCont");
       postsCont.innerHTML = "";
 
@@ -168,29 +168,32 @@ const createElements = () => {
         actionsCnt.classList.add("actionsCnt");
 
         //reikia sutvarkyt
-        
+
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
         actionsElem.addEventListener('click', (e) => {
           let btn = document.querySelectorAll('.heart');
           for (var i = 0; i < btn.length; i++) {
-            if(btn[i] == event.target){
+            if (btn[i] == event.target) {
               btn[i].classList.toggle('fillBtn')
+              toggleLike(myJson[i]._id)
             }
           }
-        })
+        });
         let likeBtn = document.createElement('i')
         likeBtn.setAttribute("data-feather", "heart");
         likeBtn.setAttribute("id", "heartBtn");
         likeBtn.classList.add('heart')
         likeBtn.classList.add('actionBtn')
-        if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
-
+        console.log(myJson[i].user[0]._id)
+        if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
+          likeBtn.classList.add('fillBtn')
+        };
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = "../front/comments.html";
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -215,7 +218,7 @@ const createElements = () => {
         postLikes.classList.add('font-weight-bold', 'postLikes')
         postLikes.textContent = myJson[i].likes.length + ' likes'
         postLikes.addEventListener('click', () => {
-            // window.location.href = "../front/postLikes.html";
+          // window.location.href = "../front/postLikes.html";
         })
 
         let userPostCom = document.createElement('div')
@@ -234,13 +237,13 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = "../front/comments.html";
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = myJson[i].likes.length +  ' comments';
+        postComNum.textContent = myJson[i].likes.length + ' comments';
 
         //main append
         postsCont.appendChild(onePost);
@@ -280,4 +283,28 @@ const createElements = () => {
     })
 
 }
-  createElements();
+createElements();
+
+const toggleLike = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+
+    if (!response.ok) {
+      throw Error(response);
+    }
+    return response.json();
+
+  }).then((myJson) => {
+
+  }).catch((e) => {
+    console.log(e);
+    alert('toggle failed');
+  });
+};

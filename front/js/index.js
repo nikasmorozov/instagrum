@@ -168,6 +168,7 @@ const createElements = () => {
         actionsCnt.classList.add("actionsCnt");
 
         //reikia sutvarkyt
+        
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
         actionsElem.addEventListener('click', (e) => {
@@ -183,6 +184,8 @@ const createElements = () => {
         likeBtn.setAttribute("id", "heartBtn");
         likeBtn.classList.add('heart')
         likeBtn.classList.add('actionBtn')
+        if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
+
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
@@ -210,7 +213,7 @@ const createElements = () => {
         //likes txt
         let postLikes = document.createElement('p')
         postLikes.classList.add('font-weight-bold', 'postLikes')
-        postLikes.textContent = "50 likes"
+        postLikes.textContent = myJson[i].likes.length + ' likes'
         postLikes.addEventListener('click', () => {
             // window.location.href = "../front/postLikes.html";
         })
@@ -237,7 +240,7 @@ const createElements = () => {
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " 13 comments";
+        postComNum.textContent = myJson[i].likes.length +  ' comments';
 
         //main append
         postsCont.appendChild(onePost);

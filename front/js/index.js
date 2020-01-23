@@ -87,7 +87,19 @@ const createElements = () => {
             span.addEventListener('click', () => {
                 deletePost(myJson[i]._id, li)
             })
+            let followButton = document.createElement("button")
+            followButton.setAttribute("id", "followButtonId")
+            followButton.classList.add('badge', 'badge-pill')
+            followButton.innerHTML = 'Follow'
+            followButton.addEventListener('click', () => {
+                followThisUser(myJson[i].user)
+            })
             li.appendChild(span)
+
+            let myPosts = myJson[i].user.includes(activeUserId)
+            if (!myPosts) {
+                li.appendChild(followButton)
+            };
             ul.appendChild(li)
         }
     }).catch((e) => {
@@ -157,7 +169,35 @@ const deletePost = (id, li) => {
     });
 };
 
+const followThisUser = (id) => {
+    let token = localStorage.getItem('x-auth');
+    console.log(id)
+    fetch(`http://localhost:3000/api/v1/user/follow-user/${id}`, {
 
+        method: 'POST',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+        console.log(response);
+        alert('follow successful');
+        // document.getElementById("followButtonId").innerHTML = "Unfollow"
+        // li.classList.toggle('list-group-item-success');
+        // if (!response.ok) {
+        //     throw Error(response);
+        // }
+        return response.json();
+    })
+    // .then((myJson) => {
+    //     createElements();
+    // })
+    .catch((e) => {
+        console.log(e);
+        alert('follow failed');
+    });
+};
 
 const logout = () => {
     let token = localStorage.getItem('x-auth');

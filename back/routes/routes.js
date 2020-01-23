@@ -28,11 +28,11 @@ var upload = multer({ storage: storage })
 //user routes
 router.post('/user/register', userController.register);
 router.post('/user/login', userController.login);
+router.post('/user/follow-user/:id', middleware.authenticate, userController.followUser);
 router.get('/user/getAllUsers', userController.getAll);
 router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.get('/user/deleteUserByName/:username', userController.deleteUserByName);
 router.get('/user/logout', middleware.authenticate, userController.logout);
-router.post('/user/:user_id/follow-user', middleware.authenticate, userController.followUser)
 
 
 
@@ -45,11 +45,7 @@ router.delete('/posts/deletePostById/:id', postController.deletePostById);
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
 //Comment routes
-<<<<<<< HEAD
 // router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
-=======
-// router.post('/comments/addComment', middleware.authenticate, commentController.addComment);
->>>>>>> ac7d9576b07146c79d955e0978d38a4fe1ab6687
 
 
 

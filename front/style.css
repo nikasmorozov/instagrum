@@ -372,3 +372,7 @@ ul, li {
 li p, li a{
   cursor: pointer;
 }
+
+.fillBtn{
+  fill: red;
+}

@@ -23,14 +23,44 @@
     </a>
   </nav>
 
-  <!-- ONE IMAGE POST -->
-  <div class="container-fluid fullWidthCnt postsCont" id="postsCont">
+  <div class="container-fluid profileCnt">
+    <div class="container d-flex justify-content-around align-items-center fullWidthCnt userProfileData">
+      <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPicBig">
+      <div class="d-flex flex-column profileUserInf">
+        <span class="profileUserName" id="userNameTag"></span>
+        <button type="button" name="button" class="btn btn-light btn-sm editProfBtn">Edit Profile</button>
+        <button type="button" onclick="logout()" name="button" class="btn btn-light btn-sm logOutBtn">Log Out</button>
+      </div>
+    </div>
+
+    <div class="container-fluid userStatisticCnt">
+      <hr>
+      <div class="container-fluid d-flex justify-content-around align-items-center userStatistic">
+        <div class="statsElemCnt">
+          <p class="statNum" id="">0</p>
+          <p class="statName">posts</p>
+        </div>
+        <div class="statsElemCnt">
+          <p class="statNum" id="">33</p>
+          <p class="statName">followers</p>
+        </div>
+        <div class="statsElemCnt">
+          <p class="statNum" id="">80</p>
+          <p class="statName">following</p>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div class="container-fluid userPicsCnt">
+
+    </div>
 
   </div>
 
   <footer class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers">
     <a class="footerElem" href="index.html">
-      <i data-feather="home" class="filledIcon"></i>
+      <i data-feather="home"></i>
     </a>
     <a class="footerElem" href="#">
       <i data-feather="search"></i>
@@ -42,14 +72,15 @@
       <i data-feather="heart"></i>
     </a>
     <a class="footerElem" href="profile.html">
-      <i data-feather="user"></i>
+      <i data-feather="user" class="filledIcon"></i>
     </a>
   </footer>
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
-  <script src="./js/index.js"></script>
+  <script src="./js/profile.js"></script>
 </body>
 </html>

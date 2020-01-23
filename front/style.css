@@ -1,33 +1,365 @@
-body {
-  background-color: #fafafa
+
+*, html {
+  padding: 0;
+  margin: 0;
 }
 
-input {
+body {
   width: 100%;
-  margin-bottom: 5px;
+  height: 100%;
+  background-color: #fff;
+  font-family: 'Lato', sans-serif;
+}
+
+.centrCont{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+/* registes.html login.html */
+.instagrumImg{
+  margin-bottom: 20px;
+  padding: 5px;
+  height: 50px;
+  width: 190px;
+}
+
+.signRegTxt{
+  color: #b0b0b0;
+  margin: 0px auto;
+  padding: 5px;
+  width: 75%;
+  font-size: 17px;
+}
+
+.card{
+  background-color: transparent;
+  border: none;
+  width: 80%;
+}
+
+.card-body{
+  padding: 3px;
+}
+
+input{
+  width: 100%;
+  margin-bottom: 10px;
   border-radius: 4px;
-  border: 1px solid #0a0a0a;
+  border: 1px solid #ededed;
+  padding: 5px;
+  background-color: #fff;
+}
+
+input::placeholder{
+  padding: 3px;
+  color: #b0b0b0;
+  font-size: 13px;
+}
+
+.goToLogOrRegTxt{
+  margin: 10px auto;
+  padding: 5px;
+  width: 75%;
+  font-size: 15px;
+  text-align: center;
+}
+
+a:link{
+  text-decoration: none;
+}
+
+.checkbox{
+  display: flex;
+  justify-content: flex-end;
+}
+
+label{
+  font-size:  13px;
+}
+
+.checkbx{
+  border: 1px solid blue;
+  width: auto;
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
+  margin: auto 5px;
+}
+
+/* index.html */
+.instagrumMainCont{
+  padding-top: 60px;
+  height: auto;
+  margin-bottom: 60px;
+}
+
+.navLogo{
+  width: auto;
+  height: 25px;
+}
+
+.filledIcon{
+  fill: rgba(0, 0, 0, 0.6)
+}
+
+.navElem{
+  color: #000;
+  height: auto;
   padding: 5px;
 }
 
-.formContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.sendIcon{
+  transform: rotate(10deg);
 }
 
-.formContainer .card {
-  width: 200px;
+.footerElem{
+  color: #000;
+  height: 51px;
+  padding: 15px;
+  margin: 0px 5px;
 }
 
+.fullWidthCnt{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.postsCont{
+  height: auto;
+  width: 100%;
+}
+
+.fillBtn{
+  fill: #fd1d1d;
+}
+
+.onePost{
+  height: auto;
+  margin: 20px 0px;
+}
+
+
+.userInfoCnt{
+  padding: 0px 10px;
+  margin-bottom: 10px;
+}
+
+.userProfPicSml{
+  width: 42px;
+  height: 42px;
+  margin-right: 5px;
+}
+
+.postImage{
+  /* object-fit: fill;
+  height: auto; */
+  object-fit: contain;
+  /* height: 400px; */
+  width: 100%;
+}
+
+.postActionsCnt{
+  height: auto;
+  padding: 5px;
+}
+
+.actionsCnt{
+  display: inline-block;
+}
+
+.actionsElem, .actionsElemLink{
+  margin: 0px 5px;
+  color: #000;
+}
+
+.messageCircle{
+  transform: scaleX(-1)
+}
+
+.carousel-indicators li{
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 100%;
+  background-color: lightslategray;
+}
+
+.carousel-indicators .active {
+    background-color: #4c5fd7;
+}
+
+.postComsAndLikesCnt{
+  font-size: 14px;
+}
+
+.postLikes{
+  margin: 0px;
+}
+
+.userPostCom{
+  margin: 0px;
+}
+
+.moreBtnPostCom{
+  display: inline-block;
+  font-size: 14px;
+  padding: 0;
+  border: none;
+}
+
+.moreBtnPostCom:focus{
+  box-shadow: none !important;
+}
+
+.moreBtnPostCom span{
+  color: #4c5fd7;
+}
+
+.viewAllComBtn{
+  font-size: 14px;
+  padding: 0;
+  margin-top: 3px;
+}
+
+.viewAllComBtn p{
+  color: #4c5fd7;
+  margin: 0;
+}
+
+.userCommTxt{
+  margin-left: 6px;
+  font-weight: 100;
+  word-wrap: break-word;
+}
+
+/* newPost.html */
+.addPostCnt{
+  margin: 15px 10px 0px 10px;
+  border: none;
+}
+
+.shareBtn{
+  color: #4c5fd7;
+}
+
+.shareBtn:focus{
+  box-shadow: none !important;
+  color: #4c5fd7;
+}
+
+.custom-file input{
+  border: none;
+  border-bottom: 1px solid #ededed;
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.newPostCaption{
+  margin: 15px 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ededed;
+  font-size: 14px;
+  resize: none;
+}
+
+textarea:focus, input:focus{
+  border: none !important;
+  outline: 0 none !important;
+  box-shadow: none !important;
+}
+
+/* comments.html */
+.createComCnt{
+  padding: 10px 5px;
+  height: auto;
+}
+
+.userComment{
+  resize: none;
+}
+
+.postBtnCont{
+  margin-left: 5px;
+}
+
+/* profile.html */
+.profileCnt{
+  height: auto;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+.userProfileData{
+  padding: 5px 0px;
+}
+
+.profileUserInf{
+  width: 65%;
+}
+
+.userProfPicBig{
+  width: 70px;
+  height: 70px;
+  margin-right: 5px;
+}
+
+.profileUserName{
+  font-size: 25px;
+  margin-bottom: 2px;
+}
+
+.editProfBtn, .logOutBtn{
+  border: 1.5px solid #ededed;
+  color: #000;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.editProfBtn:focus{
+  box-shadow: none !important;
+}
+
+.userStatisticCnt{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+hr{
+  width: 100%;
+  margin: 10px 0;
+}
+
+.statsElemCnt{
+  text-align: center;
+  padding: 5px;
+}
+
+.statNum{
+  margin: 0;
+}
+
+.statName{
+  margin: 0;
+  color: #c0c0c0;
+  font-size: 15px;
+}
+
+.userPicsCnt{
+  padding: 0;
+  margin: 0;
+}
+
+/* index.html */
 .createItemContainer:first-child {
   margin-bottom: 40px;
   border-bottom: 1px solid black;
   padding-bottom: 40px;
 }
 
-.createItemContainer input {}
+/* .createItemContainer input {} */
 
 .createItemContainer button {
   width: 100px;
@@ -44,6 +376,10 @@ ul, li {
   list-style: none;
 }
 
-li p {
+li p, li a{
   cursor: pointer;
+}
+
+.fillBtn{
+  fill: red;
 }

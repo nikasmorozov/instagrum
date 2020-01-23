@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const userController = require('../user/userController.js');
 const postController = require('../posts/postController.js');
-const middleware = require('../middleware/middleware.js')
-const multer = require('multer')
-const crypto = require('crypto')
+const commentController = require('../comments/commentController.js');
+const middleware = require('../middleware/middleware.js');
+const multer = require('multer');
+const crypto = require('crypto');
 
 
 router.get('/', (rec, res) => {
@@ -13,12 +14,11 @@ router.get('/', (rec, res) => {
 const storage = multer.diskStorage({
     destination: 'images',
     filename: function (req, file, callback) {
-        // callback(null,Date.now()+file.originalname)
         crypto.pseudoRandomBytes(16, function(err, raw) {
             if (err) return callback(err);
           
             callback(null, raw.toString('hex') + file.originalname);
-          });
+        });
     }
 });
 
@@ -26,7 +26,7 @@ var upload = multer({ storage: storage })
 
 
 //user routes
-router.post('/user/register', userController.register);
+router.post('/user/register', upload.single('profilePic'), userController.register);
 router.post('/user/login', userController.login);
 router.post('/user/follow-user/:id', middleware.authenticate, userController.followUser);
 router.get('/user/getAllUsers', userController.getAll);
@@ -37,15 +37,22 @@ router.get('/user/logout', middleware.authenticate, userController.logout);
 
 
 //post routes
-router.post('/posts/createPost', middleware.authenticate, upload.single('avatar'), postController.createPost);
+router.post('/posts/createPost', middleware.authenticate, upload.single('postPic'), postController.createPost);
 router.get('/posts/getAllPosts', middleware.authenticate, postController.getAllPosts);
 router.get('/posts/getPostById/:id', postController.getPostById);
 router.patch('/posts/toggleLike/:id', middleware.authenticate, postController.toggleLike);
 router.delete('/posts/deletePostById/:id', postController.deletePostById);
+router.get('/posts/getLikesUsers/:id', postController.getLikesUsers);
+
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
 //Comment routes
+<<<<<<< HEAD
 // router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
+=======
+router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
+router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId)
+>>>>>>> 9412055841599a6b458f079f50edcae26d5375f0
 
 
 

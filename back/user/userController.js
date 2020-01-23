@@ -4,10 +4,16 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config.js')
 
 const register = (req, res) => {
+    const host = req.hostname;
+    const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
+
     let data = req.body
     let user = new User()
     user.username = data.username;
     user.password = data.password;
+    user.profilePicURL = filePath;
+    console.log('user',user);
+    
     user.save()
         .then((createdUser) => {
             res.json(createdUser)
@@ -48,15 +54,6 @@ const login = async (req, res) => {
     }
 };
 
-// let getAll = (req, res) => {
-//     User.find()
-//     .then((users) => {
-//         res.json(users)
-//     }).catch((e) => {
-//         res.status(400).json(e)
-//     })
-// };
-
 const getAll = async (req, res) => {
     try {
         let users = await User.find()
@@ -64,19 +61,19 @@ const getAll = async (req, res) => {
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const getSingleUser = async (req, res) => {
     let id = req.params.id;
     try {
         let user = await User.findOne({
             _id: id
-        })
+        });
         res.json(user)
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const followUser = async (req, res) => {
     
@@ -175,16 +172,16 @@ const followUser = async (req, res) => {
 }
 
 const deleteUserByName = async (req, res) => {
-    let username = req.params.user;
+    let username = req.params.username;
     try {
         let user = await User.deleteOne({
-            user: username
+            username: username
         })
         res.json(user)
     } catch (e) {
         res.status(400).json(e)
     }
-}
+};
 
 const logout = (req, res) => {
     let token = req.token

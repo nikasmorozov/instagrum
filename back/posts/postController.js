@@ -1,11 +1,13 @@
 const Post = require('./postModel.js');
+const User = require('../user/userModel.js');
+
 
 const createPost = (req, res) => {
     const host = req.hostname;
     const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
-    
+
     console.log(filePath);
-    
+
     let data = req.body
     let post = new Post()
     post.title = data.title;
@@ -23,9 +25,7 @@ const createPost = (req, res) => {
 const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
-            //gaut postus is kitu useriu
-            // user: req.user._id
-        })
+        }).populate('user')
         res.json(posts)
     } catch (e) {
         res.status(400).json(e)
@@ -39,7 +39,7 @@ const getPostById = async (req, res) => {
             post: postTitle
         })
         res.json(post)
-        
+
     } catch (e) {
         res.status(400).json(e)
     }
@@ -67,7 +67,25 @@ const toggleLike = async (req, res) => {
 
         post.save();
         res.json(post)
-        
+
+    } catch (e) {
+        res.status(400).json(e)
+    }
+};
+
+const getLikesUsers = async (req, res) => {
+    let id = req.params.id;
+
+    try {
+        let post = await Post.findOne({
+            _id: id
+        });
+
+        let likesUsers = await User.find({
+            _id: post.likes
+        });
+
+        res.json(likesUsers)
     } catch (e) {
         res.status(400).json(e)
     }
@@ -91,4 +109,5 @@ module.exports = {
     getPostById,
     deletePostById,
     toggleLike,
+    getLikesUsers
 };

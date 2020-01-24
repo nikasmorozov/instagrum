@@ -391,7 +391,7 @@ hr{
   padding-bottom: 40px;
 }
 
-.createItemContainer input {}
+/* .createItemContainer input {} */
 
 .createItemContainer button {
   width: 100px;
@@ -410,4 +410,8 @@ ul, li {
 
 li p, li a{
   cursor: pointer;
+}
+
+.fillBtn{
+  fill: red;
 }

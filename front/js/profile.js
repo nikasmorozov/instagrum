@@ -54,7 +54,7 @@ const postsCounter = () => {
 
 postsCounter();
 
-const setProfilePic = () => {
+const setProfileInfo = () => {
   const userNameTag = document.getElementById("userNameTag");
   const userProfPicBig = document.querySelector(".userProfPicBig");
   let token = localStorage.getItem("x-auth");
@@ -81,7 +81,20 @@ const setProfilePic = () => {
     });
 };
 
-setProfilePic();
+setProfileInfo();
+
+const editProfileBtn = document.querySelector('.editProfBtn')
+
+editProfileBtn.addEventListener('click', (e) => {
+    if (editProfileBtn.textContent !== 'Save') {
+
+        editProfileBtn.textContent = 'Save'
+        const usernameTag = document.getElementById('userNameTag')
+        const usernameInput = document.createElement('input')
+    } else {
+        editProfileBtn.textContent = 'Edit Profile'
+    }
+})
 
 
 const activeUserPosts = () =>{
@@ -103,6 +116,7 @@ const activeUserPosts = () =>{
       return response.json();
     })
     .then(userPost => {
+      userPost.reverse();
       let postedImg = userPost.filter(e => {
         if (e.user[0]._id === activeUserId) {
           return e;

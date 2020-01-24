@@ -3,13 +3,13 @@ feather.replace();
 
 
 //moreBtn hide
-let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
-
-for (var i = 0; i < moreInfBtn.length; i++) {
-  moreInfBtn[i].addEventListener("click", event => {
-    let btnClass = (event.target.style.display = "none");
-  });
-}
+// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
+//
+// for (var i = 0; i < moreInfBtn.length; i++) {
+//   moreInfBtn[i].addEventListener("click", event => {
+//     let btnClass = (event.target.style.display = "none");
+//   });
+// }
 
 //checking
 const checkifLoggedIn = () => {
@@ -138,7 +138,7 @@ const createElements = () => {
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = "../front/comments.html";
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -161,9 +161,9 @@ const createElements = () => {
         //likes txt
         let postLikes = document.createElement('p')
         postLikes.classList.add('font-weight-bold', 'postLikes')
-        postLikes.textContent = "50 likes"
+        postLikes.textContent = myJson[i].likes.length + ' likes'
         postLikes.addEventListener('click', () => {
-            // window.location.href = "../front/postLikes.html";
+          // window.location.href = "../front/postLikes.html";
         })
 
         let userPostCom = document.createElement('div')
@@ -182,13 +182,13 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = "../front/comments.html";
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " 13 comments";
+        postComNum.textContent = " "+ myJson[i].likes.length + ' comments';
 
         //main append
         postsCont.appendChild(onePost);
@@ -228,4 +228,28 @@ const createElements = () => {
     })
 
 }
-  createElements();
+createElements();
+
+const toggleLike = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+
+    if (!response.ok) {
+      throw Error(response);
+    }
+    return response.json();
+
+  }).then((myJson) => {
+
+  }).catch((e) => {
+    console.log(e);
+    alert('toggle failed');
+  });
+};

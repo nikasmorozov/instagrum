@@ -19,13 +19,13 @@
     <a class="navElem" href="#">
       <h6>New Photo Post</h6>
     </a>
-    <!-- sulinkinti reikia, kad numestu atgal i index.html -->
     <button type="button" name="newPost" class="btn btn-outline-ligh shareBtn" onclick="createPost()">Share</button>
   </nav>
 
   <form method="POST" action="#" class="addPostCnt">
     <div class="custom-file">
-      <input type="file" name="postPic" class="form-control-file" id="attachedImage">
+      <input type="file" name="postPic" class="custom-file-input regForm" id="attachedImage">
+      <label class="custom-file-label regForm imgAttLabel" for="customFile" id="customFileLabel">Choose file</label>
     </div>
     <textarea class="form-control newPostCaption" rows="5" id="title" placeholder="Write a caption..."></textarea>
   </form>

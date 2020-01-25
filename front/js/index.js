@@ -1,44 +1,15 @@
 // for icons
 feather.replace();
 
-// action Btns
-// let actionsElem = [...document.querySelectorAll('.actionsElem')];
-// console.log(actionsElem)
-
-// for (let i=0; i<actionsElem.length; i++){
-//   actionsElem[i].addEventListener('click', function(event){
-
-//     let btnId = event.target.id;
-//     console.log(btnId)
-
-//     switch (btnId) {
-//       case 'heartBtn':
-//       btn = document.getElementById('heartBtn');
-//       btn.classList.toggle('fillBtn');
-//       console.log(btn);
-//       document.querySelector('#heartBtn').style.fill = '#fd1d1d';
-//         break;
-//       case 'sendIcon':
-//       console.log("send");
-//         break;
-//       case 'heartBtnMultPos':
-//       document.querySelector('#heartBtnMultPos').style.fill = '#fd1d1d';
-//         break;
-//       case 'sendIconMultPost':
-//       console.log("send");
-//         break;
-//     }
-//   });
-// };
 
 //moreBtn hide
-let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
-
-for (var i = 0; i < moreInfBtn.length; i++) {
-  moreInfBtn[i].addEventListener("click", event => {
-    let btnClass = (event.target.style.display = "none");
-  });
-}
+// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
+//
+// for (var i = 0; i < moreInfBtn.length; i++) {
+//   moreInfBtn[i].addEventListener("click", event => {
+//     let btnClass = (event.target.style.display = "none");
+//   });
+// }
 
 //checking
 const checkifLoggedIn = () => {
@@ -50,35 +21,6 @@ const checkifLoggedIn = () => {
 };
 checkifLoggedIn();
 
-//TEST bandau priskirti userName is dattos emaila
-// let nameTag = document.getElementById('userNameTag');
-// let token = localStorage.getItem('x-auth');
-//
-// nameTag.innerHTML = '';
-//
-// fetch('http://localhost:3000/api/v1/user/getAllUsers',{
-//   method: 'GET',
-//   headers: {
-//       'x-auth': token,
-//       'Content-Type': 'application/json'
-//   }
-//   }).then((response) => {
-//
-//       if (!response.ok) {
-//           throw Error(response);
-//       }
-//       return response.json();
-//   }).then((myJson) => {
-//     for (let i = 0; i < myJson.length; i++){
-//       //userName
-//       let name = document.createElement('p')
-//       nameTag.textContent = myJson[i].username
-//     }
-//   }).catch((e) => {
-//       console.log(e);
-//   })
-
-//su img ?
 
 const createElements = () => {
   let postsCont = document.getElementById("postsCont");
@@ -100,13 +42,17 @@ const createElements = () => {
       }
       return response.json();
     })
-    .then(myJson => {
-      console.log(myJson);
+      .then(myJson => {
+        // console.log(myJson);
 
       let postsCont = document.getElementById("postsCont");
       postsCont.innerHTML = "";
 
+      //paskutini posta rodys pirma
+      myJson.reverse();
+
       for (let i = 0; i < myJson.length; i++) {
+
         //konteineriai
         let onePost = document.createElement("div");
         onePost.classList.add("container", "fullWidthCnt", "onePost");
@@ -119,9 +65,6 @@ const createElements = () => {
           "align-items-center",
           "userInfoCnt"
         );
-
-        //cnt userInfo
-        //   console.log(myJson[2].user[0].username);
 
         let userInfo = document.createElement("div");
         const profileImg = document.createElement("img");
@@ -145,6 +88,10 @@ const createElements = () => {
         userName.classList.add("font-weight-bold", "userName");
         userName.setAttribute("id", "userNameTag");
         userName.textContent = myJson[i].user[0].username;
+        userName.addEventListener('click', (e) => {
+          //turetu nukelti i to zmogaus kurio nikas paspautas profili
+          window.location.href = "profile.html"
+        })
         let moreIcn = document.createElement("i");
         moreIcn.setAttribute("data-feather", "more-horizontal");
 
@@ -160,45 +107,33 @@ const createElements = () => {
         const postImg = document.createElement("img");
         postImg.classList.add("img-fluid", "postImage");
         postImg.setAttribute("src", myJson[i].imageURL);
+        postImg.addEventListener('click', (e) => {
+          //turetu nukelti i kita langa ir priskirti pries tai paspaustos ft info
+          window.location.href = "onePostInf.html"
+        })
 
         let postActionsCnt = document.createElement("div");
         postActionsCnt.classList.add("container-fluid", "postActionsCnt");
 
         let actionsCnt = document.createElement("div");
-        actionsCnt.classList.add("actionsCnt");
-
-        //reikia sutvarkyt
+        actionsCnt.classList.add("actionsCnt","d-flex", "justify-content-start", "align-itemps-center");
 
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
-        // actionsElem.addEventListener('click', (e) => {
-        //   let btn = document.querySelectorAll('.heart');
-        //   for (var i = 0; i < btn.length; i++) {
-        //     if (btn[i] == event.target) {
-        //       btn[i].classList.toggle('fillBtn')
-        //       console.log('meh')
-        //       toggleLike(myJson[i]._id);
-        //     }
-        //   }
-        // });
+        actionsElem.addEventListener('click', (e) => {
+          let btn = document.querySelectorAll('#heartBtn');
+          if (e.target.classList.contains("ri-heart-line")) {
+            e.target.classList.replace("ri-heart-line", "ri-heart-fill");
+          }else if(e.target.classList.contains("ri-heart-fill")){
+            e.target.classList.replace("ri-heart-fill", "ri-heart-line");
+          }else{
+            console.log("Ups");
+          }
+        })
 
-        // let likeBtn = document.createElement('i')
-        // likeBtn.setAttribute("data-feather", "heart");
-        // likeBtn.setAttribute("id", "heartBtn");
-        // likeBtn.classList.add('heart')
-        // likeBtn.classList.add('actionBtn')
-        // if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
-        //   likeBtn.classList.add('fillBtn')
-        // };
-        let likeBtn = document.createElement('div')
-        likeBtn.classList.add('heartEmpty');
-
-
-
-        if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
-          likeBtn.classList.remove('heartEmpty');
-          likeBtn.classList.add('heartFilled');
-        };
+        let likeBtn = document.createElement('i')
+        likeBtn.setAttribute("class", "ri-heart-line");
+        likeBtn.setAttribute("id", "heartBtn");
 
         likeBtn.addEventListener('click', () => {
           toggleLike(myJson[i]._id);
@@ -272,7 +207,7 @@ const createElements = () => {
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = myJson[i].likes.length + ' comments';
+        postComNum.textContent = " "+ myJson[i].likes.length + ' comments';
 
         //main append
         postsCont.appendChild(onePost);

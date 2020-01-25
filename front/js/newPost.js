@@ -1,6 +1,13 @@
-
 // for icons
 feather.replace();
+
+//selected img displaying
+document.querySelector('.custom-file-input').addEventListener('change',function(e){
+  var fileName = document.getElementById("attachedImage").files[0].name;
+  var nextSibling = document.getElementById("customFileLabel");
+  nextSibling.innerText = fileName
+  nextSibling.style.color = "#000"
+})
 
 function createPost() {
     let token = localStorage.getItem('x-auth');

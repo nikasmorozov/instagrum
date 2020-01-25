@@ -23,17 +23,24 @@ const registerUser = () => {
             if(header.status == 200) {
                 return header.json();
             } else {
-                alert('Registration failed')
+                alert('Registration failed, please try again')
             }
         }).then((response) => {
-            if(response) {
-                document.location.href='../front/login.html',true
-            }
-        }).catch((e) => {
+            window.location.href = '../front/login.html';
+        })
+        .catch((e) => {
             console.log(e)
         })
     }
 };
+
+//selected img displaying
+document.querySelector('.custom-file-input').addEventListener('change',function(e){
+  var fileName = document.getElementById("attachedProfileImage").files[0].name;
+  var nextSibling = document.getElementById("customFileLabel");
+  nextSibling.innerText = fileName
+  nextSibling.style.color = "#000"
+})
 
 //show password
 const showPasswordBtn = () =>{

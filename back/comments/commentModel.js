@@ -8,8 +8,8 @@ const commentSchema = new mongoose.Schema({
     postId:{
         type: String
     },
-    commenterName:{
-        type: String
+    user:{
+        type: mongoose.Schema.Types.ObjectId, ref: "Users"
     }
 })
 

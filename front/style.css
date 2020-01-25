@@ -376,10 +376,19 @@ ul, li {
   list-style: none;
 }
 
-li p, li a{
-  cursor: pointer;
+
+.heartEmpty {
+  background: url('./src/heart_empty.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
 }
 
-.fillBtn{
-  fill: red;
+.heartFilled {
+  background: url('./src/heart_filled.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
 }

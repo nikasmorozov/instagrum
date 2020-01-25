@@ -171,24 +171,53 @@ const createElements = () => {
 
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
-        actionsElem.addEventListener('click', (e) => {
-          let btn = document.querySelectorAll('.heart');
-          for (var i = 0; i < btn.length; i++) {
-            if (btn[i] == event.target) {
-              btn[i].classList.toggle('fillBtn')
-              toggleLike(myJson[i]._id)
-            }
+        // actionsElem.addEventListener('click', (e) => {
+        //   let btn = document.querySelectorAll('.heart');
+        //   for (var i = 0; i < btn.length; i++) {
+        //     if (btn[i] == event.target) {
+        //       btn[i].classList.toggle('fillBtn')
+        //       console.log('meh')
+        //       toggleLike(myJson[i]._id);
+        //     }
+        //   }
+        // });
+
+        // let likeBtn = document.createElement('i')
+        // likeBtn.setAttribute("data-feather", "heart");
+        // likeBtn.setAttribute("id", "heartBtn");
+        // likeBtn.classList.add('heart')
+        // likeBtn.classList.add('actionBtn')
+        // if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
+        //   likeBtn.classList.add('fillBtn')
+        // };
+        let likeBtn = document.createElement('div')
+        likeBtn.classList.add('heartEmpty');
+
+
+
+        if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
+          likeBtn.classList.remove('heartEmpty');
+          likeBtn.classList.add('heartFilled');
+        };
+
+        likeBtn.addEventListener('click', () => {
+          toggleLike(myJson[i]._id);
+
+          if (likeBtn.classList.contains('heartFilled')) {
+            likeBtn.classList.remove('heartFilled');
+            likeBtn.classList.add('heartEmpty');
+            postLikes.textContent = myJson[i].likes.length+1 + ' likes';
+            console.log('-')
+          } 
+          else {
+            likeBtn.classList.remove('heartEmpty');
+            likeBtn.classList.add('heartFilled');
+            postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+            console.log('+')
+
           }
         });
-        let likeBtn = document.createElement('i')
-        likeBtn.setAttribute("data-feather", "heart");
-        likeBtn.setAttribute("id", "heartBtn");
-        likeBtn.classList.add('heart')
-        likeBtn.classList.add('actionBtn')
-        console.log(myJson[i].user[0]._id)
-        if (myJson[i].likes.includes(myJson[i].user[0]._id)) {
-          likeBtn.classList.add('fillBtn')
-        };
+
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
@@ -216,7 +245,7 @@ const createElements = () => {
         //likes txt
         let postLikes = document.createElement('p')
         postLikes.classList.add('font-weight-bold', 'postLikes')
-        postLikes.textContent = myJson[i].likes.length + ' likes'
+        postLikes.textContent = myJson[i].likes.length + ' likes';
         postLikes.addEventListener('click', () => {
           // window.location.href = "../front/postLikes.html";
         })

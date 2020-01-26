@@ -4,7 +4,7 @@ feather.replace();
 const logout = () => {
   let token = localStorage.getItem("x-auth");
   localStorage.removeItem("x-auth");
-  fetch(`http://localhost:3000/api/v1//user/logout`, {
+  fetch(`http://localhost:3000/api/v1/user/logout`, {
     method: "GET",
     headers: {
       "x-auth": token,
@@ -23,12 +23,13 @@ const logout = () => {
     });
 };
 
+
 const postsCounter = () => {
   let token = localStorage.getItem("x-auth");
   const noOfPostsSpan = document.querySelector(".statNum");
   let activeUserId = localStorage.getItem("activeUserId");
 
-  fetch("http://localhost:3000/api/v1//posts/getAllPosts", {
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
     method: "GET",
     headers: {
       "x-auth": token,

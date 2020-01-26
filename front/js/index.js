@@ -25,7 +25,7 @@ checkifLoggedIn();
 const createElements = () => {
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
-  // let activeUserId = localStorage.getItem('activeUserId')
+  let activeUserId = localStorage.getItem('activeUserId')
 
   postsCont.innerHTML = "";
 
@@ -92,8 +92,97 @@ const createElements = () => {
           //turetu nukelti i to zmogaus kurio nikas paspautas profili
           window.location.href = "profile.html"
         })
+
+        let moreIcnBtn = document.createElement("button");
+        moreIcnBtn.setAttribute("data-toggle", "modal");
+        moreIcnBtn.setAttribute("class", "moreIcnBtn");
+        moreIcnBtn.setAttribute("data-target", "#modalCenter");
+
+        moreIcnBtn.addEventListener("click", (e)=>{
+          let id = myJson[i]._id
+          deletePost(id, onePost);
+        });
+
+
         let moreIcn = document.createElement("i");
         moreIcn.setAttribute("data-feather", "more-horizontal");
+
+
+        let modal = document.createElement("div");
+        modal.setAttribute("tabindex", "-1");
+        modal.setAttribute("ria-labelledby", "modalCenter");
+        modal.setAttribute("aria-hidden", "true");
+        modal.setAttribute("id", "modalCenter");
+        modal.classList.add("modal", "fade");
+
+        let modalCentered = document.createElement("div");
+        modalCentered.classList.add("modal-dialog", "modal-dialog-centered");
+
+        let modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+
+        // modalContent.addEventListener('click', (e) => {
+        //   let targetBtn = e.target.textContent;
+        //   switch (targetBtn) {
+        //     case "Delete":
+        //       // deletePost(,onePost);
+        //       // if (user[0]._id === activeUserId) {
+        //       //   del.style.visibility = "visible"
+        //       // }else{
+        //       //   del.style.visibility = "hidden"
+        //       // }
+        //       // for (var i = 0; i < onePost.length; i++) {
+        //       //
+        //       // }
+        //       //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
+        //       // const userPosts = myJson.filter(el => {
+        //       //   if (el.user[0]._id === activeUserId) {
+        //       //     return el;
+        //       //   }
+        //       // });
+        //       // console.log(userPosts);
+        //       // console.log(allFeedPosts);
+        //       // console.log(e.target.tagName);
+        //       //Is visu pasiimti tik ta ant kurio atidariau ta langa
+        //       // console.log(onePost.post._id);
+        //       // if (user[0]._id === activeUserId) {
+        //       //   del.style.visibility = "visible"
+        //       // }else{
+        //       //   del.style.visibility = "hidden"
+        //       // }
+        //
+        //       // console.log(e.target.myJson[i]._id);
+        //
+        //       deletePost(myJson[i]._id, onePost);
+        //       e.target.setAttribute("data-dismiss", "modal");
+        //       break;
+        //     case "Follow":
+        //
+        //       break;
+        //     case "Unfollow":
+        //
+        //       break;
+        //     case "Cancel":
+        //       e.target.setAttribute("data-dismiss", "modal");
+        //       break;
+        //   }
+        // })
+
+        // console.log(onePost); visu postu feede id
+        // console.log(myJson[i]._id);
+
+        let del = document.createElement("button");
+        del.textContent= "Delete";
+        del.classList.add("btn", "btn-light", "deleteBtn");
+        let follow = document.createElement("button");
+        follow.textContent= "Follow";
+        follow.classList.add("btn", "btn-light", "followBtn");
+        // let unfollow = document.createElement("button");
+        // unfollow.textContent= "Unfollow";
+        // unfollow.classList.add("btn", "btn-light", "unfollowBtn");
+        let cancel = document.createElement("button");
+        cancel.textContent= "Cancel";
+        cancel.classList.add("btn", "btn-light");
 
         //cnt userPost
         let userPostContentCnt = document.createElement("div");
@@ -118,6 +207,7 @@ const createElements = () => {
         let actionsCnt = document.createElement("div");
         actionsCnt.classList.add("actionsCnt","d-flex", "justify-content-start", "align-itemps-center");
 
+        //Like btn
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
         actionsElem.addEventListener('click', (e) => {
@@ -126,8 +216,6 @@ const createElements = () => {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
-          }else{
-            console.log("Ups");
           }
         })
 
@@ -193,11 +281,22 @@ const createElements = () => {
         //main append
         postsCont.appendChild(onePost);
         onePost.appendChild(userInfoCnt);
+        //modal try
+        onePost.appendChild(modal)
+        modal.appendChild(modalCentered)
+        modalCentered.appendChild(modalContent)
+        modalContent.appendChild(del)
+        modalContent.appendChild(follow)
+        // modalContent.appendChild(unfollow)
+        modalContent.appendChild(cancel)
+
         //user info append
         userInfoCnt.appendChild(userInfo);
         userInfo.appendChild(profileImg);
         userInfo.appendChild(userName);
-        userInfoCnt.appendChild(moreIcn);
+        // userInfoCnt.appendChild(moreIcn);
+        userInfoCnt.appendChild(moreIcnBtn);
+        moreIcnBtn.appendChild(moreIcn);
 
         //userPost append
         onePost.appendChild(userPostContentCnt);
@@ -252,4 +351,30 @@ const toggleLike = (id) => {
     console.log(e);
     alert('toggle failed');
   });
+};
+
+
+const deletePost = (id, onePost) => {
+    let token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'x-auth': token,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        onePost.remove();
+
+        if (!response.ok) {
+            throw Error(response);
+        }
+        return response.json();
+
+    }).then((myJson) => {
+
+    }).catch((e) => {
+        console.log(e);
+        alert('toggle failed');
+    });
 };

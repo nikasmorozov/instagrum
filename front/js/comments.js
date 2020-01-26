@@ -1,5 +1,4 @@
 // for icons
-
 feather.replace();
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -97,7 +96,7 @@ function drawComments(val){
   userName.classList.add("font-weight-bold", "userName");
   userName.setAttribute("id", "userNameTag");
   userName.textContent = val.user.username;
-  
+
   let comment = document.createElement('p')
   comment.textContent = val.comment
 

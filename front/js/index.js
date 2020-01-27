@@ -89,12 +89,12 @@ const createElements = () => {
         let moreIcnBtn = document.createElement("button");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
-        // moreIcnBtn.setAttribute("data-target", "#modalCenter");
+        moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
-        moreIcnBtn.addEventListener("click", (e)=>{
-          deletePost(myJson[i]._id);
-          onePost.style.display = 'none';
-        });
+        // moreIcnBtn.addEventListener("click", (e)=>{
+        //   deletePost(myJson[i]._id);
+        //   onePost.style.display = 'none';
+        // });
 
 
         let moreIcn = document.createElement("i");
@@ -114,26 +114,30 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        // modalContent.addEventListener('click', (e) => {
-        //   let targetBtn = e.target.textContent;
-        //   switch (targetBtn) {
-        //     case "Delete":
+        modalContent.addEventListener('click', (e) => {
+          let targetBtn = e.target.textContent;
+          let postToDelete = myJson[i]._id;
+          switch (targetBtn) {
+            case "Delete":
         
-        //       deletePost(id);
+              // deletePost(postToDelete);
+              console.log(postToDelete)
+              onePost.style.display = 'none';
 
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //     case "Follow":
+
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+            case "Follow":
         
-        //       break;
-        //     case "Unfollow":
+              break;
+            case "Unfollow":
         
-        //       break;
-        //     case "Cancel":
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //   };
-        // });
+              break;
+            case "Cancel":
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+          };
+        });
 
         // console.log(onePost); visu postu feede id
         // console.log(myJson[i]._id);
@@ -180,11 +184,9 @@ const createElements = () => {
         actionsElem.addEventListener('click', (e) => {
 
           toggleLike(myJson[i]._id);
-          let btn = document.querySelector('#heartBtn');
           if (e.target.classList.contains("ri-heart-line")) {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
             postLikes.textContent = myJson[i].likes.length +1 + ' likes';
-            console.log(e.target.classList);
             console.log('+')
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
@@ -192,7 +194,6 @@ const createElements = () => {
             console.log(e.target.classList);
             // postLikes.textContent = myJson[i].likes.length-0 + ' likes';
             postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-            // console.log();
             console.log('-')
           }
 

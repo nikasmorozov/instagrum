@@ -439,10 +439,24 @@ ul, li {
   list-style: none;
 }
 
-li p, li a{
-  cursor: pointer;
-}
-
+/* Cia su likebtn pokyciai */
 .fillBtn{
   fill: red;
+}
+
+.heartEmpty {
+  background: url('./src/heart_empty.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
+}
+
+
+.heartFilled {
+  background: url('./src/heart_filled.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
 }

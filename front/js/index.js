@@ -1,7 +1,6 @@
 // for icons
 feather.replace();
 
-
 //moreBtn hide
 // let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
 //
@@ -27,7 +26,10 @@ const createElements = () => {
   let token = localStorage.getItem("x-auth");
   let activeUserId = localStorage.getItem('activeUserId')
 
-  postsCont.innerHTML = "";
+  let filled = localStorage.setItem("filled", "ri-heart-fill");
+  let empty = localStorage.setItem("empty", "ri-heart-line");
+
+  // postsCont.innerHTML = "";
 
   fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
     method: "GET",
@@ -46,7 +48,7 @@ const createElements = () => {
         // console.log(myJson);
 
       let postsCont = document.getElementById("postsCont");
-      postsCont.innerHTML = "";
+      // postsCont.innerHTML = "";
 
       //paskutini posta rodys pirma
       myJson.reverse();
@@ -211,17 +213,79 @@ const createElements = () => {
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
         actionsElem.addEventListener('click', (e) => {
-          let btn = document.querySelectorAll('#heartBtn');
+
+          toggleLike(myJson[i]._id);
+          let btn = document.querySelector('#heartBtn');
           if (e.target.classList.contains("ri-heart-line")) {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
+            postLikes.textContent = myJson[i].likes.length +1 + ' likes';
+            console.log(e.target.classList);
+            console.log('+')
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
+            console.log(localStorage.getItem("heartBtne"));
+            console.log(e.target.classList);
+            // postLikes.textContent = myJson[i].likes.length-0 + ' likes';
+            postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+            // console.log();
+            console.log('-')
           }
+
         })
 
         let likeBtn = document.createElement('i')
-        likeBtn.setAttribute("class", "ri-heart-line");
+        // likeBtn.setAttribute("class", "ri-heart-line");
+        // let likeBtn = document.createElement('img')
+        // likeBtn.setAttribute("src", "/front/src/heart_empty.png");
+
+        // likeBtn.setAttribute("class", (e)=>{
+        //   if(e === localStorage.getItem("empty")){
+        //     likeBtn.setAttribute("class", localStorage.getItem("filled"));
+        //   }else(e === localStorage.getItem("filled")){
+        //     likeBtn.setAttribute("class", localStorage.getItem("empty"));
+        //   }
+        // });
+
+        likeBtn.setAttribute("class", "ri-heart-line")
+
+
         likeBtn.setAttribute("id", "heartBtn");
+
+
+        // likeBtn.addEventListener('click', (e) => {
+        //
+        //   let btn = document.querySelector('#heartBtn');
+        //   if (e.target.classList.contains("ri-heart-line")) {
+        //     console.log(e.target.classList);
+        //   }else if(e.target.classList.contains("ri-heart-fill")){
+        //     console.log(e.target.classList);
+        //   }
+        //
+        //
+        // })
+
+        // local storage try
+        // localStorage.setItem("heartBtne", "ri-heart-line");
+        // localStorage.setItem("heartSS", "heartFilled");
+
+        // likeBtn.addEventListener('click', () => {
+        //   toggleLike(myJson[i]._id);
+        //
+        //   if (likeBtn.classList.contains('heartFilled')) {
+        //     likeBtn.classList.remove('heartFilled');
+        //     likeBtn.classList.add('heartEmpty');
+        //     // postLikes.textContent = myJson[i].likes.length+1 + ' likes';
+        //     console.log('+')
+        //   }
+        //   else {
+        //     likeBtn.classList.remove('heartEmpty');
+        //     likeBtn.classList.add('heartFilled');
+        //     // postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+        //     console.log('-')
+        //
+        //   }
+        // });
+
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
@@ -249,7 +313,7 @@ const createElements = () => {
         //likes txt
         let postLikes = document.createElement('p')
         postLikes.classList.add('font-weight-bold', 'postLikes')
-        postLikes.textContent = myJson[i].likes.length + ' likes'
+        postLikes.textContent = myJson[i].likes.length + ' likes';
         postLikes.addEventListener('click', () => {
           // window.location.href = "../front/postLikes.html";
         })

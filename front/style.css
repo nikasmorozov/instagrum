@@ -1,4 +1,3 @@
-
 *, html {
   padding: 0;
   margin: 0;
@@ -111,6 +110,10 @@ label{
   padding: 5px;
 }
 
+.navElem h6{
+  margin: auto 0px;
+}
+
 .sendIcon{
   transform: rotate(10deg);
 }
@@ -141,7 +144,6 @@ label{
   margin: 20px 0px;
 }
 
-
 .userInfoCnt{
   padding: 0px 10px;
   margin-bottom: 10px;
@@ -151,6 +153,29 @@ label{
   width: 42px;
   height: 42px;
   margin-right: 5px;
+}
+
+.moreIcnBtn{
+  border: none;
+  background: transparent;
+}
+
+.moreIcnBtn:focus{
+  outline: none !important;
+}
+
+.modal-content{
+  border-radius: 12px;
+  padding: 5px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.deleteBtn, .unfollowBtn{
+  color: red;
+}
+.followBtn{
+  color: blue;
 }
 
 .postImage{
@@ -170,25 +195,35 @@ label{
   display: inline-block;
 }
 
+/* cia */
 .actionsElem, .actionsElemLink{
   margin: 0px 5px;
   color: #000;
 }
 
+.actionsElem svg{
+  margin-top: 4px;
+  transform: rotate(10deg);
+  stroke-width: 1.5px;
+}
+
+.actionsElemLink svg{
+  margin-top: 4px;
+  stroke-width: 1.7px;
+}
+
+.ri-heart-line{
+  font-size: 22px;
+  padding-top: -20px;
+}
+
+.ri-heart-fill{
+  color: red;
+  font-size: 22px;
+}
+
 .messageCircle{
   transform: scaleX(-1)
-}
-
-.carousel-indicators li{
-  width: 8px;
-  height: 8px;
-  border: none;
-  border-radius: 100%;
-  background-color: lightslategray;
-}
-
-.carousel-indicators .active {
-    background-color: #4c5fd7;
 }
 
 .postComsAndLikesCnt{
@@ -236,11 +271,6 @@ label{
 }
 
 /* newPost.html */
-.addPostCnt{
-  margin: 15px 10px 0px 10px;
-  border: none;
-}
-
 .shareBtn{
   color: #4c5fd7;
 }
@@ -250,25 +280,39 @@ label{
   color: #4c5fd7;
 }
 
-.custom-file input{
-  border: none;
-  border-bottom: 1px solid #ededed;
-  font-size: 14px;
-  border-radius: 0;
+.space{
+  visibility: hidden;
+}
+
+.custom-file label{
+  font-family: 'Lato', sans-serif;
+  padding-left: 8px;
+  color: #b0b0b0;
+  font-size: 13px;
+  border: 1px solid #ededed;
+}
+
+.imgAttLabel{
+  width: 90%;
+  margin: 10px auto;
 }
 
 .newPostCaption{
-  margin: 15px 0;
-  border-radius: 0;
-  border: none;
-  border-bottom: 1px solid #ededed;
-  font-size: 14px;
+  padding-left: 8px;
+  border-radius: 1;
+  border: 1px solid #ededed;
+  font-size: 13px;
   resize: none;
+  width: 90%;
+  margin: 15px auto;
+}
+
+.newPostCaption::placeholder{
+  color: #b0b0b0;
 }
 
 textarea:focus, input:focus{
-  border: none !important;
-  outline: 0 none !important;
+  border: 1px solid #ededed !important;
   box-shadow: none !important;
 }
 
@@ -304,11 +348,15 @@ textarea:focus, input:focus{
   width: 70px;
   height: 70px;
   margin-right: 5px;
+  object-fit: cover;
+
 }
 
 .profileUserName{
-  font-size: 25px;
+  width: 100%;
+  font-size: 20px;
   margin-bottom: 2px;
+  word-wrap: break-word;
 }
 
 .editProfBtn, .logOutBtn{
@@ -316,6 +364,8 @@ textarea:focus, input:focus{
   color: #000;
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 5px;
+  width: 90%;
 }
 
 .editProfBtn:focus{
@@ -347,12 +397,25 @@ hr{
   font-size: 15px;
 }
 
+/* cia */
 .userPicsCnt{
-  padding: 0;
-  margin: 0;
+  padding: 0px;
 }
 
-/* index.html */
+.postImageProfCnt{
+  margin: 0px;
+  padding: 0px;
+}
+
+.userPostImage{
+  object-fit: cover;
+  object-position: 50% 50%;
+  width: 100%;
+  height: 24vw;
+  padding: 2px;
+}
+
+/* index-old.html */
 .createItemContainer:first-child {
   margin-bottom: 40px;
   border-bottom: 1px solid black;
@@ -376,10 +439,24 @@ ul, li {
   list-style: none;
 }
 
-li p, li a{
-  cursor: pointer;
-}
-
+/* Cia su likebtn pokyciai */
 .fillBtn{
   fill: red;
+}
+
+.heartEmpty {
+  background: url('./src/heart_empty.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
+}
+
+
+.heartFilled {
+  background: url('./src/heart_filled.png');
+  background-position: center;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
 }

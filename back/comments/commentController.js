@@ -7,12 +7,12 @@ const addComment = async (req, res) => {
         let comment = new Comment()
         comment.comment = data.comment;
         comment.postId = data.postId
-        comment.commenterName = req.user.username
+        comment.user = req.user._id
         comment.save()
 
         let post = await Post.findOne({
             _id: data.postId
-        })
+        }).populate('user', 'username profilePicURL')
         post.comment = comment
         post.save()
         res.json(post)
@@ -25,7 +25,7 @@ const getCommentsByPostId = async (req, res) => {
     try {
         let comments = await Comment.find({
             postId: req.params.id
-        })
+        }).populate('user', 'username profilePicURL')
         res.json(comments)
     } catch (e) {
         res.status(400).json(e)

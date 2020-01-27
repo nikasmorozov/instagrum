@@ -4,7 +4,7 @@ feather.replace();
 const logout = () => {
   let token = localStorage.getItem("x-auth");
   localStorage.removeItem("x-auth");
-  fetch(`http://localhost:3000/api/v1//user/logout`, {
+  fetch(`http://localhost:3000/api/v1/user/logout`, {
     method: "GET",
     headers: {
       "x-auth": token,
@@ -23,12 +23,13 @@ const logout = () => {
     });
 };
 
+
 const postsCounter = () => {
   let token = localStorage.getItem("x-auth");
   const noOfPostsSpan = document.querySelector(".statNum");
   let activeUserId = localStorage.getItem("activeUserId");
 
-  fetch("http://localhost:3000/api/v1//posts/getAllPosts", {
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
     method: "GET",
     headers: {
       "x-auth": token,
@@ -45,6 +46,7 @@ const postsCounter = () => {
       const userPosts = allPosts.filter(el => {
         if (el.user[0]._id === activeUserId) {
           return el;
+          // console.log(allPosts);
         }
       });
       noOfPostsSpan.textContent = userPosts.length;
@@ -86,7 +88,7 @@ const editProfileBtn = document.querySelector('.editProfBtn')
 
 editProfileBtn.addEventListener('click', (e) => {
     if (editProfileBtn.textContent !== 'Save') {
-        
+
         editProfileBtn.textContent = 'Save'
         const usernameTag = document.getElementById('userNameTag')
         const usernameInput = document.createElement('input')
@@ -94,3 +96,44 @@ editProfileBtn.addEventListener('click', (e) => {
         editProfileBtn.textContent = 'Edit Profile'
     }
 })
+
+
+const activeUserPosts = () =>{
+  let token = localStorage.getItem("x-auth");
+  let activeUserId = localStorage.getItem("activeUserId");
+  let row = document.querySelector(".postImageProfCnt");
+
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(userPost => {
+      userPost.reverse();
+      let postedImg = userPost.filter(e => {
+        if (e.user[0]._id === activeUserId) {
+          return e;
+        }
+      })
+
+      for (var i = 0; i < postedImg.length; i++) {
+           let col = document.createElement("div")
+           col.classList.add("col-4", "postImageProfCnt");
+
+           const userPostImage = document.createElement("img");
+           userPostImage.classList.add("img-fluid", "userPostImage");
+           userPostImage.setAttribute("src", postedImg[i].imageURL);
+           row.appendChild(col)
+           col.appendChild(userPostImage)
+      }
+    });
+}
+activeUserPosts();

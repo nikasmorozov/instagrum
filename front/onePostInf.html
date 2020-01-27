@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -6,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
@@ -14,27 +14,40 @@
 
   <nav class="navbar fixed-top bg-light border-bottom d-flex justify-content-between align-items-center">
     <a class="navElem" href="javascript:history.back()">
-      <i data-feather="chevron-left"></i>
+      <i data-feather="chevron-left" class="backArr"></i>
     </a>
     <a class="navElem" href="#">
-      <h6>New Photo Post</h6>
+      <h6>Photo</h6>
     </a>
-    <button type="button" name="newPost" class="btn btn-outline-ligh shareBtn" onclick="createPost()">Share</button>
+    <button type="button" class="btn btn-outline-ligh space"></button>
   </nav>
 
-  <form method="POST" action="#" class="addPostCnt">
-    <div class="custom-file">
-      <input type="file" name="postPic" class="custom-file-input regForm" id="attachedImage">
-      <label class="custom-file-label regForm imgAttLabel" for="customFile" id="customFileLabel">Choose file</label>
-    </div>
-    <textarea class="form-control newPostCaption" rows="5" id="title" placeholder="Write a caption..."></textarea>
-  </form>
+  <div class="container fullWidthCnt onePost" id="onePostInfo">
+    
+  </div>
+
+  <footer class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers">
+    <a class="footerElem" href="index.html">
+      <i data-feather="home" class="filledIcon"></i>
+    </a>
+    <a class="footerElem" href="#">
+      <i data-feather="search"></i>
+    </a>
+    <a class="footerElem" id="newPostBtn" href="newpost.html">
+      <i data-feather="plus-square"></i>
+    </a>
+    <a class="footerElem" href="#">
+      <i data-feather="heart"></i>
+    </a>
+    <a class="footerElem" href="profile.html">
+      <i data-feather="user"></i>
+    </a>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
-  <script src="./js/newPost.js"></script>
-
+  <script src="./js/onePostInf.js"></script>
 </body>
 </html>

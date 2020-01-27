@@ -85,12 +85,12 @@ const createElements = () => {
         let moreIcnBtn = document.createElement("button");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
-        moreIcnBtn.setAttribute("data-target", "#modalCenter");
+        // moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
-        // moreIcnBtn.addEventListener("click", (e)=>{
-        //   let id = myJson[i]._id
-        //   deletePost(id, onePost);
-        // });
+        moreIcnBtn.addEventListener("click", (e)=>{
+          deletePost(myJson[i]._id);
+          onePost.style.display = 'none';
+        });
 
 
         let moreIcn = document.createElement("i");
@@ -110,25 +110,26 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        modalContent.addEventListener('click', (e) => {
-          let targetBtn = e.target.textContent;
-          switch (targetBtn) {
-            case "Delete":
+        // modalContent.addEventListener('click', (e) => {
+        //   let targetBtn = e.target.textContent;
+        //   switch (targetBtn) {
+        //     case "Delete":
 
-              deletePost(myJson[i]._id);
-              e.target.setAttribute("data-dismiss", "modal");
-              break;
-            case "Follow":
+        //       deletePost(id);
 
-              break;
-            case "Unfollow":
+        //       e.target.setAttribute("data-dismiss", "modal");
+        //       break;
+        //     case "Follow":
 
-              break;
-            case "Cancel":
-              e.target.setAttribute("data-dismiss", "modal");
-              break;
-          }
-        })
+        //       break;
+        //     case "Unfollow":
+
+        //       break;
+        //     case "Cancel":
+        //       e.target.setAttribute("data-dismiss", "modal");
+        //       break;
+        //   };
+        // });
 
         let del = document.createElement("button");
         del.textContent= "Delete";
@@ -194,7 +195,7 @@ const createElements = () => {
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -238,7 +239,7 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"
@@ -322,7 +323,7 @@ const toggleLike = (id) => {
 };
 
 
-const deletePost = (id, onePost) => {
+const deletePost = (id) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
@@ -332,7 +333,6 @@ const deletePost = (id, onePost) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        onePost.remove();
 
         if (!response.ok) {
             throw Error(response);
@@ -343,6 +343,6 @@ const deletePost = (id, onePost) => {
 
     }).catch((e) => {
         console.log(e);
-        alert('toggle failed');
+        alert('delete failed');
     });
 };

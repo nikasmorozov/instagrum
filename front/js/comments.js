@@ -16,8 +16,6 @@ function autosize(){
   },0);
 }
 
-
-
 const userNameTag = document.getElementById('userNameTag')
 let token = localStorage.getItem('x-auth');
 let activeUserId = localStorage.getItem('activeUserId');

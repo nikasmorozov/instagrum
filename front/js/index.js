@@ -30,7 +30,7 @@ const createElements = () => {
       }
       return response.json();
     })
-      .then(myJson => {
+    .then(myJson => {
 
       let postsCont = document.getElementById("postsCont");
       // postsCont.innerHTML = "";
@@ -111,7 +111,7 @@ const createElements = () => {
         modalContent.classList.add("modal-content");
 
         let del = document.createElement("button");
-        del.textContent= "Delete";
+        del.textContent = "Delete";
         del.classList.add("btn", "btn-light", "deleteBtn");
         del.addEventListener('click', () => {
           deletePost(myJson[i]._id);
@@ -119,7 +119,7 @@ const createElements = () => {
           modalContent.setAttribute("data-dismiss", "modal");
         })
         let follow = document.createElement("button");
-        follow.textContent= "Follow";
+        follow.textContent = "Follow";
         follow.classList.add("btn", "btn-light", "followBtn");
         follow.addEventListener('click', () => {
 
@@ -131,7 +131,7 @@ const createElements = () => {
         //
         // })
         let cancel = document.createElement("button");
-        cancel.textContent= "Cancel";
+        cancel.textContent = "Cancel";
         cancel.classList.add("btn", "btn-light");
         cancel.addEventListener('click', () => {
           modalContent.setAttribute("data-dismiss", "modal");
@@ -158,7 +158,7 @@ const createElements = () => {
         postActionsCnt.classList.add("container-fluid", "postActionsCnt");
 
         let actionsCnt = document.createElement("div");
-        actionsCnt.classList.add("actionsCnt","d-flex", "justify-content-start", "align-itemps-center");
+        actionsCnt.classList.add("actionsCnt", "d-flex", "justify-content-start", "align-itemps-center");
 
         //Like btn
         let actionsElem = document.createElement('span')
@@ -166,16 +166,29 @@ const createElements = () => {
         actionsElem.addEventListener('click', (e) => {
 
           toggleLike(myJson[i]._id);
-          if (e.target.classList.contains("ri-heart-line")) {
-            e.target.classList.replace("ri-heart-line", "ri-heart-fill");
-            postLikes.textContent = myJson[i].likes.length +1 + ' likes';
-            console.log('+')
-          }else if(e.target.classList.contains("ri-heart-fill")){
-            e.target.classList.replace("ri-heart-fill", "ri-heart-line");
-            postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-            console.log('-')
-          }
-        })
+
+         
+            if (e.target.classList.contains("ri-heart-fill")) {
+              e.target.classList.replace("ri-heart-fill", "ri-heart-line");
+              
+              if (myJson[i].likes.includes(activeUserId)) {
+                postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+              } else {
+                postLikes.textContent = myJson[i].likes.length + ' likes';
+              }
+              
+            } else {
+              e.target.classList.replace("ri-heart-line", "ri-heart-fill");
+
+              if (myJson[i].likes.includes(activeUserId)) {
+                postLikes.textContent = myJson[i].likes.length + ' likes';
+              } else {
+                postLikes.textContent = myJson[i].likes.length+1 + ' likes';
+              }
+              console.log(myJson[i].likes.length)
+            }
+        }
+        );
 
         let likeBtn = document.createElement('i')
         likeBtn.setAttribute("id", "heartBtn");
@@ -237,7 +250,7 @@ const createElements = () => {
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " "+ myJson[i].likes.length + ' comments';
+        postComNum.textContent = " " + myJson[i].likes.length + ' comments';
 
         //main append
         postsCont.appendChild(onePost);
@@ -316,26 +329,26 @@ const toggleLike = (id) => {
 
 
 const deletePost = (id) => {
-    let token = localStorage.getItem('x-auth');
+  let token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        // onePost.remove();
+  fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+    // onePost.remove();
 
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
+    if (!response.ok) {
+      throw Error(response);
+    }
+    return response.json();
 
-    }).then((myJson) => {
+  }).then((myJson) => {
 
-    }).catch((e) => {
-        console.log(e);
-        alert('toggle failed');
-    });
+  }).catch((e) => {
+    console.log(e);
+    alert('toggle failed');
+  });
 };

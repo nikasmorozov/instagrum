@@ -1,19 +1,9 @@
 // for icons
 feather.replace();
 
-//moreBtn hide
-// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
-//
-// for (var i = 0; i < moreInfBtn.length; i++) {
-//   moreInfBtn[i].addEventListener("click", event => {
-//     let btnClass = (event.target.style.display = "none");
-//   });
-// }
-
 //checking
 const checkifLoggedIn = () => {
   let token = localStorage.getItem("x-auth");
-  // console.log(token)
   if (!token) {
     window.location.href = "../front/login.html";
   }
@@ -41,7 +31,6 @@ const createElements = () => {
       return response.json();
     })
       .then(myJson => {
-        // console.log(myJson);
 
       let postsCont = document.getElementById("postsCont");
       // postsCont.innerHTML = "";
@@ -96,10 +85,10 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
-        moreIcnBtn.addEventListener("click", (e)=>{
-          let id = myJson[i]._id
-          // deletePost(id, onePost);
-        });
+        // moreIcnBtn.addEventListener("click", (e)=>{
+        //   let id = myJson[i]._id
+        //   deletePost(id, onePost);
+        // });
 
 
         let moreIcn = document.createElement("i");
@@ -119,59 +108,13 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        // modalContent.addEventListener('click', (e) => {
-        //   let targetBtn = e.target.textContent;
-        //   switch (targetBtn) {
-        //     case "Delete":
-        //       // deletePost(,onePost);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //       // for (var i = 0; i < onePost.length; i++) {
-        //       //
-        //       // }
-        //       //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
-        //       // const userPosts = myJson.filter(el => {
-        //       //   if (el.user[0]._id === activeUserId) {
-        //       //     return el;
-        //       //   }
-        //       // });
-        //       // console.log(userPosts);
-        //       // console.log(allFeedPosts);
-        //       // console.log(e.target.tagName);
-        //       //Is visu pasiimti tik ta ant kurio atidariau ta langa
-        //       // console.log(onePost.post._id);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //
-        //       // console.log(e.target.myJson[i]._id);
-        //
-        //       deletePost(myJson[i]._id);
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //     case "Follow":
-        //
-        //       break;
-        //     case "Unfollow":
-        //
-        //       break;
-        //     case "Cancel":
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //   }
-        // })
-
         let del = document.createElement("button");
         del.textContent= "Delete";
         del.classList.add("btn", "btn-light", "deleteBtn");
         del.addEventListener('click', () => {
           deletePost(myJson[i]._id);
-          // modalContent.setAttribute("data-dismiss", "modal");
+          onePost.style.display = "none"
+          modalContent.setAttribute("data-dismiss", "modal");
         })
         let follow = document.createElement("button");
         follow.textContent= "Follow";
@@ -370,7 +313,7 @@ const toggleLike = (id) => {
 };
 
 
-const deletePost = (id, onePost) => {
+const deletePost = (id) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
@@ -380,7 +323,7 @@ const deletePost = (id, onePost) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        onePost.remove();
+        // onePost.remove();
 
         if (!response.ok) {
             throw Error(response);

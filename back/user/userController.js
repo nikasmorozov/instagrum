@@ -76,8 +76,6 @@ const getSingleUser = async (req, res) => {
 };
 
 const followUser = async (req, res) => {
-    
-
     User.findById(req.params.id, async function(err, user) {
         
         let user2 = req.params.id;
@@ -121,54 +119,7 @@ const followUser = async (req, res) => {
         })
         console.log("REMOVED")
         }
-
-        // user.followers.push(req.user._id);
-        // user.save(async function(err) {
-        //     if(err) {
-        //         console.log(err)
-        //     }
-        //     else {
-        //         let thisUser = req.user
-        //         thisUser.following.push(user._id)
-        //         let response = await thisUser.save()
-        //         res.json(response)
-        //     }
-        // })
     })
-
-
-
-//     let id = req.params.id;
-//     let user = req.user.id;
-//     let thisUser = req.user;
-//     let followingId = req.user.following._id;
-//     try {
-//         let findUser = await User.findOne({
-//             _id: id
-//         });
-
-//         let isAddedToFollowing = await User.findOne({
-//             _id: id,
-//             following: thisUser
-//         });
-
-//         if (!isAddedToFollowing) {
-//             findUser.followers.push(user);
-//             thisUser.following.push(user._id);
-//         } else {
-//             findUser.followers.pull(user);
-//             thisUser.following.pull(user._id);
-//         };
-
-//         findUser.save(() => {
-//             let response = thisUser.save()
-//             res.json(response)
-//         });
-//         // res.json(findUser)
-        
-//     } catch (e) {
-//         res.status(400).json(e)
-//     }
 }
 
 const deleteUserByName = async (req, res) => {

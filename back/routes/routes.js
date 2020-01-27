@@ -47,12 +47,8 @@ router.get('/posts/getLikesUsers/:id', postController.getLikesUsers);
 // router.post('/posts/createImage', middleware.authenticate, postController.createPost);
 
 //Comment routes
-<<<<<<< HEAD
-// router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
-=======
 router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
 router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId)
->>>>>>> 9412055841599a6b458f079f50edcae26d5375f0
 
 
 

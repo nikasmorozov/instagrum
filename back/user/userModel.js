@@ -11,6 +11,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  following: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  }],
+  followers: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  }],
   tokens: [
     {
       access: {
@@ -19,48 +31,8 @@ const UserSchema = new mongoose.Schema({
       },
       token: {
         type: String,
-<<<<<<< HEAD
-        required: true,
-    },
-    following: [{  
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    }],
-    followers: [{
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    }],
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        },
-        token: {
-            type: String,
-            required: true
-        }
-    }]
-})
-
-UserSchema.pre('save', function(next) {
-    let user = this;
-    if (user.isModified('password')) {
-        bcrypt.genSalt(10, (error, salt) => {
-            bcrypt.hash(user.password, salt, (error, hash) => {
-                user.password = hash;
-                next()
-            })
-        })
-    } else {
-        next()
-=======
         required: true
       }
->>>>>>> 9412055841599a6b458f079f50edcae26d5375f0
     }
   ],
   profilePicURL: {
@@ -68,7 +40,7 @@ UserSchema.pre('save', function(next) {
   }
 });
 
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   let user = this;
   if (user.isModified("password")) {
     bcrypt.genSalt(10, (error, salt) => {

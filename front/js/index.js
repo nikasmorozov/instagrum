@@ -83,7 +83,8 @@ checkifLoggedIn();
 const createElements = () => {
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
-  // let activeUserId = localStorage.getItem('activeUserId')
+  let activeUserId = localStorage.getItem('activeUserId');
+  console.log(activeUserId)
 
   postsCont.innerHTML = "";
 
@@ -190,52 +191,6 @@ const createElements = () => {
           likeBtn.classList.add('fillBtn')
         };
 
-<<<<<<< HEAD
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
-    }).then((myJson) => {
-        console.log(myJson);
-        
-        let ul = document.getElementById("list")
-        ul.innerHTML = ''
-        for (let i = 0; i < myJson.length; i++) {
-            let li = document.createElement('li')
-            li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
-    console.log(activeUserId);
-            if (myJson[i].likes.includes(activeUserId)) li.classList.add('list-group-item-success')
-            let p = document.createElement('p')
-            p.textContent = myJson[i].title + ' ' + myJson[i].likes.length 
-            p.addEventListener('click', () => {
-                toggleLike(myJson[i]._id, li)
-            })
-            li.appendChild(p)
-            let span = document.createElement('button')
-            span.classList.add('badge', 'badge-danger', 'badge-pill')
-            span.innerHTML = '<ion-icon name="close"></ion-icon>'
-            span.addEventListener('click', () => {
-                deletePost(myJson[i]._id, li)
-            })
-            let followButton = document.createElement("button")
-            followButton.setAttribute("id", "followButtonId")
-            followButton.classList.add('badge', 'badge-pill')
-            followButton.innerHTML = 'Follow'
-            followButton.addEventListener('click', () => {
-                followThisUser(myJson[i].user)
-            })
-            li.appendChild(span)
-
-            let myPosts = myJson[i].user.includes(activeUserId)
-            if (!myPosts) {
-                li.appendChild(followButton)
-            };
-            ul.appendChild(li)
-        }
-    }).catch((e) => {
-        console.log(e);
-=======
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
@@ -266,6 +221,20 @@ const createElements = () => {
         postLikes.addEventListener('click', () => {
           // window.location.href = "../front/postLikes.html";
         })
+
+        //Follow/Unfollow btn TEMPORARY
+        let followButton = document.createElement("button")
+        followButton.setAttribute("id", "followButtonId")
+        followButton.innerHTML = 'Follow'
+        followButton.addEventListener('click', () => {
+          followThisUser(myJson[i].user[0]._id)
+        })
+        // let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+        // if (!myPosts) {
+        //   userInfo.appendChild(followButton)
+        // };
+
+        console.log(myJson[i].user)
 
         let userPostCom = document.createElement('div')
         userPostCom.classList.add('userPostCom')
@@ -298,6 +267,14 @@ const createElements = () => {
         userInfoCnt.appendChild(userInfo);
         userInfo.appendChild(profileImg);
         userInfo.appendChild(userName);
+
+        //ADD FOLLOW BUTTON ONLY on posts that don't belong to the active user
+        // userInfo.appendChild(followButton)
+        let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+        if (!myPosts) {
+          userInfo.appendChild(followButton)
+        };
+
         userInfoCnt.appendChild(moreIcn);
 
         //userPost append
@@ -326,7 +303,6 @@ const createElements = () => {
         //ikonoms
         feather.replace();
       }
->>>>>>> 9412055841599a6b458f079f50edcae26d5375f0
     })
 
 }
@@ -343,118 +319,10 @@ const toggleLike = (id) => {
     }
   }).then((response) => {
 
-<<<<<<< HEAD
-const toggleLike = (id, li) => {
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        // console.log(response);
-        // alert('toggle successful');
-
-        li.classList.toggle('list-group-item-success');
-
-
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
-    }).then((myJson) => {
-        createElements();
-
-    }).catch((e) => {
-        console.log(e);
-        alert('toggle failed');
-    });
-};
-
-const deletePost = (id, li) => {
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        // console.log(response);
-        // alert('deleted successfully');
-
-        li.remove();
-
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-
-    }).then((myJson) => {
-
-    }).catch((e) => {
-        console.log(e);
-        alert('toggle failed');
-    });
-};
-
-const followThisUser = (id) => {
-    let token = localStorage.getItem('x-auth');
-    console.log(id)
-    fetch(`http://localhost:3000/api/v1/user/follow-user/${id}`, {
-
-        method: 'POST',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then((response) => {
-        console.log(response);
-        alert('follow successful');
-        // document.getElementById("followButtonId").innerHTML = "Unfollow"
-        // li.classList.toggle('list-group-item-success');
-        // if (!response.ok) {
-        //     throw Error(response);
-        // }
-        return response.json();
-    })
-    // .then((myJson) => {
-    //     createElements();
-    // })
-    .catch((e) => {
-        console.log(e);
-        alert('follow failed');
-    });
-};
-
-const logout = () => {
-    let token = localStorage.getItem('x-auth');
-
-    localStorage.removeItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1//user/logout`, {
-        method: 'GET',
-        headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json'
-        }
-    }).then((header) => {
-        console.log(header);
-
-        if (!header.ok) {
-            throw Error(header);
-        };
-=======
     if (!response.ok) {
       throw Error(response);
     }
     return response.json();
->>>>>>> 9412055841599a6b458f079f50edcae26d5375f0
 
   }).then((myJson) => {
 
@@ -462,4 +330,35 @@ const logout = () => {
     console.log(e);
     alert('toggle failed');
   });
+};
+
+//FOLLOWING function
+const followThisUser = (id) => {
+  let token = localStorage.getItem('x-auth');
+  // console.log(id)
+  fetch(`http://localhost:3000/api/v1/user/follow-user/${id}`, {
+
+    method: 'POST',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => {
+      console.log(response);
+      alert('follow successful');
+      // document.getElementById("followButtonId").innerHTML = "Unfollow"
+      // li.classList.toggle('list-group-item-success');
+      // if (!response.ok) {
+      //     throw Error(response);
+      // }
+      return response.json();
+    })
+    // .then((myJson) => {
+    //     createElements();
+    // })
+    .catch((e) => {
+      console.log(e);
+      alert('follow failed');
+    });
 };

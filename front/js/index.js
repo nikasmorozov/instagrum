@@ -213,7 +213,7 @@ const createElements = () => {
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -257,7 +257,7 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"

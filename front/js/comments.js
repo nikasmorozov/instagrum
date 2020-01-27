@@ -16,8 +16,6 @@ function autosize(){
   },0);
 }
 
-
-
 const userNameTag = document.getElementById('userNameTag')
 let token = localStorage.getItem('x-auth');
 let activeUserId = localStorage.getItem('activeUserId');
@@ -44,6 +42,7 @@ const addComment = () => {
       comment: comment,
       postId: queryToJSON().id
   }
+  document.getElementById("userComment").value = ""
   fetch(`http://localhost:3000/api/v1/comments/addComment`, {
       method: 'POST',
       headers: {

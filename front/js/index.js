@@ -1,19 +1,9 @@
 // for icons
 feather.replace();
 
-//moreBtn hide
-// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
-//
-// for (var i = 0; i < moreInfBtn.length; i++) {
-//   moreInfBtn[i].addEventListener("click", event => {
-//     let btnClass = (event.target.style.display = "none");
-//   });
-// }
-
 //checking
 const checkifLoggedIn = () => {
   let token = localStorage.getItem("x-auth");
-  // console.log(token)
   if (!token) {
     window.location.href = "../front/login.html";
   }
@@ -25,10 +15,6 @@ const createElements = () => {
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
   let activeUserId = localStorage.getItem('activeUserId')
-
-  let filled = localStorage.setItem("filled", "ri-heart-fill");
-  let empty = localStorage.setItem("empty", "ri-heart-line");
-
   // postsCont.innerHTML = "";
 
   fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
@@ -45,7 +31,6 @@ const createElements = () => {
       return response.json();
     })
       .then(myJson => {
-        // console.log(myJson);
 
       let postsCont = document.getElementById("postsCont");
       // postsCont.innerHTML = "";
@@ -100,10 +85,12 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
-        moreIcnBtn.addEventListener("click", (e)=>{
-          let id = myJson[i]._id
-          // deletePost(id, onePost);
-        });
+
+        // moreIcnBtn.addEventListener("click", (e)=>{
+        //   deletePost(myJson[i]._id);
+        //   onePost.style.display = 'none';
+        // });
+
 
 
         let moreIcn = document.createElement("i");
@@ -123,68 +110,32 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        modalContent.addEventListener('click', (e) => {
-          let targetBtn = e.target.textContent;
-          switch (targetBtn) {
-            case "Delete":
-              // deletePost(,onePost);
-              // if (user[0]._id === activeUserId) {
-              //   del.style.visibility = "visible"
-              // }else{
-              //   del.style.visibility = "hidden"
-              // }
-              // for (var i = 0; i < onePost.length; i++) {
-              //
-              // }
-              //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
-              // const userPosts = myJson.filter(el => {
-              //   if (el.user[0]._id === activeUserId) {
-              //     return el;
-              //   }
-              // });
-              // console.log(userPosts);
-              // console.log(allFeedPosts);
-              // console.log(e.target.tagName);
-              //Is visu pasiimti tik ta ant kurio atidariau ta langa
-              // console.log(onePost.post._id);
-              // if (user[0]._id === activeUserId) {
-              //   del.style.visibility = "visible"
-              // }else{
-              //   del.style.visibility = "hidden"
-              // }
-        
-              // console.log(e.target.myJson[i]._id);
-        
-              deletePost(myJson[i]._id);
-              e.target.setAttribute("data-dismiss", "modal");
-              break;
-            case "Follow":
-        
-              break;
-            case "Unfollow":
-        
-              break;
-            case "Cancel":
-              e.target.setAttribute("data-dismiss", "modal");
-              break;
-          }
-        })
-
-        // console.log(onePost); visu postu feede id
-        // console.log(myJson[i]._id);
-
         let del = document.createElement("button");
         del.textContent= "Delete";
         del.classList.add("btn", "btn-light", "deleteBtn");
+        del.addEventListener('click', () => {
+          deletePost(myJson[i]._id);
+          onePost.style.display = "none"
+          modalContent.setAttribute("data-dismiss", "modal");
+        })
         let follow = document.createElement("button");
         follow.textContent= "Follow";
         follow.classList.add("btn", "btn-light", "followBtn");
+        follow.addEventListener('click', () => {
+
+        })
         // let unfollow = document.createElement("button");
         // unfollow.textContent= "Unfollow";
         // unfollow.classList.add("btn", "btn-light", "unfollowBtn");
+        // unfollow.addEventListener('click', () => {
+        //
+        // })
         let cancel = document.createElement("button");
         cancel.textContent= "Cancel";
         cancel.classList.add("btn", "btn-light");
+        cancel.addEventListener('click', () => {
+          modalContent.setAttribute("data-dismiss", "modal");
+        })
 
         //cnt userPost
         let userPostContentCnt = document.createElement("div");
@@ -215,86 +166,28 @@ const createElements = () => {
         actionsElem.addEventListener('click', (e) => {
 
           toggleLike(myJson[i]._id);
-          let btn = document.querySelector('#heartBtn');
           if (e.target.classList.contains("ri-heart-line")) {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
             postLikes.textContent = myJson[i].likes.length +1 + ' likes';
-            console.log(e.target.classList);
             console.log('+')
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
-            console.log(localStorage.getItem("heartBtne"));
-            console.log(e.target.classList);
-            // postLikes.textContent = myJson[i].likes.length-0 + ' likes';
             postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-            // console.log();
             console.log('-')
           }
-
         })
 
         let likeBtn = document.createElement('i')
-        // likeBtn.setAttribute("class", "ri-heart-line");
-        // let likeBtn = document.createElement('img')
-        // likeBtn.setAttribute("src", "/front/src/heart_empty.png");
-
-        // likeBtn.setAttribute("class", (e)=>{
-        //   if(e === localStorage.getItem("empty")){
-        //     likeBtn.setAttribute("class", localStorage.getItem("filled"));
-        //   }else(e === localStorage.getItem("filled")){
-        //     likeBtn.setAttribute("class", localStorage.getItem("empty"));
-        //   }
-        // });
-
+        likeBtn.setAttribute("id", "heartBtn");
         likeBtn.setAttribute("class", "ri-heart-line")
         if (myJson[i].likes.includes(activeUserId)) {
           likeBtn.classList.replace('ri-heart-line', 'ri-heart-fill')
         };
 
-
-
-        likeBtn.setAttribute("id", "heartBtn");
-
-
-        // likeBtn.addEventListener('click', (e) => {
-        //
-        //   let btn = document.querySelector('#heartBtn');
-        //   if (e.target.classList.contains("ri-heart-line")) {
-        //     console.log(e.target.classList);
-        //   }else if(e.target.classList.contains("ri-heart-fill")){
-        //     console.log(e.target.classList);
-        //   }
-        //
-        //
-        // })
-
-        // local storage try
-        // localStorage.setItem("heartBtne", "ri-heart-line");
-        // localStorage.setItem("heartSS", "heartFilled");
-
-        // likeBtn.addEventListener('click', () => {
-        //   toggleLike(myJson[i]._id);
-        //
-        //   if (likeBtn.classList.contains('heartFilled')) {
-        //     likeBtn.classList.remove('heartFilled');
-        //     likeBtn.classList.add('heartEmpty');
-        //     // postLikes.textContent = myJson[i].likes.length+1 + ' likes';
-        //     console.log('+')
-        //   }
-        //   else {
-        //     likeBtn.classList.remove('heartEmpty');
-        //     likeBtn.classList.add('heartFilled');
-        //     // postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-        //     console.log('-')
-        //
-        //   }
-        // });
-
-
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -352,7 +245,7 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-          window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"
@@ -475,7 +368,7 @@ const followThisUser = (id) => {
     });
 };
 
-const deletePost = (id, onePost) => {
+const deletePost = (id) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
@@ -485,7 +378,7 @@ const deletePost = (id, onePost) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        onePost.remove();
+        // onePost.remove();
 
         if (!response.ok) {
             throw Error(response);

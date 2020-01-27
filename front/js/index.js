@@ -100,10 +100,10 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
-        moreIcnBtn.addEventListener("click", (e)=>{
-          let id = myJson[i]._id
-          deletePost(id, onePost);
-        });
+        // moreIcnBtn.addEventListener("click", (e)=>{
+        //   let id = myJson[i]._id
+        //   deletePost(id, onePost);
+        // });
 
 
         let moreIcn = document.createElement("i");
@@ -123,52 +123,52 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        // modalContent.addEventListener('click', (e) => {
-        //   let targetBtn = e.target.textContent;
-        //   switch (targetBtn) {
-        //     case "Delete":
-        //       // deletePost(,onePost);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //       // for (var i = 0; i < onePost.length; i++) {
-        //       //
-        //       // }
-        //       //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
-        //       // const userPosts = myJson.filter(el => {
-        //       //   if (el.user[0]._id === activeUserId) {
-        //       //     return el;
-        //       //   }
-        //       // });
-        //       // console.log(userPosts);
-        //       // console.log(allFeedPosts);
-        //       // console.log(e.target.tagName);
-        //       //Is visu pasiimti tik ta ant kurio atidariau ta langa
-        //       // console.log(onePost.post._id);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //
-        //       // console.log(e.target.myJson[i]._id);
-        //
-        //       deletePost(myJson[i]._id, onePost);
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //     case "Follow":
-        //
-        //       break;
-        //     case "Unfollow":
-        //
-        //       break;
-        //     case "Cancel":
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //   }
-        // })
+        modalContent.addEventListener('click', (e) => {
+          let targetBtn = e.target.textContent;
+          switch (targetBtn) {
+            case "Delete":
+              // deletePost(,onePost);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
+              // for (var i = 0; i < onePost.length; i++) {
+              //
+              // }
+              //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
+              // const userPosts = myJson.filter(el => {
+              //   if (el.user[0]._id === activeUserId) {
+              //     return el;
+              //   }
+              // });
+              // console.log(userPosts);
+              // console.log(allFeedPosts);
+              // console.log(e.target.tagName);
+              //Is visu pasiimti tik ta ant kurio atidariau ta langa
+              // console.log(onePost.post._id);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
+
+              // console.log(e.target.myJson[i]._id);
+
+              deletePost(myJson[i]._id, onePost);
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+            case "Follow":
+
+              break;
+            case "Unfollow":
+
+              break;
+            case "Cancel":
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+          }
+        })
 
         // console.log(onePost); visu postu feede id
         // console.log(myJson[i]._id);
@@ -218,17 +218,17 @@ const createElements = () => {
           let btn = document.querySelector('#heartBtn');
           if (e.target.classList.contains("ri-heart-line")) {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
-            postLikes.textContent = myJson[i].likes.length +1 + ' likes';
-            console.log(e.target.classList);
-            console.log('+')
+            // postLikes.textContent = myJson[i].likes.length +1 + ' likes';
+            // console.log(e.target.classList);
+            // console.log('+')
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
             console.log(localStorage.getItem("heartBtne"));
             console.log(e.target.classList);
             // postLikes.textContent = myJson[i].likes.length-0 + ' likes';
-            postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-            // console.log();
-            console.log('-')
+            // postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+            // // console.log();
+            // console.log('-')
           }
 
         })
@@ -263,10 +263,6 @@ const createElements = () => {
         //
         //
         // })
-
-        // local storage try
-        // localStorage.setItem("heartBtne", "ri-heart-line");
-        // localStorage.setItem("heartSS", "heartFilled");
 
         // likeBtn.addEventListener('click', () => {
         //   toggleLike(myJson[i]._id);

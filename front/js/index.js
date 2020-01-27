@@ -102,7 +102,7 @@ const createElements = () => {
 
         moreIcnBtn.addEventListener("click", (e)=>{
           let id = myJson[i]._id
-          deletePost(id, onePost);
+          // deletePost(id, onePost);
         });
 
 
@@ -123,52 +123,52 @@ const createElements = () => {
         let modalContent = document.createElement("div");
         modalContent.classList.add("modal-content");
 
-        // modalContent.addEventListener('click', (e) => {
-        //   let targetBtn = e.target.textContent;
-        //   switch (targetBtn) {
-        //     case "Delete":
-        //       // deletePost(,onePost);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //       // for (var i = 0; i < onePost.length; i++) {
-        //       //
-        //       // }
-        //       //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
-        //       // const userPosts = myJson.filter(el => {
-        //       //   if (el.user[0]._id === activeUserId) {
-        //       //     return el;
-        //       //   }
-        //       // });
-        //       // console.log(userPosts);
-        //       // console.log(allFeedPosts);
-        //       // console.log(e.target.tagName);
-        //       //Is visu pasiimti tik ta ant kurio atidariau ta langa
-        //       // console.log(onePost.post._id);
-        //       // if (user[0]._id === activeUserId) {
-        //       //   del.style.visibility = "visible"
-        //       // }else{
-        //       //   del.style.visibility = "hidden"
-        //       // }
-        //
-        //       // console.log(e.target.myJson[i]._id);
-        //
-        //       deletePost(myJson[i]._id, onePost);
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //     case "Follow":
-        //
-        //       break;
-        //     case "Unfollow":
-        //
-        //       break;
-        //     case "Cancel":
-        //       e.target.setAttribute("data-dismiss", "modal");
-        //       break;
-        //   }
-        // })
+        modalContent.addEventListener('click', (e) => {
+          let targetBtn = e.target.textContent;
+          switch (targetBtn) {
+            case "Delete":
+              // deletePost(,onePost);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
+              // for (var i = 0; i < onePost.length; i++) {
+              //
+              // }
+              //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
+              // const userPosts = myJson.filter(el => {
+              //   if (el.user[0]._id === activeUserId) {
+              //     return el;
+              //   }
+              // });
+              // console.log(userPosts);
+              // console.log(allFeedPosts);
+              // console.log(e.target.tagName);
+              //Is visu pasiimti tik ta ant kurio atidariau ta langa
+              // console.log(onePost.post._id);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
+        
+              // console.log(e.target.myJson[i]._id);
+        
+              deletePost(myJson[i]._id);
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+            case "Follow":
+        
+              break;
+            case "Unfollow":
+        
+              break;
+            case "Cancel":
+              e.target.setAttribute("data-dismiss", "modal");
+              break;
+          }
+        })
 
         // console.log(onePost); visu postu feede id
         // console.log(myJson[i]._id);
@@ -247,6 +247,10 @@ const createElements = () => {
         // });
 
         likeBtn.setAttribute("class", "ri-heart-line")
+        if (myJson[i].likes.includes(activeUserId)) {
+          likeBtn.classList.replace('ri-heart-line', 'ri-heart-fill')
+        };
+
 
 
         likeBtn.setAttribute("id", "heartBtn");

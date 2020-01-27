@@ -1,6 +1,15 @@
 // for icons
 feather.replace();
 
+//moreBtn hide
+// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
+//
+// for (var i = 0; i < moreInfBtn.length; i++) {
+//   moreInfBtn[i].addEventListener("click", event => {
+//     let btnClass = (event.target.style.display = "none");
+//   });
+// }
+
 //checking
 const checkifLoggedIn = () => {
   let token = localStorage.getItem("x-auth");
@@ -91,10 +100,17 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
+<<<<<<< HEAD
         // moreIcnBtn.addEventListener("click", (e)=>{
         //   deletePost(myJson[i]._id);
         //   onePost.style.display = 'none';
         // });
+=======
+        moreIcnBtn.addEventListener("click", (e)=>{
+          let id = myJson[i]._id
+          // deletePost(id, onePost);
+        });
+>>>>>>> 8300155326cd80dbbf9a4aa8c34cde0cb9ae88a4
 
 
         let moreIcn = document.createElement("i");
@@ -116,15 +132,37 @@ const createElements = () => {
 
         modalContent.addEventListener('click', (e) => {
           let targetBtn = e.target.textContent;
-          let postToDelete = myJson[i]._id;
           switch (targetBtn) {
             case "Delete":
+              // deletePost(,onePost);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
+              // for (var i = 0; i < onePost.length; i++) {
+              //
+              // }
+              //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
+              // const userPosts = myJson.filter(el => {
+              //   if (el.user[0]._id === activeUserId) {
+              //     return el;
+              //   }
+              // });
+              // console.log(userPosts);
+              // console.log(allFeedPosts);
+              // console.log(e.target.tagName);
+              //Is visu pasiimti tik ta ant kurio atidariau ta langa
+              // console.log(onePost.post._id);
+              // if (user[0]._id === activeUserId) {
+              //   del.style.visibility = "visible"
+              // }else{
+              //   del.style.visibility = "hidden"
+              // }
         
-              // deletePost(postToDelete);
-              console.log(postToDelete)
-              onePost.style.display = 'none';
-
-
+              // console.log(e.target.myJson[i]._id);
+        
+              deletePost(myJson[i]._id);
               e.target.setAttribute("data-dismiss", "modal");
               break;
             case "Follow":
@@ -136,8 +174,8 @@ const createElements = () => {
             case "Cancel":
               e.target.setAttribute("data-dismiss", "modal");
               break;
-          };
-        });
+          }
+        })
 
         // console.log(onePost); visu postu feede id
         // console.log(myJson[i]._id);
@@ -200,7 +238,17 @@ const createElements = () => {
         })
 
         let likeBtn = document.createElement('i')
+        // likeBtn.setAttribute("class", "ri-heart-line");
+        // let likeBtn = document.createElement('img')
+        // likeBtn.setAttribute("src", "/front/src/heart_empty.png");
 
+        // likeBtn.setAttribute("class", (e)=>{
+        //   if(e === localStorage.getItem("empty")){
+        //     likeBtn.setAttribute("class", localStorage.getItem("filled"));
+        //   }else(e === localStorage.getItem("filled")){
+        //     likeBtn.setAttribute("class", localStorage.getItem("empty"));
+        //   }
+        // });
 
         likeBtn.setAttribute("class", "ri-heart-line")
         if (myJson[i].likes.includes(activeUserId)) {
@@ -210,6 +258,42 @@ const createElements = () => {
 
 
         likeBtn.setAttribute("id", "heartBtn");
+
+
+        // likeBtn.addEventListener('click', (e) => {
+        //
+        //   let btn = document.querySelector('#heartBtn');
+        //   if (e.target.classList.contains("ri-heart-line")) {
+        //     console.log(e.target.classList);
+        //   }else if(e.target.classList.contains("ri-heart-fill")){
+        //     console.log(e.target.classList);
+        //   }
+        //
+        //
+        // })
+
+        // local storage try
+        // localStorage.setItem("heartBtne", "ri-heart-line");
+        // localStorage.setItem("heartSS", "heartFilled");
+
+        // likeBtn.addEventListener('click', () => {
+        //   toggleLike(myJson[i]._id);
+        //
+        //   if (likeBtn.classList.contains('heartFilled')) {
+        //     likeBtn.classList.remove('heartFilled');
+        //     likeBtn.classList.add('heartEmpty');
+        //     // postLikes.textContent = myJson[i].likes.length+1 + ' likes';
+        //     console.log('+')
+        //   }
+        //   else {
+        //     likeBtn.classList.remove('heartEmpty');
+        //     likeBtn.classList.add('heartFilled');
+        //     // postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+        //     console.log('-')
+        //
+        //   }
+        // });
+
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
@@ -342,7 +426,7 @@ const toggleLike = (id) => {
 };
 
 
-const deletePost = (id) => {
+const deletePost = (id, onePost) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
@@ -352,6 +436,7 @@ const deletePost = (id) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
+        onePost.remove();
 
         if (!response.ok) {
             throw Error(response);
@@ -362,6 +447,6 @@ const deletePost = (id) => {
 
     }).catch((e) => {
         console.log(e);
-        alert('delete failed');
+        alert('toggle failed');
     });
 };

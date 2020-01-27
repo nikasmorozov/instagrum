@@ -85,10 +85,12 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
+
         // moreIcnBtn.addEventListener("click", (e)=>{
-        //   let id = myJson[i]._id
-        //   deletePost(id, onePost);
+        //   deletePost(myJson[i]._id);
+        //   onePost.style.display = 'none';
         // });
+
 
 
         let moreIcn = document.createElement("i");
@@ -164,7 +166,6 @@ const createElements = () => {
         actionsElem.addEventListener('click', (e) => {
 
           toggleLike(myJson[i]._id);
-          let btn = document.querySelector('#heartBtn');
           if (e.target.classList.contains("ri-heart-line")) {
             e.target.classList.replace("ri-heart-line", "ri-heart-fill");
             postLikes.textContent = myJson[i].likes.length +1 + ' likes';
@@ -172,6 +173,7 @@ const createElements = () => {
           }else if(e.target.classList.contains("ri-heart-fill")){
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
             postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+            console.log('-')
           }
         })
 

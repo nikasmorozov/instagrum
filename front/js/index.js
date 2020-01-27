@@ -175,7 +175,7 @@ const createElements = () => {
                 postLikes.textContent = myJson[i].likes.length-1 + ' likes';
               } else {
                 postLikes.textContent = myJson[i].likes.length + ' likes';
-              }
+              };
               
             } else {
               e.target.classList.replace("ri-heart-line", "ri-heart-fill");
@@ -186,7 +186,7 @@ const createElements = () => {
                 postLikes.textContent = myJson[i].likes.length+1 + ' likes';
               }
               console.log(myJson[i].likes.length)
-            }
+            };
         }
         );
 

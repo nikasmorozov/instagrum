@@ -42,6 +42,7 @@ const addComment = () => {
       comment: comment,
       postId: queryToJSON().id
   }
+  document.getElementById("userComment").value = ""
   fetch(`http://localhost:3000/api/v1/comments/addComment`, {
       method: 'POST',
       headers: {

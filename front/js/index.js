@@ -1,6 +1,15 @@
 // for icons
 feather.replace();
 
+//moreBtn hide
+// let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
+//
+// for (var i = 0; i < moreInfBtn.length; i++) {
+//   moreInfBtn[i].addEventListener("click", event => {
+//     let btnClass = (event.target.style.display = "none");
+//   });
+// }
+
 //checking
 const checkifLoggedIn = () => {
   let token = localStorage.getItem("x-auth");
@@ -85,11 +94,11 @@ const createElements = () => {
         let moreIcnBtn = document.createElement("button");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
-        // moreIcnBtn.setAttribute("data-target", "#modalCenter");
+        moreIcnBtn.setAttribute("data-target", "#modalCenter");
 
         moreIcnBtn.addEventListener("click", (e)=>{
-          deletePost(myJson[i]._id);
-          onePost.style.display = 'none';
+          let id = myJson[i]._id
+          // deletePost(id, onePost);
         });
 
 
@@ -114,35 +123,74 @@ const createElements = () => {
         //   let targetBtn = e.target.textContent;
         //   switch (targetBtn) {
         //     case "Delete":
-
-        //       deletePost(id);
-
+        //       // deletePost(,onePost);
+        //       // if (user[0]._id === activeUserId) {
+        //       //   del.style.visibility = "visible"
+        //       // }else{
+        //       //   del.style.visibility = "hidden"
+        //       // }
+        //       // for (var i = 0; i < onePost.length; i++) {
+        //       //
+        //       // }
+        //       //GRAZINA VISUS ELEMENTUS PRISIJUNGUSIO ASMENS
+        //       // const userPosts = myJson.filter(el => {
+        //       //   if (el.user[0]._id === activeUserId) {
+        //       //     return el;
+        //       //   }
+        //       // });
+        //       // console.log(userPosts);
+        //       // console.log(allFeedPosts);
+        //       // console.log(e.target.tagName);
+        //       //Is visu pasiimti tik ta ant kurio atidariau ta langa
+        //       // console.log(onePost.post._id);
+        //       // if (user[0]._id === activeUserId) {
+        //       //   del.style.visibility = "visible"
+        //       // }else{
+        //       //   del.style.visibility = "hidden"
+        //       // }
+        //
+        //       // console.log(e.target.myJson[i]._id);
+        //
+        //       deletePost(myJson[i]._id);
         //       e.target.setAttribute("data-dismiss", "modal");
         //       break;
         //     case "Follow":
-
+        //
         //       break;
         //     case "Unfollow":
-
+        //
         //       break;
         //     case "Cancel":
         //       e.target.setAttribute("data-dismiss", "modal");
         //       break;
-        //   };
-        // });
+        //   }
+        // })
 
         let del = document.createElement("button");
         del.textContent= "Delete";
         del.classList.add("btn", "btn-light", "deleteBtn");
+        del.addEventListener('click', () => {
+          deletePost(myJson[i]._id);
+          // modalContent.setAttribute("data-dismiss", "modal");
+        })
         let follow = document.createElement("button");
         follow.textContent= "Follow";
         follow.classList.add("btn", "btn-light", "followBtn");
+        follow.addEventListener('click', () => {
+
+        })
         // let unfollow = document.createElement("button");
         // unfollow.textContent= "Unfollow";
         // unfollow.classList.add("btn", "btn-light", "unfollowBtn");
+        // unfollow.addEventListener('click', () => {
+        //
+        // })
         let cancel = document.createElement("button");
         cancel.textContent= "Cancel";
         cancel.classList.add("btn", "btn-light");
+        cancel.addEventListener('click', () => {
+          modalContent.setAttribute("data-dismiss", "modal");
+        })
 
         //cnt userPost
         let userPostContentCnt = document.createElement("div");
@@ -182,7 +230,6 @@ const createElements = () => {
             e.target.classList.replace("ri-heart-fill", "ri-heart-line");
             postLikes.textContent = myJson[i].likes.length-1 + ' likes';
           }
-
         })
 
         let likeBtn = document.createElement('i')
@@ -323,7 +370,7 @@ const toggleLike = (id) => {
 };
 
 
-const deletePost = (id) => {
+const deletePost = (id, onePost) => {
     let token = localStorage.getItem('x-auth');
 
     fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
@@ -333,6 +380,7 @@ const deletePost = (id) => {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
+        onePost.remove();
 
         if (!response.ok) {
             throw Error(response);
@@ -343,6 +391,6 @@ const deletePost = (id) => {
 
     }).catch((e) => {
         console.log(e);
-        alert('delete failed');
+        alert('toggle failed');
     });
 };

@@ -23,6 +23,7 @@ const logout = () => {
     });
 };
 
+
 const postsCounter = () => {
   let token = localStorage.getItem("x-auth");
   const noOfPostsSpan = document.querySelector(".statNum");
@@ -45,6 +46,7 @@ const postsCounter = () => {
       const userPosts = allPosts.filter(el => {
         if (el.user[0]._id === activeUserId) {
           return el;
+          // console.log(allPosts);
         }
       });
       noOfPostsSpan.textContent = userPosts.length;
@@ -194,6 +196,7 @@ editProfileBtn.addEventListener("click", async () => {
         repeatPsw.style.display = "none";
         changePicBtn.style.display = "none";
 
+<<<<<<< HEAD
         // if (usernameInput.value !== usernameTag.textContent) {
         //   changeUsernameDB(usernameInput.value);
         // }
@@ -213,6 +216,14 @@ editProfileBtn.addEventListener("click", async () => {
       currentPsw.style.display = "none";
       newPsw.style.display = "none";
       repeatPsw.style.display = "none";
+=======
+editProfileBtn.addEventListener('click', (e) => {
+    if (editProfileBtn.textContent !== 'Save') {
+
+        editProfileBtn.textContent = 'Save'
+        const usernameTag = document.getElementById('userNameTag')
+        const usernameInput = document.createElement('input')
+>>>>>>> 0645b7576c70661404b65fe6279af3132ee2fbdf
     } else {
       alert("Please fill all required fields");
     }
@@ -245,6 +256,7 @@ const changePicBtn = () => {
     headers: {
       "x-auth": token
     }
+<<<<<<< HEAD
   })
     .then(response => {
       console.log(response);
@@ -259,3 +271,47 @@ const changePicBtn = () => {
     });
   // userProfPicBig.attributes('src','../../back/images/15792014152408_frame.jpg')
 };
+=======
+})
+
+
+const activeUserPosts = () =>{
+  let token = localStorage.getItem("x-auth");
+  let activeUserId = localStorage.getItem("activeUserId");
+  let row = document.querySelector(".postImageProfCnt");
+
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(userPost => {
+      userPost.reverse();
+      let postedImg = userPost.filter(e => {
+        if (e.user[0]._id === activeUserId) {
+          return e;
+        }
+      })
+
+      for (var i = 0; i < postedImg.length; i++) {
+           let col = document.createElement("div")
+           col.classList.add("col-4", "postImageProfCnt");
+
+           const userPostImage = document.createElement("img");
+           userPostImage.classList.add("img-fluid", "userPostImage");
+           userPostImage.setAttribute("src", postedImg[i].imageURL);
+           row.appendChild(col)
+           col.appendChild(userPostImage)
+      }
+    });
+}
+activeUserPosts();
+>>>>>>> 0645b7576c70661404b65fe6279af3132ee2fbdf

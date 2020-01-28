@@ -1,91 +1,21 @@
 // for icons
 feather.replace();
 
-// action Btns
-// let actionsElem = [...document.querySelectorAll('.actionsElem')];
-// console.log(actionsElem)
-
-// for (let i=0; i<actionsElem.length; i++){
-//   actionsElem[i].addEventListener('click', function(event){
-
-//     let btnId = event.target.id;
-//     console.log(btnId)
-
-//     switch (btnId) {
-//       case 'heartBtn':
-//       btn = document.getElementById('heartBtn');
-//       btn.classList.toggle('fillBtn');
-//       console.log(btn);
-//       document.querySelector('#heartBtn').style.fill = '#fd1d1d';
-//         break;
-//       case 'sendIcon':
-//       console.log("send");
-//         break;
-//       case 'heartBtnMultPos':
-//       document.querySelector('#heartBtnMultPos').style.fill = '#fd1d1d';
-//         break;
-//       case 'sendIconMultPost':
-//       console.log("send");
-//         break;
-//     }
-//   });
-// };
-
-//moreBtn hide
-let moreInfBtn = document.querySelectorAll(".moreBtnPostCom");
-
-for (var i = 0; i < moreInfBtn.length; i++) {
-  moreInfBtn[i].addEventListener("click", event => {
-    let btnClass = (event.target.style.display = "none");
-  });
-}
-
 //checking
 const checkifLoggedIn = () => {
   let token = localStorage.getItem("x-auth");
-  // console.log(token)
   if (!token) {
     window.location.href = "../front/login.html";
   }
 };
 checkifLoggedIn();
 
-//TEST bandau priskirti userName is dattos emaila
-// let nameTag = document.getElementById('userNameTag');
-// let token = localStorage.getItem('x-auth');
-//
-// nameTag.innerHTML = '';
-//
-// fetch('http://localhost:3000/api/v1/user/getAllUsers',{
-//   method: 'GET',
-//   headers: {
-//       'x-auth': token,
-//       'Content-Type': 'application/json'
-//   }
-//   }).then((response) => {
-//
-//       if (!response.ok) {
-//           throw Error(response);
-//       }
-//       return response.json();
-//   }).then((myJson) => {
-//     for (let i = 0; i < myJson.length; i++){
-//       //userName
-//       let name = document.createElement('p')
-//       nameTag.textContent = myJson[i].username
-//     }
-//   }).catch((e) => {
-//       console.log(e);
-//   })
-
-//su img ?
 
 const createElements = () => {
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
-  // let activeUserId = localStorage.getItem('activeUserId')
-
-  postsCont.innerHTML = "";
+  let activeUserId = localStorage.getItem('activeUserId')
+  // postsCont.innerHTML = "";
 
   fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
     method: "GET",
@@ -100,13 +30,16 @@ const createElements = () => {
       }
       return response.json();
     })
-      .then(myJson => {
-        console.log(myJson);
-        
+    .then(myJson => {
+
       let postsCont = document.getElementById("postsCont");
-      postsCont.innerHTML = "";
+      // postsCont.innerHTML = "";
+
+      //paskutini posta rodys pirma
+      myJson.reverse();
 
       for (let i = 0; i < myJson.length; i++) {
+
         //konteineriai
         let onePost = document.createElement("div");
         onePost.classList.add("container", "fullWidthCnt", "onePost");
@@ -119,9 +52,6 @@ const createElements = () => {
           "align-items-center",
           "userInfoCnt"
         );
-
-        //cnt userInfo
-        //   console.log(myJson[2].user[0].username);
 
         let userInfo = document.createElement("div");
         const profileImg = document.createElement("img");
@@ -145,8 +75,67 @@ const createElements = () => {
         userName.classList.add("font-weight-bold", "userName");
         userName.setAttribute("id", "userNameTag");
         userName.textContent = myJson[i].user[0].username;
+        userName.addEventListener('click', (e) => {
+          //turetu nukelti i to zmogaus kurio nikas paspautas profili
+          window.location.href = "profile.html"
+        })
+
+        let moreIcnBtn = document.createElement("button");
+        moreIcnBtn.setAttribute("data-toggle", "modal");
+        moreIcnBtn.setAttribute("class", "moreIcnBtn");
+        moreIcnBtn.setAttribute("data-target", "#modalCenter");
+
+
+        // moreIcnBtn.addEventListener("click", (e)=>{
+        //   deletePost(myJson[i]._id);
+        //   onePost.style.display = 'none';
+        // });
+
+
+
         let moreIcn = document.createElement("i");
         moreIcn.setAttribute("data-feather", "more-horizontal");
+
+
+        let modal = document.createElement("div");
+        modal.setAttribute("tabindex", "-1");
+        modal.setAttribute("ria-labelledby", "modalCenter");
+        modal.setAttribute("aria-hidden", "true");
+        modal.setAttribute("id", "modalCenter");
+        modal.classList.add("modal", "fade");
+
+        let modalCentered = document.createElement("div");
+        modalCentered.classList.add("modal-dialog", "modal-dialog-centered");
+
+        let modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+
+        let del = document.createElement("button");
+        del.textContent = "Delete";
+        del.classList.add("btn", "btn-light", "deleteBtn");
+        del.addEventListener('click', () => {
+          deletePost(myJson[i]._id);
+          onePost.style.display = "none"
+          modalContent.setAttribute("data-dismiss", "modal");
+        })
+        let follow = document.createElement("button");
+        follow.textContent = "Follow";
+        follow.classList.add("btn", "btn-light", "followBtn");
+        follow.addEventListener('click', () => {
+
+        })
+        // let unfollow = document.createElement("button");
+        // unfollow.textContent= "Unfollow";
+        // unfollow.classList.add("btn", "btn-light", "unfollowBtn");
+        // unfollow.addEventListener('click', () => {
+        //
+        // })
+        let cancel = document.createElement("button");
+        cancel.textContent = "Cancel";
+        cancel.classList.add("btn", "btn-light");
+        cancel.addEventListener('click', () => {
+          modalContent.setAttribute("data-dismiss", "modal");
+        })
 
         //cnt userPost
         let userPostContentCnt = document.createElement("div");
@@ -160,34 +149,58 @@ const createElements = () => {
         const postImg = document.createElement("img");
         postImg.classList.add("img-fluid", "postImage");
         postImg.setAttribute("src", myJson[i].imageURL);
+        postImg.addEventListener('click', (e) => {
+          //turetu nukelti i kita langa ir priskirti pries tai paspaustos ft info
+          window.location.href = "onePostInf.html"
+        })
 
         let postActionsCnt = document.createElement("div");
         postActionsCnt.classList.add("container-fluid", "postActionsCnt");
 
         let actionsCnt = document.createElement("div");
-        actionsCnt.classList.add("actionsCnt");
+        actionsCnt.classList.add("actionsCnt", "d-flex", "justify-content-start", "align-itemps-center");
 
-        //reikia sutvarkyt
+        //Like btn
         let actionsElem = document.createElement('span')
         actionsElem.classList.add('actionsElem')
         actionsElem.addEventListener('click', (e) => {
-          let btn = document.querySelectorAll('.heart');
-          for (var i = 0; i < btn.length; i++) {
-            if(btn[i] == event.target){
-              btn[i].classList.toggle('fillBtn')
-            }
-          }
-        })
+
+          toggleLike(myJson[i]._id);
+
+         
+            if (e.target.classList.contains("ri-heart-fill")) {
+              e.target.classList.replace("ri-heart-fill", "ri-heart-line");
+              
+              if (myJson[i].likes.includes(activeUserId)) {
+                postLikes.textContent = myJson[i].likes.length-1 + ' likes';
+              } else {
+                postLikes.textContent = myJson[i].likes.length + ' likes';
+              };
+              
+            } else {
+              e.target.classList.replace("ri-heart-line", "ri-heart-fill");
+
+              if (myJson[i].likes.includes(activeUserId)) {
+                postLikes.textContent = myJson[i].likes.length + ' likes';
+              } else {
+                postLikes.textContent = myJson[i].likes.length+1 + ' likes';
+              }
+              console.log(myJson[i].likes.length)
+            };
+        }
+        );
+
         let likeBtn = document.createElement('i')
-        likeBtn.setAttribute("data-feather", "heart");
         likeBtn.setAttribute("id", "heartBtn");
-        likeBtn.classList.add('heart')
-        likeBtn.classList.add('actionBtn')
+        likeBtn.setAttribute("class", "ri-heart-line")
+        if (myJson[i].likes.includes(activeUserId)) {
+          likeBtn.classList.replace('ri-heart-line', 'ri-heart-fill')
+        };
 
         let actionsElemLink = document.createElement('a')
         actionsElemLink.classList.add('actionsElemLink')
         actionsElemLink.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let chatIcn = document.createElement('i')
         chatIcn.setAttribute("data-feather", "message-circle");
@@ -210,9 +223,9 @@ const createElements = () => {
         //likes txt
         let postLikes = document.createElement('p')
         postLikes.classList.add('font-weight-bold', 'postLikes')
-        postLikes.textContent = "50 likes"
+        postLikes.textContent = myJson[i].likes.length + ' likes';
         postLikes.addEventListener('click', () => {
-            // window.location.href = "../front/postLikes.html";
+          // window.location.href = "../front/postLikes.html";
         })
 
         let userPostCom = document.createElement('div')
@@ -231,22 +244,33 @@ const createElements = () => {
         let viewAllComBtn = document.createElement('a')
         viewAllComBtn.classList.add('btn', 'viewAllComBtn')
         viewAllComBtn.addEventListener('click', () => {
-            window.location.href = "../front/comments.html";
+          window.location.href = `../front/comments.html?id=${myJson[i]._id}`;
         })
         let viewAllComTxt = document.createElement('p')
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " 13 comments";
+        postComNum.textContent = " " + myJson[i].likes.length + ' comments';
 
         //main append
         postsCont.appendChild(onePost);
         onePost.appendChild(userInfoCnt);
+        //modal try
+        onePost.appendChild(modal)
+        modal.appendChild(modalCentered)
+        modalCentered.appendChild(modalContent)
+        modalContent.appendChild(del)
+        modalContent.appendChild(follow)
+        // modalContent.appendChild(unfollow)
+        modalContent.appendChild(cancel)
+
         //user info append
         userInfoCnt.appendChild(userInfo);
         userInfo.appendChild(profileImg);
         userInfo.appendChild(userName);
-        userInfoCnt.appendChild(moreIcn);
+        // userInfoCnt.appendChild(moreIcn);
+        userInfoCnt.appendChild(moreIcnBtn);
+        moreIcnBtn.appendChild(moreIcn);
 
         //userPost append
         onePost.appendChild(userPostContentCnt);
@@ -277,4 +301,54 @@ const createElements = () => {
     })
 
 }
-  createElements();
+createElements();
+
+const toggleLike = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/posts/togglelike/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+
+    if (!response.ok) {
+      throw Error(response);
+    }
+    return response.json();
+
+  }).then((myJson) => {
+
+  }).catch((e) => {
+    console.log(e);
+    alert('toggle failed');
+  });
+};
+
+
+const deletePost = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/posts/deletePostById/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+    // onePost.remove();
+
+    if (!response.ok) {
+      throw Error(response);
+    }
+    return response.json();
+
+  }).then((myJson) => {
+
+  }).catch((e) => {
+    console.log(e);
+    alert('toggle failed');
+  });
+};

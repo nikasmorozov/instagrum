@@ -27,8 +27,9 @@
   <div class="media">
     <!-- <img src="..." class="mr-3" alt="..."> -->
     <div class="media-body">
-      <h5 class="mt-0">Media heading</h5>
-      Cras sit amet nibh libero, in gravida nulla.
+        <div id="comments">
+
+        </div>
     </div>
   </div>
 
@@ -36,7 +37,7 @@
     <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="profile pic" class="rounded-circle img-fluid userProfPicSml" id="userProfPicSml">
     <textarea class="form-control userComment" rows="2" id="userComment" placeholder="Add a comment..."></textarea>
     <div class="postBtnCont">
-      <button type="button" class="btn btn-sm btn-primary btn-block" onclick="">Post</button>
+      <button type="button" class="btn btn-sm btn-primary btn-block" id="postBtn" onclick="addComment()">Post</button>
     </div>
   </div>
 

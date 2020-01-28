@@ -107,7 +107,6 @@ const createElements = () => {
           if (!myPosts) {
             modalContent.innerHTML = ""
             modalContent.appendChild(follow)
-            modalContent.appendChild(del)
             modalContent.appendChild(cancel)
           }else{
             modalContent.innerHTML = ""

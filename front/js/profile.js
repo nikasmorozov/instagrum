@@ -301,4 +301,3 @@ const activeUserPosts = () =>{
     });
 }
 activeUserPosts();
-

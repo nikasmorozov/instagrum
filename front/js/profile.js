@@ -196,7 +196,6 @@ editProfileBtn.addEventListener("click", async () => {
         repeatPsw.style.display = "none";
         changePicBtn.style.display = "none";
 
-<<<<<<< HEAD
         // if (usernameInput.value !== usernameTag.textContent) {
         //   changeUsernameDB(usernameInput.value);
         // }
@@ -216,14 +215,6 @@ editProfileBtn.addEventListener("click", async () => {
       currentPsw.style.display = "none";
       newPsw.style.display = "none";
       repeatPsw.style.display = "none";
-=======
-editProfileBtn.addEventListener('click', (e) => {
-    if (editProfileBtn.textContent !== 'Save') {
-
-        editProfileBtn.textContent = 'Save'
-        const usernameTag = document.getElementById('userNameTag')
-        const usernameInput = document.createElement('input')
->>>>>>> 0645b7576c70661404b65fe6279af3132ee2fbdf
     } else {
       alert("Please fill all required fields");
     }
@@ -256,7 +247,6 @@ const changePicBtn = () => {
     headers: {
       "x-auth": token
     }
-<<<<<<< HEAD
   })
     .then(response => {
       console.log(response);
@@ -271,9 +261,6 @@ const changePicBtn = () => {
     });
   // userProfPicBig.attributes('src','../../back/images/15792014152408_frame.jpg')
 };
-=======
-})
-
 
 const activeUserPosts = () =>{
   let token = localStorage.getItem("x-auth");
@@ -314,4 +301,4 @@ const activeUserPosts = () =>{
     });
 }
 activeUserPosts();
->>>>>>> 0645b7576c70661404b65fe6279af3132ee2fbdf
+

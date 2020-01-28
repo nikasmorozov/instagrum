@@ -10,8 +10,8 @@ const checkifLoggedIn = () => {
 };
 checkifLoggedIn();
 
-
 const createElements = () => {
+  // let modal = document.getElementById("modalCenter");
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
   let activeUserId = localStorage.getItem('activeUserId')
@@ -33,13 +33,11 @@ const createElements = () => {
       .then(myJson => {
 
       let postsCont = document.getElementById("postsCont");
-      // postsCont.innerHTML = "";
 
       //paskutini posta rodys pirma
       myJson.reverse();
 
       for (let i = 0; i < myJson.length; i++) {
-
         //konteineriai
         let onePost = document.createElement("div");
         onePost.classList.add("container", "fullWidthCnt", "onePost");
@@ -81,61 +79,46 @@ const createElements = () => {
         })
 
         let moreIcnBtn = document.createElement("button");
-        moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
+        moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
+        moreIcnBtn.addEventListener("click", (e)=>{
+          let modalContent = document.querySelector(".modal-content")
+            let cancel = document.createElement("button");
+            cancel.textContent= "Cancel";
+            cancel.classList.add("btn", "btn-light");
+            cancel.addEventListener('click', () => {
+              modalContent.setAttribute("data-dismiss", "modal");
+            })
 
+            let del = document.createElement("button");
+            del.textContent= "Delete";
+            del.classList.add("btn", "btn-light", "deleteBtn");
+            del.addEventListener('click', () => {
+              deletePost(myJson[i]._id);
+              onePost.style.display = "none"
+              modalContent.setAttribute("data-dismiss", "modal");
+              onePost.removeChild(modal)
+            })
+            let follow = document.createElement("button");
+            follow.textContent= "Follow";
+            follow.classList.add("btn", "btn-light", "followBtn");
 
-        // moreIcnBtn.addEventListener("click", (e)=>{
-        //   deletePost(myJson[i]._id);
-        //   onePost.style.display = 'none';
-        // });
-
-
+          let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+          if (!myPosts) {
+            modalContent.innerHTML = ""
+            modalContent.appendChild(follow)
+            modalContent.appendChild(del)
+            modalContent.appendChild(cancel)
+          }else{
+            modalContent.innerHTML = ""
+            modalContent.appendChild(del)
+            modalContent.appendChild(cancel)
+          }
+        });
 
         let moreIcn = document.createElement("i");
         moreIcn.setAttribute("data-feather", "more-horizontal");
-
-
-        let modal = document.createElement("div");
-        modal.setAttribute("tabindex", "-1");
-        modal.setAttribute("ria-labelledby", "modalCenter");
-        modal.setAttribute("aria-hidden", "true");
-        modal.setAttribute("id", "modalCenter");
-        modal.classList.add("modal", "fade");
-
-        let modalCentered = document.createElement("div");
-        modalCentered.classList.add("modal-dialog", "modal-dialog-centered");
-
-        let modalContent = document.createElement("div");
-        modalContent.classList.add("modal-content");
-
-        let del = document.createElement("button");
-        del.textContent= "Delete";
-        del.classList.add("btn", "btn-light", "deleteBtn");
-        del.addEventListener('click', () => {
-          deletePost(myJson[i]._id);
-          onePost.style.display = "none"
-          modalContent.setAttribute("data-dismiss", "modal");
-        })
-        let follow = document.createElement("button");
-        follow.textContent= "Follow";
-        follow.classList.add("btn", "btn-light", "followBtn");
-        follow.addEventListener('click', () => {
-
-        })
-        // let unfollow = document.createElement("button");
-        // unfollow.textContent= "Unfollow";
-        // unfollow.classList.add("btn", "btn-light", "unfollowBtn");
-        // unfollow.addEventListener('click', () => {
-        //
-        // })
-        let cancel = document.createElement("button");
-        cancel.textContent= "Cancel";
-        cancel.classList.add("btn", "btn-light");
-        cancel.addEventListener('click', () => {
-          modalContent.setAttribute("data-dismiss", "modal");
-        })
 
         //cnt userPost
         let userPostContentCnt = document.createElement("div");
@@ -242,20 +225,11 @@ const createElements = () => {
         //main append
         postsCont.appendChild(onePost);
         onePost.appendChild(userInfoCnt);
-        //modal try
-        onePost.appendChild(modal)
-        modal.appendChild(modalCentered)
-        modalCentered.appendChild(modalContent)
-        modalContent.appendChild(del)
-        modalContent.appendChild(follow)
-        // modalContent.appendChild(unfollow)
-        modalContent.appendChild(cancel)
 
         //user info append
         userInfoCnt.appendChild(userInfo);
         userInfo.appendChild(profileImg);
         userInfo.appendChild(userName);
-        // userInfoCnt.appendChild(moreIcn);
         userInfoCnt.appendChild(moreIcnBtn);
         moreIcnBtn.appendChild(moreIcn);
 

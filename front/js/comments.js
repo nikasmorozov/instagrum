@@ -90,17 +90,56 @@ const getCommentsByPostId = (id) => {
 
 function drawComments(val){
   let commentDiv = document.getElementById("comments")
+  commentDiv.classList.add(
+    "container-fluid",
+    "d-flex",
+    "flex-column",
+    "justify-content-center",
+    "align-items-start",
+  );
+  commentDiv.style.border = "1px solid blue"
+
+  //profilio img
+  const profileImg = document.createElement("img");
+  profileImg.classList.add(
+    "rounded-circle",
+    "img-fluid",
+    "userProfPicSml"
+  );
+  if (val.user.profilePicURL) {
+    profileImg.setAttribute(
+      "src",
+      val.user.profilePicURL
+    );
+  } else {
+    profileImg.setAttribute(
+      "src",
+      "https://www.w3schools.com/w3css/img_avatar3.png"
+    );
+  }
+
+  //vienas postas
+  let nameAndComCnt = document.createElement("div");
+  nameAndComCnt.style.border = "1px solid red"
+  nameAndComCnt.classList.add(
+    "d-flex",
+    "justify-content-center",
+    "align-items-center",
+  );
 
   let userName = document.createElement("span");
   userName.classList.add("font-weight-bold", "userName");
   userName.setAttribute("id", "userNameTag");
   userName.textContent = val.user.username;
 
-  let comment = document.createElement('p')
+  let comment = document.createElement('span')
   comment.textContent = val.comment
 
-  commentDiv.appendChild(userName);
-  commentDiv.appendChild(comment);
+  // commentDiv.appendChild(singleCom);
+  commentDiv.appendChild(profileImg);
+  commentDiv.appendChild(nameAndComCnt);
+  nameAndComCnt.appendChild(userName);
+  nameAndComCnt.appendChild(comment);
 }
 
 function queryToJSON() {

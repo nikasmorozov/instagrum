@@ -6,20 +6,23 @@ const fs = require('fs')
 
 const register = (req, res) => {
   const host = req.hostname;
-  const filePath =
-    req.protocol +
-    "://" +
-    host +
-    ":" +
-    req.socket.localPort +
-    "/" +
-    req.file.path;
-
   let data = req.body;
   let user = new User();
+    if (req.file!=undefined) {
+        const filePath =
+            req.protocol +
+            "://" +
+            host +
+            ":" +
+            req.socket.localPort +
+            "/" +
+            req.file.path;
+            user.profilePicURL = filePath;
+    } else {
+        user.profilePicURL = '';
+    }
   user.username = data.username;
   user.password = data.password;
-  user.profilePicURL = filePath;
   console.log("user", user);
 
   user

@@ -55,6 +55,81 @@ const postsCounter = () => {
 
 postsCounter();
 
+const FollowersCounter = () => {
+  let token = localStorage.getItem("x-auth");
+  const noOfFollowersSpan = document.getElementById("NumberOfFollowers");
+  let activeUserId = localStorage.getItem("activeUserId");
+
+  fetch("http://localhost:3000/api/v1/user/getAllUsers", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(allUsers => {
+      const userFollowers = allUsers.filter(el => {
+        if (el.users[0]._id === activeUserId) {
+          // return el;
+          console.log(allUsers);
+          console.log(userFollowers)
+        }
+      });
+      noOfFollowersSpan.textContent = userFollowers.length;
+    });
+}
+
+FollowersCounter();
+
+const changePsw = (pswToTest, newPsw, repeatPsw) => {
+  return new Promise((resolve, reject) => {
+    let token = localStorage.getItem("x-auth");
+    //   let activeUserId = localStorage.getItem("activeUserId");
+    let body = {
+      // id: activeUserId,
+      currPassword: pswToTest,
+      newPassword: newPsw,
+      repPassword: repeatPsw
+    };
+
+    fetch("http://localhost:3000/api/v1/user/changeUserInfo", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "x-auth": token,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        console.log(response);
+        if (!response.ok) {
+          alert("wrong password");
+
+          throw response;
+        }
+        return response.json();
+      })
+      .then(checkResult => {
+        if (newPsw === repeatPsw) {
+          resolve(true);
+        } else {
+          alert("new password does not match");
+          resolve(false);
+        }
+      })
+      .catch(async e => {
+        console.log(await e.json());
+        reject(false);
+      });
+  });
+};
+
 const setProfileInfo = () => {
   const userNameTag = document.getElementById("userNameTag");
   const userProfPicBig = document.querySelector(".userProfPicBig");
@@ -75,6 +150,8 @@ const setProfileInfo = () => {
       return response.json();
     })
     .then(userFound => {
+      console.log(userFound.username);
+
       userNameTag.textContent = userFound.username;
       if (userFound.profilePicURL) {
         userProfPicBig.src = userFound.profilePicURL;
@@ -84,19 +161,138 @@ const setProfileInfo = () => {
 
 setProfileInfo();
 
-const editProfileBtn = document.querySelector('.editProfBtn')
-
-editProfileBtn.addEventListener('click', (e) => {
-    if (editProfileBtn.textContent !== 'Save') {
-
-        editProfileBtn.textContent = 'Save'
-        const usernameTag = document.getElementById('userNameTag')
-        const usernameInput = document.createElement('input')
-    } else {
-        editProfileBtn.textContent = 'Edit Profile'
+const changeUsernameDB = usernameInput => {
+  //   const userNameTag = document.getElementById("userNameTag");
+  let token = localStorage.getItem("x-auth");
+  let body = {
+    newUsername: usernameInput
+  };
+  console.log("change username", usernameInput);
+  fetch("http://localhost:3000/api/v1/user/changeUserInfo", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
     }
-})
+  })
+    .then(response => {
+      console.log(response);
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+    .then(checkResult => {})
+    .catch(e => {
+      console.log(e.json());
+    });
+};
 
+const editProfileBtn = document.querySelector(".editProfBtn");
+
+editProfileBtn.addEventListener("click", async () => {
+  const usernameTag = document.getElementById("userNameTag");
+  const usernameInput = document.getElementById("userNameInput");
+  const changePswBtn = document.querySelector(".changePswBtn");
+  const changePicBtn = document.getElementById("changeProfileImage");
+  const currentPsw = document.getElementById("currentPsw");
+  const newPsw = document.getElementById("newPsw");
+  const repeatPsw = document.getElementById("repeatPsw");
+  const userNameTag = document.getElementById("userNameTag");
+
+  if (editProfileBtn.textContent !== "Save") {
+    editProfileBtn.textContent = "Save";
+    usernameTag.style.display = "none";
+    usernameInput.style.display = "block";
+    changePswBtn.style.display = "block";
+    changePicBtn.style.display = "block";
+
+    usernameInput.setAttribute("value", usernameTag.textContent);
+  } else {
+    if (currentPsw.value && newPsw.value && repeatPsw.value) {
+      const result = await changePsw(
+        currentPsw.value,
+        newPsw.value,
+        repeatPsw.value
+      );
+      console.log(result);
+
+      if (result) {
+        editProfileBtn.textContent = "Edit Profile";
+        usernameInput.style.display = "none";
+        usernameTag.style.display = "block";
+        changePswBtn.style.display = "none";
+        currentPsw.style.display = "none";
+        newPsw.style.display = "none";
+        repeatPsw.style.display = "none";
+        changePicBtn.style.display = "none";
+
+        // if (usernameInput.value !== usernameTag.textContent) {
+        //   changeUsernameDB(usernameInput.value);
+        // }
+        currentPsw.value = "";
+        newPsw.value = "";
+        repeatPsw.value = "";
+      }
+    } else if (!currentPsw.value && !newPsw.value && !repeatPsw.value) {
+      //   if (usernameInput.value !== usernameTag.textContent) {
+      //     changeUsernameDB(usernameInput.value);
+      //   }
+      editProfileBtn.textContent = "Edit Profile";
+      usernameInput.style.display = "none";
+      usernameTag.style.display = "block";
+      changePswBtn.style.display = "none";
+      changePicBtn.style.display = "none";
+      currentPsw.style.display = "none";
+      newPsw.style.display = "none";
+      repeatPsw.style.display = "none";
+    } else {
+      alert("Please fill all required fields");
+    }
+    changeUsernameDB(usernameInput.value);
+    userNameTag.textContent = usernameInput.value;
+  }
+});
+
+const changePswBtn = target => {
+  target.style.display = "none";
+  const currentPsw = document.getElementById("currentPsw");
+  const newPsw = document.getElementById("newPsw");
+  const repeatPsw = document.getElementById("repeatPsw");
+  currentPsw.style.display = "block";
+  newPsw.style.display = "block";
+  repeatPsw.style.display = "block";
+};
+
+const changePicBtn = () => {
+  // const userProfPicBig = document.querySelector('.userProfPicBig')
+
+  const file = document.getElementById("changeProfileImage");
+  let token = localStorage.getItem("x-auth");
+  let data = new FormData();
+  data.append("profilePic", file.files[0]);
+
+  fetch("http://localhost:3000/api/v1/user/changeAvatar", {
+    method: "POST",
+    body: data,
+    headers: {
+      "x-auth": token
+    }
+  })
+    .then(response => {
+      console.log(response);
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+    .then(checkResult => {})
+    .catch(e => {
+      console.log(e.json());
+    });
+  // userProfPicBig.attributes('src','../../back/images/15792014152408_frame.jpg')
+};
 
 const activeUserPosts = () =>{
   let token = localStorage.getItem("x-auth");
@@ -137,3 +333,4 @@ const activeUserPosts = () =>{
     });
 }
 activeUserPosts();
+

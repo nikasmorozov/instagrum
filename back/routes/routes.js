@@ -33,6 +33,9 @@ router.get('/user/getAllUsers', userController.getAll);
 router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.get('/user/deleteUserByName/:username', userController.deleteUserByName);
 router.get('/user/logout', middleware.authenticate, userController.logout);
+// router.post('/user/verifyPsw', middleware.authenticate, userController.checkPsw);
+router.post('/user/changeUserInfo', middleware.authenticate, userController.changeUserInfo);
+router.post('/user/changeAvatar', middleware.authenticate, upload.single('profilePic'), userController.changeAvatar);
 
 
 

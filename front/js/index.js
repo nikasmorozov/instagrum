@@ -98,7 +98,6 @@ const createElements = () => {
               deletePost(myJson[i]._id);
               onePost.style.display = "none"
               modalContent.setAttribute("data-dismiss", "modal");
-              onePost.removeChild(modal)
             })
             let follow = document.createElement("button");
             follow.textContent= "Follow";

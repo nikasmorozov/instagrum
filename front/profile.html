@@ -1,88 +1,173 @@
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Instagrum</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/feather-icons"></script>
-  <link rel="stylesheet" type="text/css" href="./style.css" />
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Instagrum</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
 
-<body class="instagrumMainCont">
+  <body class="instagrumMainCont">
+    <nav
+      class="navbar fixed-top bg-light border-bottom d-flex justify-content-between"
+    >
+      <a class="navElem" href="#">
+        <i data-feather="camera"></i>
+      </a>
+      <a class="navElem" href="index.html">
+        <img src="/front/src/instagrum.png" class="navLogo img-fluid" />
+      </a>
+      <a class="navElem" href="#">
+        <i data-feather="send" class="sendIcon"></i>
+      </a>
+    </nav>
 
-  <nav class="navbar fixed-top bg-light border-bottom d-flex justify-content-between">
-    <a class="navElem" href="#">
-      <i data-feather="camera"></i>
-    </a>
-    <a class="navElem" href="index.html">
-      <img src="/front/src/instagrum.png" class="navLogo img-fluid">
-    </a>
-    <a class="navElem" href="#">
-      <i data-feather="send" class='sendIcon'></i>
-    </a>
-  </nav>
+    <div class="container-fluid profileCnt">
+      <div
+        class="container d-flex justify-content-around align-items-center fullWidthCnt userProfileData"
+      >
+        <div class="picContainer">
+          <img
+            src="https://www.w3schools.com/w3css/img_avatar3.png"
+            alt="profile pic"
+            class="rounded-circle img-fluid userProfPicBig"
+          />
+          <input
+            type="file"
+            value="Change"
+            name="profilePic"
+            class="form-control-file"
+            id="changeProfileImage"
+            class="regForm"
+            placeholder="Change profile pic"
+            style="display:none"
+            onchange="changePicBtn()"
+          />
+        </div>
+        <div class="d-flex flex-column profileUserInf">
+          <span class="profileUserName" id="userNameTag"></span>
+          <input type="text" id="userNameInput" style="display:none" />
+          <button
+            type="button"
+            onclick="changePswBtn(this)"
+            name="button"
+            class="btn btn-light btn-sm changePswBtn"
+            style="display:none"
+          >
+            Change Password
+          </button>
+          <input
+            placeholder="Current Password"
+            id="currentPsw"
+            type="password"
+            style="display:none"
+          />
+          <input
+            placeholder="New Password"
+            id="newPsw"
+            type="password"
+            style="display:none"
+          />
+          <input
+            placeholder="Repeat new password"
+            id="repeatPsw"
+            type="password"
+            style="display:none"
+          />
 
-  <div class="container-fluid profileCnt">
-    <div class="container d-flex justify-content-around align-items-center fullWidthCnt userProfileData">
-      <img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile pic" class="rounded-circle img-fluid userProfPicBig">
-      <div class="d-flex flex-column profileUserInf">
-        <span class="profileUserName" id="userNameTag"></span>
-        <button type="button" name="button" class="btn btn-light btn-sm editProfBtn">
-          Edit Profile
-        </button>
-        <button type="button" onclick="logout()" name="button" class="btn btn-light btn-sm logOutBtn">Log Out</button>
+          <button
+            type="button"
+            name="button"
+            class="btn btn-light btn-sm editProfBtn"
+          >
+            Edit Profile
+          </button>
+          <button
+            type="button"
+            onclick="logout()"
+            name="button"
+            class="btn btn-light btn-sm logOutBtn"
+          >
+            Log Out
+          </button>
+        </div>
+      </div>
+
+      <div class="container-fluid userStatisticCnt">
+        <hr />
+        <div
+          class="container-fluid d-flex justify-content-around align-items-center userStatistic"
+        >
+          <div class="statsElemCnt">
+            <p class="statNum" id="">0</p>
+            <p class="statName">posts</p>
+          </div>
+          <div class="statsElemCnt">
+            <p class="statNum" id="">33</p>
+            <p class="statName">followers</p>
+          </div>
+          <div class="statsElemCnt">
+            <p class="statNum" id="">80</p>
+            <p class="statName">following</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <div class="container userPicsCnt">
+        <div class="row row-cols-3 postImageProfCnt"></div>
       </div>
     </div>
 
-    <div class="container-fluid userStatisticCnt">
-      <hr>
-      <div class="container-fluid d-flex justify-content-around align-items-center userStatistic">
-        <div class="statsElemCnt">
-          <p class="statNum" id="">0</p>
-          <p class="statName">posts</p>
-        </div>
-        <div class="statsElemCnt">
-          <p class="statNum" id="">33</p>
-          <p class="statName">followers</p>
-        </div>
-        <div class="statsElemCnt">
-          <p class="statNum" id="">80</p>
-          <p class="statName">following</p>
-        </div>
-      </div>
-      <hr>
-    </div>
+    <footer
+      class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers"
+    >
+      <a class="footerElem" href="index.html">
+        <i data-feather="home"></i>
+      </a>
+      <a class="footerElem" href="#">
+        <i data-feather="search"></i>
+      </a>
+      <a class="footerElem" id="newPostBtn" href="newpost.html">
+        <i data-feather="plus-square"></i>
+      </a>
+      <a class="footerElem" href="#">
+        <i data-feather="heart"></i>
+      </a>
+      <a class="footerElem" href="profile.html">
+        <i data-feather="user" class="filledIcon"></i>
+      </a>
+    </footer>
 
-    <div class="container userPicsCnt">
-      <div class="row row-cols-3 postImageProfCnt">
-      </div>
-    </div>
-  </div>
-
-  <footer class="footer fixed-bottom bg-light border-top d-flex justify-content-between align-self-center footers">
-    <a class="footerElem" href="index.html">
-      <i data-feather="home"></i>
-    </a>
-    <a class="footerElem" href="#">
-      <i data-feather="search"></i>
-    </a>
-    <a class="footerElem" id="newPostBtn" href="newpost.html">
-      <i data-feather="plus-square"></i>
-    </a>
-    <a class="footerElem" href="#">
-      <i data-feather="heart"></i>
-    </a>
-    <a class="footerElem" href="profile.html">
-      <i data-feather="user" class="filledIcon"></i>
-    </a>
-  </footer>
-
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
-  <script src="./js/profile.js"></script>
-</body>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
+    <script src="./js/profile.js"></script>
+  </body>
 </html>

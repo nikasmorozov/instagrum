@@ -433,6 +433,14 @@ hr{
 .createItemContainer button {
   width: 100px;
 }
+.picContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+#changeProfileImage{
+  width: 100px;
+}
 
 .logout {
   position: absolute;

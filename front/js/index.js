@@ -96,7 +96,6 @@ const createElements = () => {
         let moreIcn = document.createElement("i");
         moreIcn.setAttribute("data-feather", "more-horizontal");
 
-
         let modal = document.createElement("div");
         modal.setAttribute("tabindex", "-1");
         modal.setAttribute("ria-labelledby", "modalCenter");
@@ -261,7 +260,15 @@ const createElements = () => {
         modal.appendChild(modalCentered)
         modalCentered.appendChild(modalContent)
         modalContent.appendChild(del)
-        modalContent.appendChild(follow)
+        // modalContent.appendChild(follow)
+
+        let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+        if (!myPosts) {
+          userInfo.appendChild(followButton)
+          modalContent.appendChild(follow)
+        };
+        console.log(follow)
+
         // modalContent.appendChild(unfollow)
         modalContent.appendChild(cancel)
 
@@ -272,10 +279,11 @@ const createElements = () => {
 
         //ADD FOLLOW BUTTON ONLY on posts that don't belong to the active user
         // userInfo.appendChild(followButton)
-        let myPosts = myJson[i].user[0]._id.includes(activeUserId)
-        if (!myPosts) {
-          userInfo.appendChild(followButton)
-        };
+        // let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+        // if (!myPosts) {
+        //   userInfo.appendChild(followButton)
+        //   modalContent.appendChild(follow)
+        // };
 
         userInfoCnt.appendChild(moreIcn);
         // userInfoCnt.appendChild(moreIcn);

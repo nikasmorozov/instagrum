@@ -26,6 +26,11 @@ const setProfileInfo = () => {
       userNameTag.textContent = userFound.username +" liked your photo";
       if (userFound.profilePicURL) {
         userProfPicSml.src = userFound.profilePicURL;
+      }else{
+        userProfPicSml.setAttribute(
+          "src",
+          "https://www.w3schools.com/w3css/img_avatar3.png"
+        );
       }
     });
 }

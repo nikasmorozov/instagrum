@@ -134,10 +134,6 @@ const createElements = () => {
         const postImg = document.createElement("img");
         postImg.classList.add("img-fluid", "postImage");
         postImg.setAttribute("src", myJson[i].imageURL);
-        postImg.addEventListener('click', (e) => {
-          //turetu nukelti i kita langa ir priskirti pries tai paspaustos ft info
-          window.location.href = "onePostInf.html"
-        })
 
         let postActionsCnt = document.createElement("div");
         postActionsCnt.classList.add("container-fluid", "postActionsCnt");

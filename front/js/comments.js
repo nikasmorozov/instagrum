@@ -43,6 +43,7 @@ const addComment = () => {
       postId: queryToJSON().id
   }
   document.getElementById("userComment").value = ""
+  document.getElementById("userComment").style.height = "auto"
   fetch(`http://localhost:3000/api/v1/comments/addComment`, {
       method: 'POST',
       headers: {
@@ -91,13 +92,23 @@ const getCommentsByPostId = (id) => {
 function drawComments(val){
   let commentDiv = document.getElementById("comments")
   commentDiv.classList.add(
-    "container-fluid",
+    "container",
     "d-flex",
     "flex-column",
     "justify-content-center",
     "align-items-start",
   );
-  commentDiv.style.border = "1px solid blue"
+
+  let hr = document.createElement("hr")
+
+  let oneComm = document.createElement("div");
+    oneComm.classList.add(
+      "container",
+      "d-flex",
+      "justify-content-start",
+      "align-items-center",
+      "oneComm"
+    );
 
   //profilio img
   const profileImg = document.createElement("img");
@@ -111,33 +122,31 @@ function drawComments(val){
       "src",
       val.user.profilePicURL
     );
-  } else {
+  }else{
     profileImg.setAttribute(
-      "src",
-      "https://www.w3schools.com/w3css/img_avatar3.png"
+    "src",
+    "https://www.w3schools.com/w3css/img_avatar3.png"
     );
   }
 
-  //vienas postas
   let nameAndComCnt = document.createElement("div");
-  nameAndComCnt.style.border = "1px solid red"
   nameAndComCnt.classList.add(
-    "d-flex",
-    "justify-content-center",
-    "align-items-center",
+    "container"
   );
 
   let userName = document.createElement("span");
   userName.classList.add("font-weight-bold", "userName");
   userName.setAttribute("id", "userNameTag");
-  userName.textContent = val.user.username;
+  userName.textContent = val.user.username+" ";
 
   let comment = document.createElement('span')
   comment.textContent = val.comment
+  comment.classList.add("onePersonComm");
 
-  // commentDiv.appendChild(singleCom);
-  commentDiv.appendChild(profileImg);
-  commentDiv.appendChild(nameAndComCnt);
+  commentDiv.appendChild(oneComm);
+  commentDiv.appendChild(hr);
+  oneComm.appendChild(profileImg);
+  oneComm.appendChild(nameAndComCnt);
   nameAndComCnt.appendChild(userName);
   nameAndComCnt.appendChild(comment);
 }

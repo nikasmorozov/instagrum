@@ -264,7 +264,7 @@ const changePswBtn = target => {
 const changePicBtn = () => {
   // const userProfPicBig = document.querySelector('.userProfPicBig')
 
-  const file = document.getElementById("changeProfileImage");
+  const file = document.getElementById("changeProfileImageFile");
   let token = localStorage.getItem("x-auth");
   let data = new FormData();
   data.append("profilePic", file.files[0]);
@@ -303,7 +303,7 @@ const activeUserPosts = () =>{
     }
   })
     .then(response => {
-      
+
       // if (!response.ok) {
       //   throw Error(response);
       // }

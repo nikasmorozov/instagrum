@@ -17,6 +17,7 @@
       rel="stylesheet"
     />
     <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style.css" />
   </head>
 
@@ -45,21 +46,14 @@
             alt="profile pic"
             class="rounded-circle img-fluid userProfPicBig"
           />
-          <input
-            type="file"
-            value="Change"
-            name="profilePic"
-            class="form-control-file"
-            id="changeProfileImage"
-            class="regForm"
-            placeholder="Change profile pic"
-            style="display:none"
-            onchange="changePicBtn()"
-          />
+          <label class="btn changeProfileImage" style="display:none" id="changeProfileImage">
+            <i class="ri-add-circle-line ri-xl changeProfileImageFile"></i>
+            <input type="file" value="Change" name="profilePic" class="form-control-file regForm"  id="changeProfileImageFile" onchange="changePicBtn()" hidden>
+          </label>
         </div>
         <div class="d-flex flex-column profileUserInf">
           <span class="profileUserName" id="userNameTag"></span>
-          <input type="text" id="userNameInput" style="display:none" />
+          <input type="text" id="userNameInput" class="editProfInputs" maxlength="30" style="display:none" />
           <button
             type="button"
             onclick="changePswBtn(this)"
@@ -74,18 +68,21 @@
             id="currentPsw"
             type="password"
             style="display:none"
+            class="editProfInputs"
           />
           <input
             placeholder="New Password"
             id="newPsw"
             type="password"
             style="display:none"
+            class="editProfInputs"
           />
           <input
             placeholder="Repeat new password"
             id="repeatPsw"
             type="password"
             style="display:none"
+            class="editProfInputs"
           />
 
           <button
@@ -144,7 +141,7 @@
       <a class="footerElem" id="newPostBtn" href="newpost.html">
         <i data-feather="plus-square"></i>
       </a>
-      <a class="footerElem" href="#">
+      <a class="footerElem" href="activity.html">
         <i data-feather="heart"></i>
       </a>
       <a class="footerElem" href="profile.html">

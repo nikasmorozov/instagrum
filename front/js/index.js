@@ -82,41 +82,70 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
+        //moreIcnBtn dabar reik su fetchu turet, kad on click pasiupdeitintu followinimo duomenys
         moreIcnBtn.addEventListener("click", (e) => {
-          let modalContent = document.querySelector(".modal-content")
-          let cancel = document.createElement("button");
-          cancel.textContent = "Cancel";
-          cancel.classList.add("btn", "btn-light");
-          cancel.addEventListener('click', () => {
-            modalContent.setAttribute("data-dismiss", "modal");
+          fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+            method: "GET",
+            headers: {
+              "x-auth": token,
+              "Content-Type": "application/json"
+            }
           })
+            .then(response => {
+              if (!response.ok) {
+                throw Error(response);
+              }
+              return response.json();
+            })
+            .then(myJson => {
+              //sito reverse reikia, kad moreIcnBtn sutaptu su postu reverse
+              myJson.reverse();
 
-          let del = document.createElement("button");
-          del.textContent = "Delete";
-          del.classList.add("btn", "btn-light", "deleteBtn");
-          del.addEventListener('click', () => {
-            deletePost(myJson[i]._id);
-            onePost.style.display = "none"
-            modalContent.setAttribute("data-dismiss", "modal");
-          })
-          let follow = document.createElement("button");
-          follow.textContent = "Follow";
-          follow.classList.add("btn", "btn-light", "followBtn");
-          follow.addEventListener('click', () => {
-            followThisUser(myJson[i].user);
-            modalContent.setAttribute("data-dismiss", "modal");
-          })
+              let modalContent = document.querySelector(".modal-content")
+              let cancel = document.createElement("button");
+              cancel.textContent = "Cancel";
+              cancel.classList.add("btn", "btn-light");
+              cancel.addEventListener('click', () => {
+                modalContent.setAttribute("data-dismiss", "modal");
+              })
 
-          let myPosts = myJson[i].user[0]._id.includes(activeUserId)
-          if (!myPosts) {
-            modalContent.innerHTML = ""
-            modalContent.appendChild(follow)
-            modalContent.appendChild(cancel)
-          } else {
-            modalContent.innerHTML = ""
-            modalContent.appendChild(del)
-            modalContent.appendChild(cancel)
-          }
+              let del = document.createElement("button");
+              del.textContent = "Delete";
+              del.classList.add("btn", "btn-light", "deleteBtn");
+              del.addEventListener('click', () => {
+                deletePost(myJson[i]._id);
+                onePost.style.display = "none"
+                modalContent.setAttribute("data-dismiss", "modal");
+              })
+              let follow = document.createElement("button");
+              
+              // Follow/Unfollow toggle black magic. BEWARE!!
+              let FollowThat = myJson[i].user[0].followers[0];
+              if (FollowThat === undefined) {
+                follow.textContent = "Follow";
+              } else if (myJson[i].user[0].followers[0]._id === activeUserId) {
+                follow.textContent = "Unfollow";
+              }
+              // console.log(activeUserId)
+              // console.log(myJson[i])
+
+              follow.classList.add("btn", "btn-light", "followBtn");
+              follow.addEventListener('click', () => {
+                followThisUser(myJson[i].user);
+                modalContent.setAttribute("data-dismiss", "modal");
+              })
+
+              let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+              if (!myPosts) {
+                modalContent.innerHTML = ""
+                modalContent.appendChild(follow)
+                modalContent.appendChild(cancel)
+              } else {
+                modalContent.innerHTML = ""
+                modalContent.appendChild(del)
+                modalContent.appendChild(cancel)
+              }
+            });
         });
 
         let moreIcn = document.createElement("i");
@@ -318,15 +347,15 @@ const followThisUser = (id) => {
     if (!response.ok) {
       throw Error(response);
     }
-      console.log(response);
-      alert('follow successful');
-      return response.json();
-    }).then((myJson) => {
+    console.log(response);
+    // alert('follow successful');
+    return response.json();
+  }).then((myJson) => {
 
-    }).catch((e) => {
-      console.log(e);
-      alert('follow failed');
-    });
+  }).catch((e) => {
+    console.log(e);
+    alert('follow failed');
+  });
   console.log(id)
 };
 

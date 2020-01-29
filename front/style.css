@@ -317,9 +317,14 @@ textarea:focus, input:focus{
 }
 
 /* comments.html */
-.createComCnt{
-  padding: 10px 5px;
+.oneComm{
+  margin: 10px 0px;
+  padding: 0px;
+}
+.onePersonComm{
+  width: 100%;
   height: auto;
+  word-wrap: break-word;
 }
 
 .userComment{
@@ -328,6 +333,10 @@ textarea:focus, input:focus{
 
 .postBtnCont{
   margin-left: 5px;
+}
+
+.createComCnt{
+  padding: 2px 5px;
 }
 
 /* profile.html */
@@ -359,7 +368,19 @@ textarea:focus, input:focus{
   word-wrap: break-word;
 }
 
-.editProfBtn, .logOutBtn{
+.changeProfileImage{
+  position: absolute;
+  margin-left:35px;
+  margin-top: 38px;
+}
+
+.changeProfileImageFile{
+  background-color: white;
+  border-radius: 100%;
+  border: 3px solid white;
+}
+
+.editProfBtn, .logOutBtn, .changePswBtn{
   border: 1.5px solid #ededed;
   color: #000;
   font-size: 15px;
@@ -370,6 +391,15 @@ textarea:focus, input:focus{
 
 .editProfBtn:focus{
   box-shadow: none !important;
+}
+
+.changePswBtn{
+  margin-bottom: 7px;
+}
+
+.editProfInputs{
+  width: 90%;
+  margin-bottom: 5px;
 }
 
 .userStatisticCnt{
@@ -459,9 +489,9 @@ hr{
   flex-direction: column;
 }
 
-#changeProfileImage{
+/* #changeProfileImage{
   width: 100px;
-}
+} */
 
 .logout {
   position: absolute;

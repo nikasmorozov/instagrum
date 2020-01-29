@@ -163,10 +163,6 @@ const createElements = () => {
         const postImg = document.createElement("img");
         postImg.classList.add("img-fluid", "postImage");
         postImg.setAttribute("src", myJson[i].imageURL);
-        postImg.addEventListener('click', (e) => {
-          //turetu nukelti i kita langa ir priskirti pries tai paspaustos ft info
-          window.location.href = "onePostInf.html"
-        })
 
         let postActionsCnt = document.createElement("div");
         postActionsCnt.classList.add("container-fluid", "postActionsCnt");
@@ -383,3 +379,28 @@ const deletePost = (id) => {
     alert('toggle failed');
   });
 };
+
+const renderActivity = () => {
+
+  let token = localStorage.getItem("x-auth");
+
+
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(myJson => {
+      console.log(myJson)
+    })
+};
+
+renderActivity();

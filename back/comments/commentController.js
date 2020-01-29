@@ -8,12 +8,13 @@ const addComment = async (req, res) => {
         comment.comment = data.comment;
         comment.postId = data.postId
         comment.user = req.user._id
-        comment.save()
+        let createdComment = await comment.save()
 
         let post = await Post.findOne({
             _id: data.postId
         }).populate('user', 'username profilePicURL')
-        post.comment = comment
+        post.comment = createdComment._id
+        post.commentCount = post.commentCount + 1
         post.save()
         res.json(post)
     } catch (e) {

@@ -226,10 +226,10 @@ const createElements = () => {
 
         let lastUserNameComment = document.createElement('span')
         lastUserNameComment.classList.add('font-weight-bold', 'lastCommenterName')
-        lastUserNameComment.textContent ? myJson[i].comment.user.username : "";
+        lastUserNameComment.textContent = myJson[i].comment ? myJson[i].comment.user.username : "";
         let lastComment = document.createElement('span')
         lastComment.classList.add('userCommTxt')
-        lastComment.textContent ? myJson[i].comment.comment : "";
+        lastComment.textContent = myJson[i].comment ? myJson[i].comment.comment : "";
 
         //view more comments btn
         let viewAllComBtn = document.createElement('a')
@@ -273,14 +273,15 @@ const createElements = () => {
         postComsAndLikesCnt.appendChild(userPostCom)
         userPostCom.appendChild(userNameComment)
         userPostCom.appendChild(comment)
-        //lasst comment
-        postComsAndLikesCnt.appendChild(lastPostCom)
-        lastPostCom.appendChild(lastUserNameComment)
-        lastPostCom.appendChild(lastComment)
 
         postComsAndLikesCnt.appendChild(viewAllComBtn)
         viewAllComBtn.appendChild(viewAllComTxt)
         viewAllComTxt.appendChild(postComNum)
+
+        //lasst comment
+        postComsAndLikesCnt.appendChild(lastPostCom)
+        lastPostCom.appendChild(lastUserNameComment)
+        lastPostCom.appendChild(lastComment)
 
         //ikonoms
         feather.replace();

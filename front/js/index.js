@@ -82,34 +82,37 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
-        moreIcnBtn.addEventListener("click", (e)=>{
+        moreIcnBtn.addEventListener("click", (e) => {
           let modalContent = document.querySelector(".modal-content")
-            let cancel = document.createElement("button");
-            cancel.textContent= "Cancel";
-            cancel.classList.add("btn", "btn-light");
-            cancel.addEventListener('click', () => {
-              modalContent.setAttribute("data-dismiss", "modal");
-            })
+          let cancel = document.createElement("button");
+          cancel.textContent = "Cancel";
+          cancel.classList.add("btn", "btn-light");
+          cancel.addEventListener('click', () => {
+            modalContent.setAttribute("data-dismiss", "modal");
+          })
 
-            let del = document.createElement("button");
-            del.textContent= "Delete";
-            del.classList.add("btn", "btn-light", "deleteBtn");
-            del.addEventListener('click', () => {
-              deletePost(myJson[i]._id);
-              onePost.style.display = "none"
-              modalContent.setAttribute("data-dismiss", "modal");
-            })
-            let follow = document.createElement("button");
-            follow.textContent= "Follow";
-            follow.classList.add("btn", "btn-light", "followBtn");
+          let del = document.createElement("button");
+          del.textContent = "Delete";
+          del.classList.add("btn", "btn-light", "deleteBtn");
+          del.addEventListener('click', () => {
+            deletePost(myJson[i]._id);
+            onePost.style.display = "none"
+            modalContent.setAttribute("data-dismiss", "modal");
+          })
+          let follow = document.createElement("button");
+          follow.textContent = "Follow";
+          follow.classList.add("btn", "btn-light", "followBtn");
+          follow.addEventListener('click', () => {
+            followThisUser(myJson[i].user);
+            modalContent.setAttribute("data-dismiss", "modal");
+          })
 
           let myPosts = myJson[i].user[0]._id.includes(activeUserId)
           if (!myPosts) {
             modalContent.innerHTML = ""
             modalContent.appendChild(follow)
-            modalContent.appendChild(del)
             modalContent.appendChild(cancel)
-          }else{
+          } else {
             modalContent.innerHTML = ""
             modalContent.appendChild(del)
             modalContent.appendChild(cancel)
@@ -150,25 +153,25 @@ const createElements = () => {
           toggleLike(myJson[i]._id);
 
 
-            if (e.target.classList.contains("ri-heart-fill")) {
-              e.target.classList.replace("ri-heart-fill", "ri-heart-line");
+          if (e.target.classList.contains("ri-heart-fill")) {
+            e.target.classList.replace("ri-heart-fill", "ri-heart-line");
 
-              if (myJson[i].likes.includes(activeUserId)) {
-                postLikes.textContent = myJson[i].likes.length-1 + ' likes';
-              } else {
-                postLikes.textContent = myJson[i].likes.length + ' likes';
-              };
-
+            if (myJson[i].likes.includes(activeUserId)) {
+              postLikes.textContent = myJson[i].likes.length - 1 + ' likes';
             } else {
-              e.target.classList.replace("ri-heart-line", "ri-heart-fill");
-
-              if (myJson[i].likes.includes(activeUserId)) {
-                postLikes.textContent = myJson[i].likes.length + ' likes';
-              } else {
-                postLikes.textContent = myJson[i].likes.length+1 + ' likes';
-              }
-              console.log(myJson[i].likes.length)
+              postLikes.textContent = myJson[i].likes.length + ' likes';
             };
+
+          } else {
+            e.target.classList.replace("ri-heart-line", "ri-heart-fill");
+
+            if (myJson[i].likes.includes(activeUserId)) {
+              postLikes.textContent = myJson[i].likes.length + ' likes';
+            } else {
+              postLikes.textContent = myJson[i].likes.length + 1 + ' likes';
+            }
+            console.log(myJson[i].likes.length)
+          };
         }
         );
 
@@ -300,6 +303,32 @@ const toggleLike = (id) => {
   });
 };
 
+//FOLLOWING function
+const followThisUser = (id) => {
+  let token = localStorage.getItem('x-auth');
+
+  fetch(`http://localhost:3000/api/v1/user/follow-user/${id[0]._id}`, {
+
+    method: 'POST',
+    headers: {
+      'x-auth': token,
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+    if (!response.ok) {
+      throw Error(response);
+    }
+      console.log(response);
+      alert('follow successful');
+      return response.json();
+    }).then((myJson) => {
+
+    }).catch((e) => {
+      console.log(e);
+      alert('follow failed');
+    });
+  console.log(id)
+};
 
 const deletePost = (id) => {
   let token = localStorage.getItem('x-auth');

@@ -421,6 +421,27 @@ hr{
   margin: 20px 0px;
 }
 
+/* activity.html */
+.singleAction{
+  padding: 5px;
+}
+
+.userCnt{
+  width: 80%;
+  height: auto;
+}
+
+.likedImgActv{
+  width: 42px;
+  height: 42px;
+  margin-right: 5px;
+}
+
+.userNameActv{
+  font-size: 15px;
+  margin: 0px 7px;
+}
+
 /* index-old.html */
 .createItemContainer:first-child {
   margin-bottom: 40px;

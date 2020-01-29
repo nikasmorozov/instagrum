@@ -11,6 +11,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  following: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users"
+  }],
+  followers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users"
+  }],
   tokens: [
     {
       access: {
@@ -28,7 +36,7 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   let user = this;
   if (user.isModified("password")) {
     bcrypt.genSalt(10, (error, salt) => {

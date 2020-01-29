@@ -182,6 +182,53 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+const followUser = async (req, res) => {
+    User.findById(req.params.id, async function(err, user) {
+        
+        let user2 = req.params.id;
+        let id = req.user.id;
+        let isAddedToFollowing = await User.findOne({
+            _id: id,
+            following: {
+                _id: user2
+            }
+        })
+        console.log(id)
+        console.log(user2)
+        console.log(isAddedToFollowing)
+
+        if (!isAddedToFollowing) {
+            user.followers.push(req.user._id);
+            user.save(async function(err) {
+            if(err) {
+                console.log(err)
+            }
+            else {
+                let thisUser = req.user
+                thisUser.following.push(user._id)
+                let response = await thisUser.save()
+                res.json(response)
+            }
+        })
+        console.log("ADDED")
+        } else {
+            user.followers.pull(req.user._id);
+            user.save(async function(err) {
+            if(err) {
+                console.log(err)
+            }
+            else {
+                let thisUser = req.user
+                thisUser.following.pull(user._id)
+                let response = await thisUser.save()
+                res.json(response)
+            }
+        })
+        console.log("REMOVED")
+        }
+    })
+}
+
 const deleteUserByName = async (req, res) => {
   let username = req.params.username;
   try {
@@ -212,13 +259,14 @@ const logout = (req, res) => {
 };
 
 module.exports = {
-  register,
-  getAll,
-  getSingleUser,
-  deleteUserByName,
-  login,
-  logout,
-  //   checkPsw,
-  changeUserInfo,
-  changeAvatar
+    register,
+    getAll,
+    getSingleUser,
+    deleteUserByName,
+    login,
+    logout,
+    followUser,
+    // checkPsw,
+    changeUserInfo,
+    changeAvatar
 };

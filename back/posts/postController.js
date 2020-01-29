@@ -25,7 +25,15 @@ const createPost = (req, res) => {
 const getAllPosts = async (req, res) => {
     try {
         let posts = await Post.find({
-        }).populate('user')
+        }).populate({
+            path: 'user',
+            populate: {
+                path: 'followers',
+                match: {
+                    _id: req.user._id
+                }
+            }
+        })
         res.json(posts)
     } catch (e) {
         res.status(400).json(e)
@@ -57,6 +65,7 @@ const toggleLike = async (req, res) => {
             _id: id,
             likes: user
         });
+        console.log(isLiked)
 
         if (!isLiked) {
         post.likes.push(user)

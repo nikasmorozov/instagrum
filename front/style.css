@@ -415,6 +415,12 @@ hr{
   padding: 2px;
 }
 
+/* comments.html */
+.commentsCnt{
+  height: auto;
+  margin: 20px 0px;
+}
+
 /* index-old.html */
 .createItemContainer:first-child {
   margin-bottom: 40px;

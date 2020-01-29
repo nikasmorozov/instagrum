@@ -58,9 +58,10 @@ postsCounter();
 const FollowersCounter = () => {
   let token = localStorage.getItem("x-auth");
   const noOfFollowersSpan = document.getElementById("NumberOfFollowers");
+  const noOfFollowingSpan = document.getElementById("NumberOfFollowing");
   let activeUserId = localStorage.getItem("activeUserId");
 
-  fetch("http://localhost:3000/api/v1/user/getAllUsers", {
+  fetch(`http://localhost:3000/api/v1/user/getSingleUser/${activeUserId}`, {
     method: "GET",
     headers: {
       "x-auth": token,
@@ -73,15 +74,10 @@ const FollowersCounter = () => {
       }
       return response.json();
     })
-    .then(allUsers => {
-      const userFollowers = allUsers.filter(el => {
-        if (el.users[0]._id === activeUserId) {
-          // return el;
-          console.log(allUsers);
-          console.log(userFollowers)
-        }
-      });
-      noOfFollowersSpan.textContent = userFollowers.length;
+    .then(myJson => {
+      // console.log(myJson)
+      noOfFollowersSpan.textContent = myJson.followers.length;
+      noOfFollowingSpan.textContent = myJson.following.length;
     });
 }
 
@@ -307,12 +303,14 @@ const activeUserPosts = () =>{
     }
   })
     .then(response => {
-      if (!response.ok) {
-        throw Error(response);
-      }
+      
+      // if (!response.ok) {
+      //   throw Error(response);
+      // }
       return response.json();
     })
     .then(userPost => {
+      console.log(userPost)
       userPost.reverse();
       let postedImg = userPost.filter(e => {
         if (e.user[0]._id === activeUserId) {

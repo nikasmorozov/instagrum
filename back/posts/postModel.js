@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../user/userModel.js');
 
-
-
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -13,12 +11,11 @@ const postSchema = new mongoose.Schema({
         type: String
     }],
     comment: {
-        commenterName: {
-            type: String
-        },
-        comment: {
-            type: String
-        }
+        type: mongoose.Schema.Types.ObjectId, ref: "comments"
+    },
+    commentCount:{
+        type: Number,
+        default: 0
     },
     date: { 
         type: Date, 

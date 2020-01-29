@@ -325,3 +325,28 @@ const deletePost = (id) => {
     alert('toggle failed');
   });
 };
+
+const renderActivity = () => {
+
+  let token = localStorage.getItem("x-auth");
+
+
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(myJson => {
+      console.log(myJson)
+    })
+};
+
+renderActivity();

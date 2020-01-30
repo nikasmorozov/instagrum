@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 const Post = require("./postModel.js");
 const User = require("../user/userModel.js");
 const fs = require("fs");
+=======
+const Post = require('./postModel.js');
+const User = require('../user/userModel.js');
+const activityController = require('../activities/activityController.js');
+
+>>>>>>> 3b617a39e4441bfc5a535a1e598e103424d41082
 
 const createPost = (req, res) => {
   const host = req.hostname;
@@ -67,30 +74,43 @@ const getPostById = async (req, res) => {
 };
 
 const toggleLike = async (req, res) => {
-  let id = req.params.id;
-  let user = req.user.id;
-  try {
-    let post = await Post.findOne({
-      _id: id
-    });
+    let id = req.params.id;
+    let user = req.user;
 
-    let isLiked = await Post.findOne({
-      _id: id,
-      likes: user
-    });
-    console.log(isLiked);
 
-    if (!isLiked) {
-      post.likes.push(user);
-    } else {
-      post.likes.pull(user);
+    try {
+        let post = await Post.findOne({
+            _id: id
+        });
+
+        let postUser = await Post.findOne({
+            _id: id
+        }).populate('user', 'username');
+
+        let isLiked = await Post.findOne({
+            _id: id,
+            likes: user.id
+        });
+
+
+
+        if (!isLiked) {
+        post.likes.push(user.id)
+        } else {
+            post.likes.pull(user.id)
+        };
+
+        post.save();
+
+        activityController.createActivity(user.username, 'likes', postUser, id);
+
+        res.json(post);
+
+
+
+    } catch (e) {
+        res.status(400).json(e)
     }
-
-    post.save();
-    res.json(post);
-  } catch (e) {
-    res.status(400).json(e);
-  }
 };
 
 const getLikesUsers = async (req, res) => {

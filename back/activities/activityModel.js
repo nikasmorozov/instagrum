@@ -6,11 +6,11 @@ const Post = require('../posts/postModel.js');
 
 
 const activitySchema = new mongoose.Schema({
-    user1: String,
+    username: String,
+    userProfilePic: String,
     title: {
         type: String,
     },
-    user2: String,
     post:{
         type: mongoose.Schema.Types.ObjectId, ref: Post
     },

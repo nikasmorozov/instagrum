@@ -37,16 +37,15 @@ feather.replace();
 
 // setProfileInfo();
 
-const renderActivity = () => {
+const renderActivities = () => {
 
   let token = localStorage.getItem("x-auth");
-  let activeUserId = localStorage.getItem("activeUserId");
 
   const userNameTag = document.getElementById("userNameTag");
   const userProfPicSml = document.querySelector(".userProfPicSml");
   const likedImgActv = document.querySelector(".likedImgActv");
 
-  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+  fetch("http://localhost:3000/api/v1/activities/getactivities", {
     method: "GET",
     headers: {
       "x-auth": token,
@@ -60,48 +59,21 @@ const renderActivity = () => {
       return response.json();
     })
     .then(myJson => {
-      let userPosts = myJson.filter(e => {
-        if (e.user[0]._id === activeUserId) {
-          return e;
-        }
-      });
+      // let userPosts = myJson.filter(e => {
+      //   if (e.user[0]._id === activeUserId) {
+      //     return e;
+          
+      //   }
+      // });
 
-      for (let i = 0; i < userPosts.length; i++) {
-        console.log(userPosts[i]);
+      for (let i = 0; i < myJson.length; i++) {
+        userProfPicSml.src = myJson[i].userProfilePic;
 
-        let userWhoLikes = getUserNameById(userPosts[i].likes[0])
-        console.log(userWhoLikes)
+        userNameTag.textContent = myJson[i].username + ' ' + myJson[i].title;
 
-        userNameTag.textContent = userPosts[i].likes[0] + ' liked your photo';
-        likedImgActv.src = userPosts[i].imageURL;
-
+        likedImgActv.src = myJson[i].post.imageURL;
       }
     })
 };
 
-renderActivity();
-
-const getUserNameById = (userId) => {
-
-  let token = localStorage.getItem("x-auth");
-
-
-  fetch(`http://localhost:3000/api/v1/user/getSingleUser/${userId}`, {
-    method: "GET",
-    headers: {
-      "x-auth": token,
-      "Content-Type": "application/json"
-    }
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response);
-      }
-      return response.json();
-    })
-    .then(foundUser => {
-      console.log(foundUser.username)
-      return foundUser.username;
-    });
-
-}
+renderActivities();

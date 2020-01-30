@@ -7,7 +7,7 @@ const createPost = (req, res) => {
     const host = req.hostname;
     const filePath = req.protocol + "://" + host + ":" + req.socket.localPort + '/' + req.file.path;
 
-    console.log(filePath);
+    //console.log(filePath);
 
     let data = req.body
     let post = new Post()
@@ -34,7 +34,11 @@ const getAllPosts = async (req, res) => {
                     _id: req.user._id
                 }
             }
-        })
+        }).populate({
+            path: 'comment',
+            select: 'comment',
+            populate: { path: 'user', select: 'username' }
+          });
         res.json(posts)
     } catch (e) {
         res.status(400).json(e)

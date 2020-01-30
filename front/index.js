@@ -58,6 +58,7 @@ const createElements = () => {
           "img-fluid",
           "userProfPicSml"
         );
+        console.log(myJson[i])
         if (myJson[i].user[0].profilePicURL) {
           profileImg.setAttribute(
             "src",
@@ -82,70 +83,41 @@ const createElements = () => {
         moreIcnBtn.setAttribute("class", "moreIcnBtn");
         moreIcnBtn.setAttribute("data-toggle", "modal");
         moreIcnBtn.setAttribute("data-target", "#modalCenter");
-        //moreIcnBtn dabar reik su fetchu turet, kad on click pasiupdeitintu followinimo duomenys
         moreIcnBtn.addEventListener("click", (e) => {
-          fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
-            method: "GET",
-            headers: {
-              "x-auth": token,
-              "Content-Type": "application/json"
-            }
+          let modalContent = document.querySelector(".modal-content")
+          let cancel = document.createElement("button");
+          cancel.textContent = "Cancel";
+          cancel.classList.add("btn", "btn-light");
+          cancel.addEventListener('click', () => {
+            modalContent.setAttribute("data-dismiss", "modal");
           })
-            .then(response => {
-              if (!response.ok) {
-                throw Error(response);
-              }
-              return response.json();
-            })
-            .then(myJson => {
-              //sito reverse reikia, kad moreIcnBtn sutaptu su postu reverse
-              myJson.reverse();
 
-              let modalContent = document.querySelector(".modal-content")
-              let cancel = document.createElement("button");
-              cancel.textContent = "Cancel";
-              cancel.classList.add("btn", "btn-light");
-              cancel.addEventListener('click', () => {
-                modalContent.setAttribute("data-dismiss", "modal");
-              })
+          let del = document.createElement("button");
+          del.textContent = "Delete";
+          del.classList.add("btn", "btn-light", "deleteBtn");
+          del.addEventListener('click', () => {
+            deletePost(myJson[i]._id);
+            onePost.style.display = "none"
+            modalContent.setAttribute("data-dismiss", "modal");
+          })
+          let follow = document.createElement("button");
+          follow.textContent = "Follow";
+          follow.classList.add("btn", "btn-light", "followBtn");
+          follow.addEventListener('click', () => {
+            followThisUser(myJson[i].user);
+            modalContent.setAttribute("data-dismiss", "modal");
+          })
 
-              let del = document.createElement("button");
-              del.textContent = "Delete";
-              del.classList.add("btn", "btn-light", "deleteBtn");
-              del.addEventListener('click', () => {
-                deletePost(myJson[i]._id);
-                onePost.style.display = "none"
-                modalContent.setAttribute("data-dismiss", "modal");
-              })
-              let follow = document.createElement("button");
-              
-              // Follow/Unfollow toggle black magic. BEWARE!!
-              let FollowThat = myJson[i].user[0].followers[0];
-              if (FollowThat === undefined) {
-                follow.textContent = "Follow";
-              } else if (myJson[i].user[0].followers[0]._id === activeUserId) {
-                follow.textContent = "Unfollow";
-              }
-              // console.log(activeUserId)
-              // console.log(myJson[i])
-
-              follow.classList.add("btn", "btn-light", "followBtn");
-              follow.addEventListener('click', () => {
-                followThisUser(myJson[i].user);
-                modalContent.setAttribute("data-dismiss", "modal");
-              })
-
-              let myPosts = myJson[i].user[0]._id.includes(activeUserId)
-              if (!myPosts) {
-                modalContent.innerHTML = ""
-                modalContent.appendChild(follow)
-                modalContent.appendChild(cancel)
-              } else {
-                modalContent.innerHTML = ""
-                modalContent.appendChild(del)
-                modalContent.appendChild(cancel)
-              }
-            });
+          let myPosts = myJson[i].user[0]._id.includes(activeUserId)
+          if (!myPosts) {
+            modalContent.innerHTML = ""
+            modalContent.appendChild(follow)
+            modalContent.appendChild(cancel)
+          } else {
+            modalContent.innerHTML = ""
+            modalContent.appendChild(del)
+            modalContent.appendChild(cancel)
+          }
         });
 
         let moreIcn = document.createElement("i");
@@ -195,7 +167,7 @@ const createElements = () => {
             } else {
               postLikes.textContent = myJson[i].likes.length + 1 + ' likes';
             }
-            console.log(myJson[i].likes.length)
+            //console.log(myJson[i].likes.length)
           };
         }
         );
@@ -240,6 +212,8 @@ const createElements = () => {
 
         let userPostCom = document.createElement('div')
         userPostCom.classList.add('userPostCom')
+        let lastPostCom = document.createElement('div')
+        lastPostCom.classList.add('userPostCom')
 
         let userNameComment = document.createElement('span')
         userNameComment.classList.add('font-weight-bold', 'userName')
@@ -249,6 +223,13 @@ const createElements = () => {
         comment.classList.add('userCommTxt')
         comment.setAttribute("id", "comment");
         comment.textContent = myJson[i].title;
+
+        let lastUserNameComment = document.createElement('span')
+        lastUserNameComment.classList.add('font-weight-bold', 'lastCommenterName')
+        lastUserNameComment.textContent = myJson[i].comment ? myJson[i].comment.user.username : "";
+        let lastComment = document.createElement('span')
+        lastComment.classList.add('userCommTxt')
+        lastComment.textContent = myJson[i].comment ? myJson[i].comment.comment : "";
 
         //view more comments btn
         let viewAllComBtn = document.createElement('a')
@@ -260,7 +241,7 @@ const createElements = () => {
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " " + myJson[i].likes.length + ' comments';
+        postComNum.textContent = " " + myJson[i].commentCount + ' comments';
 
         //main append
         postsCont.appendChild(onePost);
@@ -292,9 +273,15 @@ const createElements = () => {
         postComsAndLikesCnt.appendChild(userPostCom)
         userPostCom.appendChild(userNameComment)
         userPostCom.appendChild(comment)
+
         postComsAndLikesCnt.appendChild(viewAllComBtn)
         viewAllComBtn.appendChild(viewAllComTxt)
         viewAllComTxt.appendChild(postComNum)
+
+        //lasst comment
+        postComsAndLikesCnt.appendChild(lastPostCom)
+        lastPostCom.appendChild(lastUserNameComment)
+        lastPostCom.appendChild(lastComment)
 
         //ikonoms
         feather.replace();
@@ -343,15 +330,15 @@ const followThisUser = (id) => {
     if (!response.ok) {
       throw Error(response);
     }
-    console.log(response);
-    // alert('follow successful');
-    return response.json();
-  }).then((myJson) => {
+      console.log(response);
+      alert('follow successful');
+      return response.json();
+    }).then((myJson) => {
 
-  }).catch((e) => {
-    console.log(e);
-    alert('follow failed');
-  });
+    }).catch((e) => {
+      console.log(e);
+      alert('follow failed');
+    });
   console.log(id)
 };
 
@@ -379,3 +366,28 @@ const deletePost = (id) => {
     alert('toggle failed');
   });
 };
+
+const renderActivity = () => {
+
+  let token = localStorage.getItem("x-auth");
+
+
+  fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
+    method: "GET",
+    headers: {
+      "x-auth": token,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response);
+      }
+      return response.json();
+    })
+    .then(myJson => {
+      //console.log(myJson)
+    })
+};
+
+renderActivity();

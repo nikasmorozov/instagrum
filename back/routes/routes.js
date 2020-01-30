@@ -2,6 +2,8 @@ const router = require('express').Router();
 const userController = require('../user/userController.js');
 const postController = require('../posts/postController.js');
 const commentController = require('../comments/commentController.js');
+const activityController = require('../activities/activityController.js');
+
 const middleware = require('../middleware/middleware.js');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -51,7 +53,11 @@ router.get('/posts/getLikesUsers/:id', postController.getLikesUsers);
 
 //Comment routes
 router.post('/comments/addComment', middleware.authenticate, commentController.addComment)
-router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId)
+router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId);
+
+//Activities routes
+// router.get('/activities/getActivities', activityController.getActivities);
+
 
 
 

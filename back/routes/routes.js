@@ -56,7 +56,7 @@ router.post('/comments/addComment', middleware.authenticate, commentController.a
 router.get('/comments/getCommentsByPostId/:id', middleware.authenticate, commentController.getCommentsByPostId);
 
 //Activities routes
-// router.get('/activities/getActivities', activityController.getActivities);
+router.get('/activities/getActivities', activityController.getActivities);
 
 
 

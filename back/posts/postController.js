@@ -68,16 +68,10 @@ const toggleLike = async (req, res) => {
             _id: id
         });
 
-        let postUser = await Post.findOne({
-            _id: id
-        }).populate('user', 'username');
-
         let isLiked = await Post.findOne({
             _id: id,
             likes: user.id
         });
-
-
 
         if (!isLiked) {
         post.likes.push(user.id)
@@ -87,11 +81,10 @@ const toggleLike = async (req, res) => {
 
         post.save();
 
-        activityController.createActivity(user.username, 'likes', postUser, id);
+        activityController.createActivity(user.username, user.profilePicURL, 'liked your post', post._id);
+        console.log(post);
 
         res.json(post);
-
-
 
     } catch (e) {
         res.status(400).json(e)

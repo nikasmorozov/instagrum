@@ -1,18 +1,33 @@
 const Activity = require('../activities/activityModel.js');
 
 
-const createActivity = (userFrom, activityTitle, userTo, postID) => {
+const createActivity = (username, userProfilePic, title, postID) => {
     let activity = new Activity();
 
-    activity.user1 = userFrom;
-    activity.title = activityTitle;
-    activity.user2 = userTo;
+    activity.username = username;
+    activity.userProfilePic = userProfilePic;
+    activity.title = title;
     activity.post = postID;
 
     activity.save()
 };
 
 
+const getActivities = async (req, res) => {
+    try {
+        let activity = await Activity.find({
+
+        }).populate('post')
+
+        res.json(activity)
+
+    } catch (e) {
+        res.status(400).json(e)
+    }
+};
+
+
 module.exports = {
-    createActivity
+    createActivity,
+    getActivities
 };

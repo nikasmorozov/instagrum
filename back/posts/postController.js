@@ -75,14 +75,14 @@ const toggleLike = async (req, res) => {
 
         if (!isLiked) {
         post.likes.push(user.id)
+
+        activityController.createActivity(user.username, user.profilePicURL, 'liked your post', post._id);
         } else {
             post.likes.pull(user.id)
         };
 
         post.save();
 
-        activityController.createActivity(user.username, user.profilePicURL, 'liked your post', post._id);
-        console.log(post);
 
         res.json(post);
 

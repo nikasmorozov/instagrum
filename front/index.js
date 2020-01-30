@@ -242,6 +242,7 @@ const createElements = () => {
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
         postComNum.textContent = " " + myJson[i].commentCount + ' comments';
+        console.log(myJson[i].commentCount);
 
         //main append
         postsCont.appendChild(onePost);

@@ -1,5 +1,6 @@
 const Post = require('./postModel.js');
 const User = require('../user/userModel.js');
+const fs = require('fs')
 
 
 const createPost = (req, res) => {
@@ -19,7 +20,7 @@ const createPost = (req, res) => {
         res.json(createdPost)
     }).catch((e) => {
         res.status(400).json(e)
-    })
+    })    
 };
 
 const getAllPosts = async (req, res) => {
@@ -106,10 +107,24 @@ const getLikesUsers = async (req, res) => {
 const deletePostById = async (req, res) => {
     let id = req.params.id;
     try {
-        let post = await Post.deleteOne({
+        let post = await Post.findOne({
             _id: id
         })
-        res.json(post)
+
+        let oldPicPath = post.imageURL
+    .split(`${req.protocol + "://" + req.hostname + ":" + req.socket.localPort + "/"}`)
+    .pop();
+  fs.unlink(oldPicPath, err => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+  res.json(post)
+        
+  post.delete()
+        
+        
     } catch (e) {
         res.status(400).json(e)
     }

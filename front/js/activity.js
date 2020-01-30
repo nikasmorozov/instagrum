@@ -5,9 +5,7 @@ const renderActivities = () => {
 
   let token = localStorage.getItem("x-auth");
 
-  const userNameTag = document.getElementById("userNameTag");
-  const userProfPicSml = document.querySelector(".userProfPicSml");
-  const likedImgActv = document.querySelector(".likedImgActv");
+
 
   fetch("http://localhost:3000/api/v1/activities/getactivities", {
     method: "GET",
@@ -31,11 +29,37 @@ const renderActivities = () => {
       // });
 
       for (let i = 0; i < myJson.length; i++) {
+        const userNameTag = document.getElementById("userNameTag");
+        const userProfPicSml = document.querySelector(".userProfPicSml");
+        const likedImgActv = document.querySelector(".likedImgActv");
+
+         //cnt activity
+         let userPostContentCnt = document.createElement("div");
+         userPostContentCnt.classList.add(
+           "container",
+           "fullWidthCnt",
+           "activityCnt"
+         );
+
+         let singleAction = document.createElement("div");
+         userPostContentCnt.classList.add(
+           "container",
+           "singleAction",
+           "d-flex",
+           "justify-content-between",
+           "align-items-center",
+         );
+
+          userPostContentCnt.setAttribute("id", "activityCnt");
+
         userProfPicSml.src = myJson[i].userProfilePic;
 
         userNameTag.textContent = myJson[i].username + ' ' + myJson[i].title;
 
         likedImgActv.src = myJson[i].post.imageURL;
+
+        userPostContentCnt.appendChild(singleAction);
+
       }
     })
 };

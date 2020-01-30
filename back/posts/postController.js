@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 const Post = require("./postModel.js");
 const User = require("../user/userModel.js");
 const fs = require("fs");
-=======
-const Post = require('./postModel.js');
-const User = require('../user/userModel.js');
 const activityController = require('../activities/activityController.js');
 
->>>>>>> 3b617a39e4441bfc5a535a1e598e103424d41082
 
 const createPost = (req, res) => {
   const host = req.hostname;

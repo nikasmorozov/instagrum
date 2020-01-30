@@ -258,7 +258,7 @@ const createElements = () => {
         viewAllComTxt.textContent = "View all"
         let postComNum = document.createElement('span')
         //KOMENTARU SKAICIUS
-        postComNum.textContent = " " + myJson[i].likes.length + ' comments';
+        postComNum.textContent = " " + myJson[i].commentCount + ' comments';
 
         //main append
         postsCont.appendChild(onePost);

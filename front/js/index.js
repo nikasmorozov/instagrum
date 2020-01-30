@@ -341,8 +341,7 @@ const followThisUser = (id) => {
     if (!response.ok) {
       throw Error(response);
     }
-    console.log(response);
-    // alert('follow successful');
+
     return response.json();
   }).then((myJson) => {
 
@@ -374,6 +373,5 @@ const deletePost = (id) => {
 
   }).catch((e) => {
     console.log(e);
-    alert('toggle failed');
   });
 };

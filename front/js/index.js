@@ -10,13 +10,13 @@ const checkifLoggedIn = () => {
 };
 checkifLoggedIn();
 
-const createElements = () => {
+const createElements = (postsFiltered) => {
+  // document.innerHTML = ''
   // let modal = document.getElementById("modalCenter");
   let postsCont = document.getElementById("postsCont");
   let token = localStorage.getItem("x-auth");
   let activeUserId = localStorage.getItem('activeUserId')
-  // postsCont.innerHTML = "";
-
+  postsCont.innerHTML = "";
   fetch("http://localhost:3000/api/v1/posts/getAllPosts", {
     method: "GET",
     headers: {
@@ -37,6 +37,10 @@ const createElements = () => {
       //paskutini posta rodys pirma
       myJson.reverse();
 
+      if (postsFiltered) {
+        myJson = postsFiltered.reverse()
+      }
+
       for (let i = 0; i < myJson.length; i++) {
         //konteineriai
         let onePost = document.createElement("div");
@@ -52,6 +56,7 @@ const createElements = () => {
         );
 
         let userInfo = document.createElement("div");
+        userInfo.style.cursor = 'pointer'
         const profileImg = document.createElement("img");
         profileImg.classList.add(
           "rounded-circle",
@@ -69,13 +74,19 @@ const createElements = () => {
             "https://www.w3schools.com/w3css/img_avatar3.png"
           );
         }
+        profileImg.addEventListener('click', async () => {      
+          const userPosts = await showSelectedUserPosts(myJson[i].user[0]._id)
+          createElements(userPosts)
+        })
+        profileImg.style.cursor = 'pointer'
         let userName = document.createElement("span");
         userName.classList.add("font-weight-bold", "userName");
         userName.setAttribute("id", "userNameTag");
         userName.textContent = myJson[i].user[0].username;
-        userName.addEventListener('click', (e) => {
-          //turetu nukelti i to zmogaus kurio nikas paspautas profili
-          window.location.href = "profile.html"
+        userName.style.cursor = 'pointer'
+        userName.addEventListener('click', async () => {      
+          const userPosts = await showSelectedUserPosts(myJson[i].user[0]._id)
+          createElements(userPosts)
         })
 
         let moreIcnBtn = document.createElement("button");
@@ -375,3 +386,35 @@ const deletePost = (id) => {
     console.log(e);
   });
 };
+
+const showSelectedUserPosts = async (userID) => {
+  let token = localStorage.getItem("x-auth");
+  // let userPosts
+  try {
+    const allPosts = await fetch(`http://localhost:3000/api/v1//posts/getAllPosts`, {
+      method: "GET",
+      headers: {
+        "x-auth": token,
+        "Content-Type": "application/json"
+      }
+      
+    })
+    const res = await allPosts.json()
+    console.log('allposts', res);
+    const newResp = await filterPosts(res, userID)
+    console.log('newresp', newResp);
+    return newResp
+  } catch (err) {
+    console.log(err);
+    
+  }
+}
+
+  const filterPosts = (allPosts, userID) => {
+    filterePosts = allPosts.filter(el => {
+      if (el.user[0]._id === userID) {
+        return el;
+      }
+    });
+    return filterePosts
+  }

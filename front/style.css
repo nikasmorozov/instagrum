@@ -472,6 +472,10 @@ hr{
   margin: 0px 7px;
 }
 
+/* .rounded-circle,.img-fluid,.userProfPicSml{
+cursor: pointer;
+} */
+
 /* index-old.html */
 .createItemContainer:first-child {
   margin-bottom: 40px;
